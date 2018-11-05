@@ -1,0 +1,66 @@
+package com.tendy.dao;
+
+import com.tendy.dao.bean.AccountPhone;
+import com.tendy.dao.bean.MobileBussiness;
+import com.tendy.dao.bean.UserAccountPhone;
+import com.tendy.dao.mapper.AccountPhoneMapper;
+import com.tendy.dao.mapper.MobileBussinessMapper;
+import com.tendy.dao.mapper.UserAccountPhoneMapper;
+import com.tendy.utils.SpringUtils;
+
+import java.util.List;
+
+/**
+ * @Author: tendy
+ * @Description:
+ * @Date: 2018/10/29
+ */
+public class DataMapperUtil {
+
+    private static AccountPhoneMapper accountPhoneMapper = SpringUtils.getBean(AccountPhoneMapper.class);
+    private static MobileBussinessMapper mobileBussinessMapper = SpringUtils.getBean(MobileBussinessMapper.class);
+    private static UserAccountPhoneMapper userAccountPhoneMapper = SpringUtils.getBean(UserAccountPhoneMapper.class);
+
+    public static AccountPhone selectAccountPhoneById(Integer id){
+        return accountPhoneMapper.selectByPrimaryKey(id);
+    }
+
+    public static List<AccountPhone> selectAccountPhoneByPhoneAndCity(String phone, Integer city,
+                                                                      Integer iDisplayStart, Integer iDisplayLength, String status){
+        return accountPhoneMapper.selectListByPhone(phone, city, iDisplayStart, iDisplayLength, status);
+    }
+
+    public static int countAccountPhoneByPhoneAndCity(String phone, Integer city, String status){
+        return accountPhoneMapper.countListByPhone(phone, city, status);
+    }
+
+    public static MobileBussiness selectMobileBussinessByPrimaryKey(Integer id){
+        return mobileBussinessMapper.selectByPrimaryKey(id);
+    }
+
+    public static MobileBussiness selectMobileBussinessByCid(String cid){
+        return mobileBussinessMapper.selectByCid(cid);
+    }
+
+    public static MobileBussiness selectMobileBussinessByName(String name){
+        return mobileBussinessMapper.selectByName(name);
+    }
+
+    public static UserAccountPhone selectUserAccountPhoneByPrimaryKey(Long id){
+        return userAccountPhoneMapper.selectByPrimaryKey(id);
+    }
+
+    public static int updateUserAccountPhoneByPrimaryKeySelective(UserAccountPhone accountPhone){
+        return userAccountPhoneMapper.updateByPrimaryKeySelective(accountPhone);
+    }
+
+    public static List<UserAccountPhone> selectUserAccountPhoneByPhoneAndBusiness(String phone, Integer businessId,
+                                                                                  Integer iDisplayStart, Integer iDisplayLength, String status){
+        return userAccountPhoneMapper.selectListByPhone(phone, businessId, iDisplayStart, iDisplayLength, status);
+    }
+
+    public static int countUserAccountPhoneByPhoneAndCity(String phone, Integer businessId, String status){
+        return userAccountPhoneMapper.countListByPhone(phone, businessId, status);
+    }
+
+}
