@@ -47,7 +47,7 @@ public class PhoneInfoController extends BaseController {
      */
     @RequestMapping(value="/phoneList", method=RequestMethod.GET)
     @ResponseBody
-    public String getTaxiDriverList(@RequestParam(value = "aoData") String aoData, HttpSession httpSession) {
+    public String getPhoneList(@RequestParam(value = "aoData") String aoData, HttpSession httpSession) {
         //解析参数
         Map<String, Object> map = DataTablesUtil.getParamMap(aoData);
         String start = (String) map.get("start");

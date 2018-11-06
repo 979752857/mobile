@@ -13,7 +13,6 @@
             <div class="box-header">
                 <div class="row">
                     <form id="searchForm"  method="get">
-
                         <div class="row">
                             <div class="col-md-10">
                                 <div class="sear_cond" style="float: left">
@@ -54,14 +53,14 @@
     </div>
     <script>
         $(document).ready(function(){
-            var taxiCarNo = "${taxiCarNo}";
-            if (taxiCarNo){
-                initPhoneBaseStringReload(all_scope_path+'/taxiDriverAuth/getTaxiDriverByPhone', taxiCarNo);
+            var keyword = "";
+            if (keyword){
+                initPhoneBaseStringReload(all_scope_path+'/phoneInfo/phoneList', keyword);
             }else {
                 initParam();
             }
         });
     </script>
-    <script src="${pageContext.request.contextPath }/static/js/taxiauth/taxiauth.js?time=<%=new Date()%>"></script>
+    <script src="${pageContext.request.contextPath }/static/js/phoneinfo/phoneListDetail.js"></script>
 </body>
 </html>
