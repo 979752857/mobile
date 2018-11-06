@@ -42,7 +42,7 @@ public class PageController extends BaseController {
         List<MenuModel> menuModels = loginService.getLevelMenuModeList(menuList);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("menuList", menuModels);
-        return new ModelAndView("homepage", resultMap);
+        return new ModelAndView("homePage", resultMap);
     }
 
     @RequestMapping(value = {"/toOpTable"}, method = {RequestMethod.GET})
@@ -52,6 +52,6 @@ public class PageController extends BaseController {
 
     @RequestMapping(value = {"/toPhoneListDetail"}, method = {RequestMethod.GET})
     public ModelAndView toPhoneListDetail() {
-        return new ModelAndView("phoneListDetail");
+        return new ModelAndView("phoneinfo/phoneListDetail");
     }
 }

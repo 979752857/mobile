@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>搜索</title>
 
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/index/normalize.css/css/normalize.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/index/font-awesome.min.css/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/index/demo.css/css/demo.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/index/style.css/css/style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/index/normalize.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/index/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/index/demo.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/index/style.css">
     <script src="${pageContext.request.contextPath}/static/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
 </head>
 <body>

@@ -5,11 +5,11 @@
   <title>嘀嗒出行 | 登录首页</title>
   <%@include file="/jsp/common/common.jsp"%>
   <!-- Ionicons -->
-  <link rel="stylesheet" href="${pageContext.request.contextPath }/adminlte/bower_components/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath }/static/adminlte/bower_components/Ionicons/css/ionicons.min.css">
   <!-- iCheck -->
-  <link rel="stylesheet" href="${pageContext.request.contextPath }/adminlte/plugins/iCheck/square/blue.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath }/static/adminlte/plugins/iCheck/square/blue.css">
 
-  <script type="text/javascript" src="${pageContext.request.contextPath }/js/cms/login.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath }/static/js/login.js"></script>
 </head>
 <body class="hold-transition login-page" style="background:#d2d6de;background-image:url(${pageContext.request.contextPath }/image/login_img.jpg); color:#fff ">
 <div class="login-box">
@@ -20,7 +20,7 @@
   <div class="login-box-body">
     <p class="login-box-msg">您好，欢迎来到cms管理后台</p>
 
-    <form action="${pageContext.request.contextPath }/regist" method="post">
+    <form action="#" method="post">
       <div class="input-group" style="margin: 10px 0px">
         <span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
         <input type="text" id="user_name" class="form-control" placeholder="Username">
@@ -31,7 +31,7 @@
       </div>
       <div class="row">
         <div class="col-xs-4">
-            <button type="button" onclick = "toRegist()" class="btn btn-block btn-danger">注 册</button>
+            <button type="button" onclick = "" class="btn btn-block btn-danger">注 册</button>
         </div>
         <div class="col-xs-4">
           <p style="text-align:center">- OR -</p>
@@ -45,7 +45,7 @@
   </div>
 </div>
 <!-- iCheck -->
-<script src="${pageContext.request.contextPath }/adminlte/plugins/iCheck/icheck.min.js"></script>
+<script src="${pageContext.request.contextPath }/static/adminlte/plugins/iCheck/icheck.min.js"></script>
 <script>
   $(function () {
     $('input').iCheck({

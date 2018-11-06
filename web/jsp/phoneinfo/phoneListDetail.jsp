@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="java.util.Date" %>
 <html>
 <head>
     <title>Title</title>
@@ -53,12 +52,7 @@
     </div>
     <script>
         $(document).ready(function(){
-            var keyword = "";
-            if (keyword){
-                initPhoneBaseStringReload(all_scope_path+'/phoneInfo/phoneList', keyword);
-            }else {
-                initParam();
-            }
+
         });
     </script>
     <script src="${pageContext.request.contextPath }/static/js/phoneinfo/phoneListDetail.js"></script>
