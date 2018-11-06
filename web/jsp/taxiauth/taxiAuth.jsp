@@ -33,7 +33,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-2" style="margin-left: 20px;">
-                                <input type="text" class="form-control" name="phone" placeholder="手机号/车牌号" value="${taxiCarNo}">
+                                <input type="text" class="form-control" name="phone" placeholder="手机号" value="">
                             </div>
                             <button type="button" id="searchBut" class="btn btn-info bg-blue">
                                 <i class="fa fa-search"></i> &nbsp;搜&nbsp;索&nbsp;
@@ -62,6 +62,6 @@
             }
         });
     </script>
-    <script src="${pageContext.request.contextPath }/js/auth/taxiauth/taxiauth.js?time=<%=new Date()%>"></script>
+    <script src="${pageContext.request.contextPath }/static/js/taxiauth/taxiauth.js?time=<%=new Date()%>"></script>
 </body>
 </html>

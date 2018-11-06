@@ -1,0 +1,81 @@
+.sear_cond { height:30px; margin-bottom:10px; padding:0 0 0 20px; line-height:28px; clear:both;}
+.sear_cond span { height:30px; margin-left:5px; display:inline; float:left; border:#bccfe6 1px solid; font-size: 12px;}
+.sear_cond span.title { width:120px; height:30px; margin-right:10px; text-align:center; color:#FFF; background:#605ca8; font-size: 12px;}
+.sear_cond_more { padding-left: 130px;}
+.sear_cond input.optioninput { padding:0 15px; border-color:#d2d6de; border-radius: 0; box-shadow: none; border: 1px solid #ccc; color:#555; background-color: #fff; background-image: none; margin-bottom:5px; font-size: 14px; height: 30px;}
+.sear_cond select.option { padding:0 15px; color:#605ca8; margin-bottom:5px; font-size: 12px; height: 30px;}
+.sear_cond span.option { padding:0 15px; color:#605ca8; margin-bottom:5px; font-size: 12px;}
+.sear_cond span.optionCity { padding:0 15px; color:#605ca8; margin-bottom:5px; font-size: 12px;}
+.sear_cond span.selected { color:#FFF; background:#f3570b; font-size: 12px;}
+
+.sear_cond_page { height:30px; margin-bottom:10px; padding:0 0 0 20px; line-height:28px; clear:both;}
+.sear_cond_page span { height:30px; margin-left:5px; display:inline; float:left; border:#bccfe6 1px solid; font-size: 12px;}
+.sear_cond_page span.title { width:120px; height:30px; margin-right:10px; text-align:center; color:#FFF; background:#605ca8; font-size: 12px;}
+.sear_cond_page select.option { padding:0 15px; color:#605ca8; margin-bottom:5px; font-size: 12px; height: 30px;}
+.sear_cond_page span.option { padding:0 15px; color:#605ca8; margin-bottom:5px; font-size: 12px;}
+.sear_cond_page span.optionCity { padding:0 15px; color:#605ca8; margin-bottom:5px; font-size: 12px;}
+.sear_cond_page span.selected { color:#FFF; background:#f3570b; font-size: 12px;}
+
+.common-query-row{
+    margin-top: 5px;
+}
+.common-query-title{
+    width: 9%;
+    float: left;
+    margin-left: 2%;
+}
+.common-query-select{
+    width: 6%;
+    float: left;
+    margin-left: 2%;
+}
+
+.menu-iframe{
+    margin-left: 0px;
+}
+
+table {
+    font-size: 14px;
+}
+
+/*  城市标签   start   */
+.city-tag-label{
+    width: 75px;
+}
+
+.city-tag-label input{
+    float: left;
+}
+
+.city-tag-label span{
+    float: left;
+    font-size: 14px;
+    font-weight: 400;
+    color: #605ca8;
+}
+/*  城市标签   end   */
+
+.ml-top{
+    margin-top: 10px;
+}
+.ml-right{
+    margin-right: 10px;
+}
+.ml-bottom{
+    margin-bottom: 10px;
+}
+
+.center{
+    text-align: center;
+}
+
+.homepage-iframe{
+    border: 0px;
+}
+
+.text-silvery {
+    color: #c0c0c0 !important;
+}
+.text-brown {
+    color: #804000 !important;
+}

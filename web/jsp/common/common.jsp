@@ -14,7 +14,7 @@
  <!-- AdminLTE Skins. Choose a skin from the css/skins
       folder instead of downloading all of them to reduce the load. -->
  <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/adminlte/dist/css/skins/_all-skins.min.css">
- <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/css/common.css?time=<%=new Date().getTime()%>.css">
+ <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/static/css/common/common.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/static/adminlte/bower_components/bootstrap-datetimepicker/dist/css/bootstrap-datetimepicker.min.css">
 
  <!-- jQuery 3 -->
