@@ -5,6 +5,7 @@ import com.tendy.common.ReplyMap;
 import com.tendy.dao.bean.UserAccountPhone;
 import com.tendy.service.LoginService;
 import com.tendy.service.PhoneInfoService;
+import com.tendy.utils.DataTablesUtil;
 import com.tendy.utils.ParamUtil;
 import com.tendy.utils.StringUtils;
 import org.apache.log4j.Logger;
@@ -17,6 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/phoneInfo")
@@ -26,24 +31,45 @@ public class PhoneInfoController extends BaseController {
     private PhoneInfoService phoneInfoService;
 
     @ResponseBody
-    @RequestMapping(value = "/phoneList", method = RequestMethod.GET)
-    public String phoneList(@RequestParam("keyword") String keyword, @RequestParam("pageNo") Integer pageNo,
+    @RequestMapping(value = "/phoneList1", method = RequestMethod.GET)
+    public String phoneList1(@RequestParam("keyword") String keyword, @RequestParam("pageNo") Integer pageNo,
                              @RequestParam("pageSize") Integer pageSize, @RequestParam("status") String status,
                              HttpSession httpSession) {
         ReplyMap replyMap = new ReplyMap();
-        if(ParamUtil.checkParamIsNull(keyword, status)){
-            replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, BusinessConstants.PARAM_ERROR_MSG);
-            return replyMap.toJson();
-        }
-        if(pageNo == null){
-            pageNo = 1;
-        }
-        if(pageSize == null){
-            pageSize = 10;
-        }
-        Integer businessId = Integer.valueOf(String.valueOf(httpSession.getAttribute("id")));
-        replyMap = phoneInfoService.getDataDetail(keyword, pageNo, pageSize, status, businessId);
+
         return replyMap.toJson();
+    }
+
+    /**
+     * 分页查询显示table实例
+     * @param aoData
+     * @return
+     */
+    @RequestMapping(value="/phoneList", method=RequestMethod.GET)
+    @ResponseBody
+    public String getTaxiDriverList(@RequestParam(value = "aoData") String aoData, HttpSession httpSession) {
+        //解析参数
+        Map<String, Object> map = DataTablesUtil.getParamMap(aoData);
+        String start = (String) map.get("start");
+        String end = (String) map.get("end");
+        //插件返回的起始行数
+        Integer iDisplayStart = (Integer) map.get("iDisplayStart");
+        //插件返回的每页长度
+        Integer iDisplayLength = (Integer) map.get("iDisplayLength");
+        List<Map<String, Object>> list = new ArrayList<>();
+		/*----------   数据库操作返回list数据   ----------*/
+		String keyword = String.valueOf(map.get("keyword"));
+		String status = String.valueOf(map.get("status"));
+        Integer businessId = Integer.valueOf(String.valueOf(httpSession.getAttribute("id")));
+        Map<String, Object> resultMap = phoneInfoService.getDataDetail(keyword, iDisplayStart, iDisplayLength, status, businessId);
+        Integer total = (Integer) resultMap.get("total");
+        if(resultMap.get("list") != null){
+            list = (List<Map<String, Object>>) resultMap.get("list");
+        }
+		/*------------------------------------------------*/
+        String result = DataTablesUtil.getResultString(list, total, map);
+        logger.info(result);
+        return result;
     }
 
     @ResponseBody

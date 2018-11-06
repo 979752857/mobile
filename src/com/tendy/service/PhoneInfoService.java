@@ -23,7 +23,7 @@ import java.util.Map;
 @Service
 public class PhoneInfoService {
 
-    public ReplyMap getDataDetail(String phoneParam, Integer pageNo, Integer pageSize, String status, Integer businessId){
+    public ReplyMap getDataDetail1(String phoneParam, Integer pageNo, Integer pageSize, String status, Integer businessId){
         ReplyMap replyMap = new ReplyMap();
         List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, businessId, (pageNo-1)*pageSize, pageSize, status);
         if(CollectionUtils.isEmpty(list)) {
@@ -53,6 +53,36 @@ public class PhoneInfoService {
         replyMap.put("total", total);
 
         return replyMap;
+    }
+
+    public Map<String, Object> getDataDetail(String phoneParam, Integer iDisplayStart, Integer pageSize, String status, Integer businessId){
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, businessId, iDisplayStart, pageSize, status);
+        if(CollectionUtils.isEmpty(list)) {
+            resultMap.put("total", 0);
+            return resultMap;
+        }
+        int total = DataMapperUtil.countUserAccountPhoneByPhoneAndCity(phoneParam, businessId, status);
+        for(int i = 0; i<list.size(); i++){
+            Map<String, Object> map = new HashMap<>();
+            UserAccountPhone accountPhone = list.get(i);
+            map.put("phone", accountPhone.getPhone());
+            map.put("url", accountPhone.getUrl());
+            if(accountPhone.getPrice() != null){
+                map.put("price", accountPhone.getPrice().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+            }
+            map.put("status", accountPhone.getStatus());
+            if(accountPhone.getUpdateTime() != null && (accountPhone.getUpdateTime().getTime() > accountPhone.getCreateTime().getTime())){
+                    map.put("time", TimeUtil.formatDate(accountPhone.getUpdateTime(), TimeUtil.YYYY_MM_DD));
+            }else{
+                map.put("time", TimeUtil.formatDate(accountPhone.getCreateTime(), TimeUtil.YYYY_MM_DD));
+            }
+            resultList.add(map);
+        }
+        resultMap.put("total", total);
+        resultMap.put("list", resultList);
+        return resultMap;
     }
 
     public ReplyMap updateUserAccountPhone(UserAccountPhone accountPhone, Integer businessId){
