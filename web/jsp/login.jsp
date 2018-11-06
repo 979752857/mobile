@@ -1,108 +1,65 @@
-<%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=UTF-8"%>
+<%@page contentType="text/html;charset=UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<!-- Basic -->
-    	<meta charset="UTF-8" />
-		<title>登录 | 手机号查询</title>
-		<!-- Mobile Metas -->
-	    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<style>footer{display: none;}</style>
-		<jsp:include page="header.jsp" flush="true"/>
-	</head>
-	<body>
-		<!-- Start: Content -->
-		<div class="container-fluid content">
-			<div class="row">
-				<!-- Main Page -->
-				<div id="content" class="col-sm-12 full">
-					<div class="row">
-						<div class="login-box">
-							<div class="panel">
-								<div class="panel-body">	
-										
-									<div id="message-container" class="header bk-margin-bottom-20 text-center">			
-										<img src="${pageContext.request.contextPath}/static/assets/img/logo.png" class="img-responsive" alt="" />
-										    <h4 id="errmsg">登录</h4>	
-									</div>
-									<form id="loginform" class="form-horizontal login" >
-										<div class="bk-padding-left-20 bk-padding-right-20">
-											<div class="form-group">
-												<label>用户名</label>
-												<div class="input-group input-group-icon">
-													<input type="text" class="form-control bk-radius" id="username" name="username" placeholder="用户名"/>
-													<span class="input-group-addon">
-														<span class="icon">
-															<i class="fa fa-user"></i>
-														</span>
-													</span>
-												</div>
-											</div>											
-											<div class="form-group">
-												<label>密码</label>
-												<div class="input-group input-group-icon">
-													<input type="password" class="form-control bk-radius" id="password" name="password" placeholder="密码"/>
-													<span class="input-group-addon">
-														<span class="icon">
-															<i class="fa fa-key"></i>
-														</span>
-													</span>
-												</div>
-											</div>
-											<div class="row bk-margin-top-20 bk-margin-bottom-10">
-												<div class="col-sm-8">
-													<div class="checkbox-custom checkbox-default">
-														<!--<input id="RememberMe" name="rememberme" type="checkbox" />
-														<label for="RememberMe">记住密码</label>-->
-													</div>
-												</div>
-												<div class="col-sm-4 text-right">
-													<button type="button" class="btn btn-primary hidden-xs" onclick="loginform()">登录</button>
-												</div>
-											</div>
-											<div class="text-with-hr">
-												<span>or</span>
-											</div>											
-											
-											<p class="text-center">还没有账户？ <a href="#">快注册吧!</a></p>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>			
-				</div>
-				<!-- End Main Page -->
-			</div>
-		</div><!--/container-->
+<html>
+<head>
+  <title>嘀嗒出行 | 登录首页</title>
+  <%@include file="/jsp/common/common.jsp"%>
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath }/adminlte/bower_components/Ionicons/css/ionicons.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath }/adminlte/plugins/iCheck/square/blue.css">
 
-		<script>
-            function loginform(){
-                var name = $("#username").val();
-                var password = $("#password").val();
-                $.ajax({
-                    type: "POST",
-                    url:"${pageContext.request.contextPath}/login/checkLogin",
-                    data:{name:name, password:password},// 要提交的表单
-                    success: function(data) {
-                        if(!data){
-                            $('#errmsg').html("网络传输错误,请重试！");
-                            return ;
-						}
-                        var result = eval('(' + data + ')');
-						if(result.code == 0){
-                            location.href = "${pageContext.request.contextPath}/page/toHomePage";
-						}else{
-                            $('#errmsg').html(result.message);
-                            document.getElementById("password").value = "";
-						}
-                    },
-                    error:function(e){
-                        alert("网络传输错误！！");
-                    }
-                });
-            }
-		</script>
-	</body>
-	
+  <script type="text/javascript" src="${pageContext.request.contextPath }/js/cms/login.js"></script>
+</head>
+<body class="hold-transition login-page" style="background:#d2d6de;background-image:url(${pageContext.request.contextPath }/image/login_img.jpg); color:#fff ">
+<div class="login-box">
+  <div class="login-logo" style="color: #fff;font-size: 40px">
+    <b>嘀嗒出行</b>CMS
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">您好，欢迎来到cms管理后台</p>
+
+    <form action="${pageContext.request.contextPath }/regist" method="post">
+      <div class="input-group" style="margin: 10px 0px">
+        <span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
+        <input type="text" id="user_name" class="form-control" placeholder="Username">
+      </div>
+      <div class="input-group" style="margin: 10px 0px">
+        <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+        <input type="password" id="password" class="form-control" placeholder="Password">
+      </div>
+      <div class="row">
+        <div class="col-xs-4">
+            <button type="button" onclick = "toRegist()" class="btn btn-block btn-danger">注 册</button>
+        </div>
+        <div class="col-xs-4">
+          <p style="text-align:center">- OR -</p>
+        </div>
+        <div class="col-xs-4">
+          <button type="button" onclick = "login()" class="btn btn-block btn-success">登 陆</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+<!-- iCheck -->
+<script src="${pageContext.request.contextPath }/adminlte/plugins/iCheck/icheck.min.js"></script>
+<script>
+  $(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' // optional
+    });
+    $(document).keyup(function (e) {//捕获文档对象的按键弹起事件
+        if (e.keyCode == 13) {//按键信息对象以参数的形式传递进来了
+            //此处编写用户敲回车后的代码
+            login();
+        }
+    });
+  });
+</script>
+</body>
 </html>

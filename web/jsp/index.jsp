@@ -7,11 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>搜索</title>
 
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/normalize.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/demo.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
-    <script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/index/normalize.css/css/normalize.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/index/font-awesome.min.css/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/index/demo.css/css/demo.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/index/style.css/css/style.css">
+    <script src="${pageContext.request.contextPath}/static/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
 <div class="search d5">
