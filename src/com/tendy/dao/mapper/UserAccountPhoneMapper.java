@@ -11,6 +11,8 @@ public interface UserAccountPhoneMapper {
 
     UserAccountPhone selectByPrimaryKey(Long id);
 
+    UserAccountPhone selectByPhone(String phone);
+
     List<UserAccountPhone> selectListByPhone(@Param("phone")String phone, @Param("businessId")Integer businessId,
                                              @Param("iDisplayStart")Integer iDisplayStart, @Param("iDisplayLength")Integer iDisplayLength,
                                              @Param("status")String status);

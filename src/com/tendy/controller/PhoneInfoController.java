@@ -98,4 +98,18 @@ public class PhoneInfoController extends BaseController {
         replyMap = phoneInfoService.updateUserAccountPhone(accountPhone, businessId);
         return replyMap.toJson();
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/lockedPhone", method = RequestMethod.GET)
+    public String lockedPhone(@RequestParam("phone") String phone, @RequestParam("status") String status,
+                              HttpSession httpSession) {
+        ReplyMap replyMap = new ReplyMap();
+        if(ParamUtil.checkParamIsNull(phone, status)){
+            replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, BusinessConstants.PARAM_ERROR_MSG);
+            return replyMap.toJson();
+        }
+        Integer businessId = Integer.valueOf(String.valueOf(httpSession.getAttribute("id")));
+        replyMap = phoneInfoService.updateLockPhone(phone, status, businessId);
+        return replyMap.toJson();
+    }
 }

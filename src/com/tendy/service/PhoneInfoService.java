@@ -11,6 +11,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,7 +97,36 @@ public class PhoneInfoService {
             replyMap.fail(BusinessConstants.USER_NULL_CODE, "这个号码不是您的哦！");
             return replyMap;
         }
+        accountPhone.setUpdateTime(new Date());
         int num = DataMapperUtil.updateUserAccountPhoneByPrimaryKeySelective(accountPhone);
+        if(num <= 0){
+            replyMap.fail(BusinessConstants.SERVER_BUSY_CODE, BusinessConstants.SERVER_BUSY_MSG);
+            return replyMap;
+        }
+        replyMap.success();
+        return replyMap;
+    }
+
+    public ReplyMap updateLockPhone(String phone, String status, Integer businessId){
+        ReplyMap replyMap = new ReplyMap();
+        UserAccountPhone accountPhone = DataMapperUtil.selectUserAccountPhoneByPhone(phone);
+        if(accountPhone == null){
+            replyMap.fail(BusinessConstants.USER_NULL_CODE, "手机信息不存在");
+            return replyMap;
+        }
+        if(accountPhone.getBusinessId().equals(businessId)){
+            replyMap.fail(BusinessConstants.USER_NULL_CODE, "这个号码不是您的哦！");
+            return replyMap;
+        }
+        if(accountPhone.getStatus().equals(status)){
+            replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "号码状态没有改变！");
+            return replyMap;
+        }
+        UserAccountPhone userAccountPhone = new UserAccountPhone();
+        userAccountPhone.setId(accountPhone.getId());
+        userAccountPhone.setStatus(status);
+        userAccountPhone.setUpdateTime(new Date());
+        int num = DataMapperUtil.updateUserAccountPhoneByPrimaryKeySelective(userAccountPhone);
         if(num <= 0){
             replyMap.fail(BusinessConstants.SERVER_BUSY_CODE, BusinessConstants.SERVER_BUSY_MSG);
             return replyMap;

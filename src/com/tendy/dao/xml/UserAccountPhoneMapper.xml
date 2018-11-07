@@ -22,6 +22,12 @@
     from user_account_phone
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectByPhone" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from user_account_phone
+    where phone = #{phone,jdbcType=VARCHAR}
+  </select>
   <select id="selectListByPhone" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select
     <include refid="Base_Column_List" />

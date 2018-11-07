@@ -58,6 +58,10 @@ public class DataMapperUtil {
         return userAccountPhoneMapper.selectByPrimaryKey(id);
     }
 
+    public static UserAccountPhone selectUserAccountPhoneByPhone(String phone){
+        return userAccountPhoneMapper.selectByPhone(phone);
+    }
+
     public static int updateUserAccountPhoneByPrimaryKeySelective(UserAccountPhone accountPhone){
         return userAccountPhoneMapper.updateByPrimaryKeySelective(accountPhone);
     }

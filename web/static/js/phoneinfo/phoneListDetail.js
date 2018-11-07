@@ -55,9 +55,30 @@ function getCloumJson() {
             "mData" : "phone",
             "mRender" : function test(data, type, full) {
                 var resultHtml = '';
-                resultHtml += '<a class="btn btn-primary btn-xs" href="#"><i class="fa fa-search"></i> 审核</a>';
+                resultHtml += '<a class="btn btn-primary btn-xs" href="#"><i class="fa fa-search"></i> 修改</a>';
+                resultHtml += '</br><a class="btn btn-primary btn-xs" href="javascript:void(0)" onclick="lockPhone(\''+data+'\', \'lock\')"><i class="fa fa-search"></i> 作废</a>';
                 return resultHtml;
             }
         }];
     return arrcol;
+}
+
+function lockPhone(phone, status){
+    $.ajax({
+        "type" : 'GET',
+        "url" : all_scope_path+'/phoneInfo/lockedPhone',
+        "dataType" : "json",
+        "data" : {
+            "phone" : phone,
+            "status" : status
+        },
+        "success" : function(data) {
+            console.log(data);
+            if(data.code == 0){
+                Ewin.success({message:"操作成功！"});
+            }else{
+                Ewin.error({message:data.message});
+            }
+        }
+    });
 }
