@@ -56,7 +56,7 @@ function getCloumJson() {
             "mRender" : function test(data, type, full) {
                 var resultHtml = '';
                 resultHtml += '<a class="btn btn-primary btn-xs" href="#"><i class="fa fa-search"></i> 修改</a>';
-                resultHtml += '</br><a class="btn btn-primary btn-xs" href="javascript:void(0)" onclick="lockPhone(\''+data+'\', \'lock\')"><i class="fa fa-search"></i> 作废</a>';
+                resultHtml += '&nbsp;<a class="btn btn-danger btn-xs" href="javascript:void(0)" onclick="lockPhone(\''+data+'\', \'locked\')"><i class="fa fa-search"></i> 作废</a>';
                 return resultHtml;
             }
         }];

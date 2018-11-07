@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>手机号管理</title>
     <%@include file="/jsp/common/common.jsp"%>
     <%@include file="/jsp/common/common_table.jsp"%>
 </head>
@@ -10,6 +10,13 @@
     <div class="wrapper">
         <div class="box">
             <div class="box-header">
+                <div class="row">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="javascript:void(0)"> 手机号管理</a></li>
+                        <li><a href="${pageContext.request.contextPath }/page/toPhoneInfo"><i class="fa fa-plus"></i> 添加</a></li>
+                    </ul>
+                </div>
+                <br/>
                 <div class="row">
                     <form id="searchForm"  method="get">
                         <div class="row">

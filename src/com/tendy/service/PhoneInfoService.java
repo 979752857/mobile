@@ -114,7 +114,7 @@ public class PhoneInfoService {
             replyMap.fail(BusinessConstants.USER_NULL_CODE, "手机信息不存在");
             return replyMap;
         }
-        if(accountPhone.getBusinessId().equals(businessId)){
+        if(!accountPhone.getBusinessId().equals(businessId)){
             replyMap.fail(BusinessConstants.USER_NULL_CODE, "这个号码不是您的哦！");
             return replyMap;
         }

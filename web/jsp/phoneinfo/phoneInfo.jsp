@@ -16,22 +16,15 @@
     </style>
     <body>
         <div class="box-body">
-            <div class="row ml-top ml-bottom">
-                <div class="col-md-4 col-md-offset-1">
-                    <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath }/taxiDriverAuth/showPage?cityId=${taxiDriverModel.cityId}&status=${taxiDriverModel.status}&reviewState=${taxiDriverModel.reviewState}&beginTime=${taxiDriverModel.beginTime}&endTime=${taxiDriverModel.endTime}&companyId=${taxiDriverModel.companyId}" class="btn btn-default btn-sm"><i class="fa fa-mail-reply"></i> &nbsp;返&nbsp;回&nbsp;</a>
-                    </div>
-                    <div class="col-md-3">
-                        <c:if test="${nextUserId != null}">
-                            <a href="${pageContext.request.contextPath }/taxiDriverAuth/showAuthPage?userId=${nextUserId}&cityId=${taxiDriverModel.cityId}&status=${taxiDriverModel.status}&reviewState=${taxiDriverModel.reviewState}&beginTime=${taxiDriverModel.beginTime}&endTime=${taxiDriverModel.endTime}&companyId=${taxiDriverModel.companyId}" id="next2" class="btn btn-default btn-sm"><i class="fa fa-mail-forward"></i> &nbsp;下一页&nbsp;</a>
-                        </c:if>
-                    </div>
-                </div>
-                <div class="col-md-6 col-md-offset-1">
-                    <div class="col-md-offset-2">
-                        <h5 class="text-blue">司机手机号：${userUser.accountId}</h5>
-                    </div>
-                </div>
+            <div class="box-header">
+                <ul class="nav nav-tabs">
+                    <li><a href="${pageContext.request.contextPath }/page/toPhoneListDetail">手机号管理</a></li>
+                    <li class="active">
+                        <a href="javascript:void(0)"><i class="fa fa-plus"></i>
+                            <c:choose><c:when test="${id != null}">编辑</c:when><c:otherwise>添加</c:otherwise></c:choose>
+                        </a>
+                    </li>
+                </ul>
             </div>
             <form class="form-horizontal" method="post">
                 <input type="hidden" name="userId" value="${taxiDriver.userId}">

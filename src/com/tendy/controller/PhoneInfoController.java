@@ -6,8 +6,11 @@ import com.tendy.dao.bean.UserAccountPhone;
 import com.tendy.service.LoginService;
 import com.tendy.service.PhoneInfoService;
 import com.tendy.utils.DataTablesUtil;
+import com.tendy.utils.ExcelUtil;
+import com.tendy.utils.FileUtil;
 import com.tendy.utils.ParamUtil;
 import com.tendy.utils.StringUtils;
+import com.tendy.utils.TimeUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,10 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,6 +116,52 @@ public class PhoneInfoController extends BaseController {
         }
         Integer businessId = Integer.valueOf(String.valueOf(httpSession.getAttribute("id")));
         replyMap = phoneInfoService.updateLockPhone(phone, status, businessId);
+        return replyMap.toJson();
+    }
+
+    @RequestMapping(value = "/readExcel")
+    @ResponseBody
+    public String readExcel(@RequestParam(value = "excelFile")MultipartFile excelFile, @RequestParam Integer source){
+        ReplyMap replyMap = new ReplyMap();
+        try{
+            if(excelFile == null || source == null){
+                replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, BusinessConstants.PARAM_ERROR_MSG);
+                return replyMap.toJson();
+            }
+            File excelReadFile = new File(System.getProperty("java.io.tmpdir"),
+                    TimeUtil.formatDate(new Date(),TimeUtil.YYYY_MM_DD_HH_MM_SS)+ FileUtil.getExtensionName(excelFile.getOriginalFilename()));
+            if(!excelReadFile.exists()){
+                excelReadFile.mkdirs();
+            }
+            excelFile.transferTo(excelReadFile);
+            List<String[]> infoList = ExcelUtil.readExcelReturnList(excelReadFile, null);
+            if (infoList != null && infoList.size()>0){
+                List<Map<String,String>> failList = new ArrayList<>();
+                for(int i=0;i<infoList.size();i++){
+                    String[] codeArr = infoList.get(i);
+                    if (codeArr == null || codeArr.length < 1 || StringUtils.isBlank(codeArr[0])) {
+                        continue;
+                    }
+
+                    try {
+
+
+                    }catch(Exception e){
+                        Map<String, String> failMap = new HashMap<String, String>();
+                        failMap.put("sort", String.valueOf(i));
+                        failMap.put("title", codeArr[0]);
+                        failMap.put("failReason", e.getMessage());
+                        failList.add(failMap);
+                        logger.error("addPhoneInfo failed title:{}  message:{}",codeArr[0],e.getMessage(),e);
+                    }
+                }
+                replyMap.success();
+                replyMap.put("failList", failList);
+            }
+        }catch(Exception e){
+            logger.error("PhoneInfoController readExcel is error fileName:{}", excelFile.getOriginalFilename(),e);
+            replyMap.fail(BusinessConstants.SERVER_ERROR_CODE, BusinessConstants.SERVER_ERROR_MSG);
+        }
         return replyMap.toJson();
     }
 }
