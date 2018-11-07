@@ -11,11 +11,11 @@ public interface UserAccountPhoneMapper {
 
     UserAccountPhone selectByPrimaryKey(Long id);
 
-    List<UserAccountPhone> selectListByPhone(@Param("phone")String phone, @Param("business_id")Integer business_id,
+    List<UserAccountPhone> selectListByPhone(@Param("phone")String phone, @Param("businessId")Integer businessId,
                                              @Param("iDisplayStart")Integer iDisplayStart, @Param("iDisplayLength")Integer iDisplayLength,
                                              @Param("status")String status);
 
-    int countListByPhone(@Param("phone")String phone, @Param("business_id")Integer business_id, @Param("status")String status);
+    int countListByPhone(@Param("phone")String phone, @Param("businessId")Integer businessId, @Param("status")String status);
 
     int updateByPrimaryKeySelective(UserAccountPhone record);
 
