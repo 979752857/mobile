@@ -121,43 +121,15 @@ public class PhoneInfoController extends BaseController {
 
     @RequestMapping(value = "/readExcel")
     @ResponseBody
-    public String readExcel(@RequestParam(value = "excelFile")MultipartFile excelFile, @RequestParam Integer source){
+    public String readExcel(@RequestParam(value = "excelFile")MultipartFile excelFile, HttpSession httpSession){
         ReplyMap replyMap = new ReplyMap();
         try{
-            if(excelFile == null || source == null){
+            if(excelFile == null){
                 replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, BusinessConstants.PARAM_ERROR_MSG);
                 return replyMap.toJson();
             }
-            File excelReadFile = new File(System.getProperty("java.io.tmpdir"),
-                    TimeUtil.formatDate(new Date(),TimeUtil.YYYY_MM_DD_HH_MM_SS)+ FileUtil.getExtensionName(excelFile.getOriginalFilename()));
-            if(!excelReadFile.exists()){
-                excelReadFile.mkdirs();
-            }
-            excelFile.transferTo(excelReadFile);
-            List<String[]> infoList = ExcelUtil.readExcelReturnList(excelReadFile, null);
-            if (infoList != null && infoList.size()>0){
-                List<Map<String,String>> failList = new ArrayList<>();
-                for(int i=0;i<infoList.size();i++){
-                    String[] codeArr = infoList.get(i);
-                    if (codeArr == null || codeArr.length < 1 || StringUtils.isBlank(codeArr[0])) {
-                        continue;
-                    }
-
-                    try {
-
-
-                    }catch(Exception e){
-                        Map<String, String> failMap = new HashMap<String, String>();
-                        failMap.put("sort", String.valueOf(i));
-                        failMap.put("title", codeArr[0]);
-                        failMap.put("failReason", e.getMessage());
-                        failList.add(failMap);
-                        logger.error("addPhoneInfo failed title:{}  message:{}",codeArr[0],e.getMessage(),e);
-                    }
-                }
-                replyMap.success();
-                replyMap.put("failList", failList);
-            }
+            Integer businessId = Integer.valueOf(String.valueOf(httpSession.getAttribute("id")));
+            replyMap = phoneInfoService.insertPhoneProcessExcel(excelFile, businessId);
         }catch(Exception e){
             logger.error("PhoneInfoController readExcel is error fileName:{}", excelFile.getOriginalFilename(),e);
             replyMap.fail(BusinessConstants.SERVER_ERROR_CODE, BusinessConstants.SERVER_ERROR_MSG);

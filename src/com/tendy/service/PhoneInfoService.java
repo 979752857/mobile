@@ -3,12 +3,22 @@ package com.tendy.service;
 import com.tendy.common.BusinessConstants;
 import com.tendy.common.ReplyMap;
 import com.tendy.dao.DataMapperUtil;
+import com.tendy.dao.bean.MobileBussiness;
 import com.tendy.dao.bean.UserAccountPhone;
+import com.tendy.utils.ExcelUtil;
+import com.tendy.utils.FileUtil;
+import com.tendy.utils.ItemRule;
 import com.tendy.utils.JsonMapper;
+import com.tendy.utils.MobileRule;
+import com.tendy.utils.ParamUtil;
+import com.tendy.utils.StringUtils;
 import com.tendy.utils.TimeUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,29 +32,29 @@ import java.util.Map;
  * @Date: 2018/10/29
  */
 @Service
-public class PhoneInfoService {
+public class PhoneInfoService extends BaseService {
 
-    public ReplyMap getDataDetail1(String phoneParam, Integer pageNo, Integer pageSize, String status, Integer businessId){
+    public ReplyMap getDataDetail1(String phoneParam, Integer pageNo, Integer pageSize, String status, Integer businessId) {
         ReplyMap replyMap = new ReplyMap();
-        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, businessId, (pageNo-1)*pageSize, pageSize, status);
-        if(CollectionUtils.isEmpty(list)) {
+        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, businessId, (pageNo - 1) * pageSize, pageSize, status);
+        if (CollectionUtils.isEmpty(list)) {
             replyMap.fail(BusinessConstants.RESULT_NULL_CODE, BusinessConstants.RESULT_NULL_MSG);
             return replyMap;
         }
         int total = DataMapperUtil.countUserAccountPhoneByPhoneAndCity(phoneParam, businessId, status);
         List<Map<String, String>> resultList = new ArrayList<>();
-        for(int i = 0; i<list.size(); i++){
+        for (int i = 0; i < list.size(); i++) {
             Map<String, String> map = new HashMap<>();
             UserAccountPhone accountPhone = list.get(i);
             map.put("phone", accountPhone.getPhone());
             map.put("url", accountPhone.getUrl());
-            if(accountPhone.getPrice() != null){
+            if (accountPhone.getPrice() != null) {
                 map.put("price", accountPhone.getPrice().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
             }
             map.put("status", accountPhone.getStatus());
-            if(accountPhone.getUpdateTime() != null && (accountPhone.getUpdateTime().getTime() > accountPhone.getCreateTime().getTime())){
-                    map.put("time", TimeUtil.formatDate(accountPhone.getUpdateTime(), TimeUtil.YYYY_MM_DD));
-            }else{
+            if (accountPhone.getUpdateTime() != null && (accountPhone.getUpdateTime().getTime() > accountPhone.getCreateTime().getTime())) {
+                map.put("time", TimeUtil.formatDate(accountPhone.getUpdateTime(), TimeUtil.YYYY_MM_DD));
+            } else {
                 map.put("time", TimeUtil.formatDate(accountPhone.getCreateTime(), TimeUtil.YYYY_MM_DD));
             }
             resultList.add(map);
@@ -56,27 +66,27 @@ public class PhoneInfoService {
         return replyMap;
     }
 
-    public Map<String, Object> getDataDetail(String phoneParam, Integer iDisplayStart, Integer pageSize, String status, Integer businessId){
+    public Map<String, Object> getDataDetail(String phoneParam, Integer iDisplayStart, Integer pageSize, String status, Integer businessId) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
         List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, businessId, iDisplayStart, pageSize, status);
-        if(CollectionUtils.isEmpty(list)) {
+        if (CollectionUtils.isEmpty(list)) {
             resultMap.put("total", 0);
             return resultMap;
         }
         int total = DataMapperUtil.countUserAccountPhoneByPhoneAndCity(phoneParam, businessId, status);
-        for(int i = 0; i<list.size(); i++){
+        for (int i = 0; i < list.size(); i++) {
             Map<String, Object> map = new HashMap<>();
             UserAccountPhone accountPhone = list.get(i);
             map.put("phone", accountPhone.getPhone());
             map.put("url", accountPhone.getUrl());
-            if(accountPhone.getPrice() != null){
+            if (accountPhone.getPrice() != null) {
                 map.put("price", accountPhone.getPrice().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
             }
             map.put("status", accountPhone.getStatus());
-            if(accountPhone.getUpdateTime() != null && (accountPhone.getUpdateTime().getTime() > accountPhone.getCreateTime().getTime())){
-                    map.put("time", TimeUtil.formatDate(accountPhone.getUpdateTime(), TimeUtil.YYYY_MM_DD));
-            }else{
+            if (accountPhone.getUpdateTime() != null && (accountPhone.getUpdateTime().getTime() > accountPhone.getCreateTime().getTime())) {
+                map.put("time", TimeUtil.formatDate(accountPhone.getUpdateTime(), TimeUtil.YYYY_MM_DD));
+            } else {
                 map.put("time", TimeUtil.formatDate(accountPhone.getCreateTime(), TimeUtil.YYYY_MM_DD));
             }
             resultList.add(map);
@@ -86,20 +96,20 @@ public class PhoneInfoService {
         return resultMap;
     }
 
-    public ReplyMap updateUserAccountPhone(UserAccountPhone accountPhone, Integer businessId){
+    public ReplyMap updateUserAccountPhone(UserAccountPhone accountPhone, Integer businessId) {
         ReplyMap replyMap = new ReplyMap();
         UserAccountPhone phone = DataMapperUtil.selectUserAccountPhoneByPrimaryKey(accountPhone.getId());
-        if(phone == null){
+        if (phone == null) {
             replyMap.fail(BusinessConstants.USER_NULL_CODE, "手机信息不存在");
             return replyMap;
         }
-        if(phone.getBusinessId().equals(businessId)){
+        if (phone.getBusinessId().equals(businessId)) {
             replyMap.fail(BusinessConstants.USER_NULL_CODE, "这个号码不是您的哦！");
             return replyMap;
         }
         accountPhone.setUpdateTime(new Date());
         int num = DataMapperUtil.updateUserAccountPhoneByPrimaryKeySelective(accountPhone);
-        if(num <= 0){
+        if (num <= 0) {
             replyMap.fail(BusinessConstants.SERVER_BUSY_CODE, BusinessConstants.SERVER_BUSY_MSG);
             return replyMap;
         }
@@ -107,18 +117,18 @@ public class PhoneInfoService {
         return replyMap;
     }
 
-    public ReplyMap updateLockPhone(String phone, String status, Integer businessId){
+    public ReplyMap updateLockPhone(String phone, String status, Integer businessId) {
         ReplyMap replyMap = new ReplyMap();
         UserAccountPhone accountPhone = DataMapperUtil.selectUserAccountPhoneByPhone(phone);
-        if(accountPhone == null){
+        if (accountPhone == null) {
             replyMap.fail(BusinessConstants.USER_NULL_CODE, "手机信息不存在");
             return replyMap;
         }
-        if(!accountPhone.getBusinessId().equals(businessId)){
+        if (!accountPhone.getBusinessId().equals(businessId)) {
             replyMap.fail(BusinessConstants.USER_NULL_CODE, "这个号码不是您的哦！");
             return replyMap;
         }
-        if(accountPhone.getStatus().equals(status)){
+        if (accountPhone.getStatus().equals(status)) {
             replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "号码状态没有改变！");
             return replyMap;
         }
@@ -127,11 +137,72 @@ public class PhoneInfoService {
         userAccountPhone.setStatus(status);
         userAccountPhone.setUpdateTime(new Date());
         int num = DataMapperUtil.updateUserAccountPhoneByPrimaryKeySelective(userAccountPhone);
-        if(num <= 0){
+        if (num <= 0) {
             replyMap.fail(BusinessConstants.SERVER_BUSY_CODE, BusinessConstants.SERVER_BUSY_MSG);
             return replyMap;
         }
         replyMap.success();
+        return replyMap;
+    }
+
+    public ReplyMap insertPhoneProcessExcel(MultipartFile excelFile, Integer businessId) throws Exception {
+        ReplyMap replyMap = new ReplyMap();
+        MobileBussiness business = DataMapperUtil.selectMobileBussinessByPrimaryKey(businessId);
+        File excelReadFile = new File(System.getProperty("java.io.tmpdir"),
+                TimeUtil.formatDate(new Date(), TimeUtil.YYYYMMDDHHMMSS) + FileUtil.getExtensionName(excelFile.getOriginalFilename()));
+        if (!excelReadFile.exists()) {
+            excelReadFile.mkdirs();
+        }
+        excelFile.transferTo(excelReadFile);
+        int successNum = 0;
+        int failNum = 0;
+        //excel格式：phone,price
+        List<String[]> infoList = ExcelUtil.readExcelReturnList(excelReadFile, null);
+        if (CollectionUtils.isEmpty(infoList)) {
+            replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "没有获取到excel的内容");
+            return replyMap;
+        }
+        List<Map<String, String>> failList = new ArrayList<>();
+        for (int i = 0; i < infoList.size(); i++) {
+            String[] codeArr = infoList.get(i);
+            if (codeArr == null || codeArr.length < 2 || ParamUtil.checkParamIsNull(codeArr[0], codeArr[1]) || ParamUtil.checkPhoneIllegal(codeArr[0])) {
+                failNum++;
+                continue;
+            }
+            try {
+                UserAccountPhone userAccountPhone = new UserAccountPhone();
+                userAccountPhone.setPhone(codeArr[0]);
+                userAccountPhone.setPrice(new BigDecimal(codeArr[1]));
+                userAccountPhone.setBusinessId(business.getId());
+                userAccountPhone.setCreateTime(new Date());
+                userAccountPhone.setUpdateTime(new Date());
+                userAccountPhone.setStatus("private");
+                userAccountPhone.setCityId(business.getCityId());
+                ItemRule item = MobileRule.checkPhone(userAccountPhone.getPhone());
+                if(item != null){
+                    userAccountPhone.setTag(item.getTag());
+                    userAccountPhone.setRemark(item.getRemark());
+                }
+                int num = DataMapperUtil.insertUserAccountPhoneSelective(userAccountPhone);
+                if (num > 0) {
+                    successNum++;
+                } else {
+                    failNum++;
+                }
+            } catch (Exception e) {
+                failNum++;
+                Map<String, String> failMap = new HashMap<String, String>();
+                failMap.put("row", String.valueOf(i + 1));
+                failMap.put("phone", codeArr[0]);
+                failMap.put("failReason", e.getMessage());
+                failList.add(failMap);
+                logger.error("insertPhoneProcessExcel failed title:{}  message:{}", codeArr[0], e.getMessage(), e);
+            }
+        }
+        replyMap.success();
+        replyMap.put("failList", failList);
+        replyMap.put("successNum", successNum);
+        replyMap.put("failNum", failNum);
         return replyMap;
     }
 }

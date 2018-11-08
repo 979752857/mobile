@@ -34,7 +34,7 @@ public class ExcelUtil {
      * @throws Exception
      */
     public static Map<String,List<String[]>> readExcelProcessFunc(MultipartFile excelFile) throws Exception {
-		File cutMoneyReadFile = new File(System.getProperty("java.io.tmpdir"), TimeUtil.formatDate(new Date(), TimeUtil.YYYY_MM_DD_HH_MM_SS)+ FileUtil.getExtensionName(excelFile.getOriginalFilename()));
+		File cutMoneyReadFile = new File(System.getProperty("java.io.tmpdir"), TimeUtil.formatDate(new Date(), TimeUtil.YYYYMMDDHHMMSS)+ FileUtil.getExtensionName(excelFile.getOriginalFilename()));
 		if (!cutMoneyReadFile.exists()){
 			cutMoneyReadFile.mkdirs();
 		}
@@ -240,18 +240,20 @@ public class ExcelUtil {
 
 	public static void main(String[] arg){
 		try {
-		    File file = new File("E:/test.xlsx");
+		    File file = new File("D:/test.xlsx");
 			int total = getTotleRowNum(file);
 			logger.info("文件总行数："+total);
-			int startRowNum = 899999;
-			List<String[]> list = readExcelOneSheet(file, startRowNum, startRowNum+100000);
+			int startRowNum = 0;
+			List<String[]> list = readExcelOneSheet(file, startRowNum, total-1);
 			for(int i = 0; i<list.size(); i++){
 				String[] strings = list.get(i);
-				String item = "";
-				for(int j = 0; j < strings.length; j++){
-					item += strings[j]+",";
+				String phone = strings[0];
+				ItemRule item = MobileRule.checkPhone(phone);
+				if(item != null){
+					logger.info("第"+(startRowNum+i)+"行数据："+phone+"   tag:"+item.getTag());
+				}else{
+					logger.info("第"+(startRowNum+i)+"行数据："+phone);
 				}
-				logger.info("第"+(startRowNum+i)+"行数据："+item);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -75,6 +75,10 @@ public class DataMapperUtil {
         return userAccountPhoneMapper.countListByPhone(phone, businessId, status);
     }
 
+    public static int insertUserAccountPhoneSelective(UserAccountPhone userAccountPhone){
+        return userAccountPhoneMapper.insertSelective(userAccountPhone);
+    }
+
     public static Integer getSysUserRoleRoleIdByBusinessId(Integer businessId){
         return sysUserRoleMapper.getRoleIdByBusinessId(businessId);
     }

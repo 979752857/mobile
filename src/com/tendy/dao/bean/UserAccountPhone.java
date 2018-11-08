@@ -16,6 +16,8 @@ public class UserAccountPhone {
 
     private BigDecimal price;
 
+    private String tag;
+
     private String status;
 
     private Date createTime;
@@ -70,6 +72,14 @@ public class UserAccountPhone {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag == null ? null : tag.trim();
     }
 
     public String getStatus() {
