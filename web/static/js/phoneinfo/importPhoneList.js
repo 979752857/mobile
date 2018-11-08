@@ -9,7 +9,7 @@ $(function () {
 function getParamData(){
     var source = $("input[name= source]").val();
     var code = $("input[name= code]").val();
-    initBaseStringReload(all_scope_path+'/raffleActivity/getThirdPartyCodeList',source,code);
+    initBaseStringReload(all_scope_path+'/phoneInfo/phoneInfo',source,code);
 }
 
 /**
@@ -75,42 +75,16 @@ function readExcel(){
     if(!checkFile()){
         return;
     }
-    var source = $("input[name= source]").val();
-    var url = all_scope_path + "/raffleActivity/readExcel";
     $.ajaxFileUpload({
-        url: url,
+        url: all_scope_path + "/phoneInfo/readExcel",
         type: "post",
-        data: {"source":source},
+        data: {},
         secureuri: false,
         fileElementId: "excelFile",
         dataType: 'json',
-        beforeSend:function (XMLHttpRequest) {
-            Ewin.loading();
-        },
         success: function (data, status) {
             var code = data.code;
-            var failList = data.data;
-            if (code==0) {
-                Ewin.unblock();
-                if(failList.length < 1){
-                    Ewin.success({
-                        message:"操作成功！"
-                    }).hide(function (e) {
-                        getParamData();
-                    });
-                }else{
-                    var html = "以下第三方券码添加失败：<br/>";
-                    for(var i=0;i <failList.length;i++){
-                        html+="第"+failList[i].sort+"条："+failList[i].title+"("+failList[i].failReason+")<br/>";
-                    }
-                    Ewin.warning({message:html}).hide(function (e) {
-                        getParamData();
-                    });
-                }
-            } else {
-                Ewin.unblock();
-                Ewin.error({message: "批量添加第三方券码失败!"});
-            }
+            Ewin.success({message: "批量添加第三方券码失败!"});
         },
         error: function (data, status, e) {
             Ewin.unblock();

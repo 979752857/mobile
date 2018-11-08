@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.Date" %>
-<%@taglib uri="/custom-tags" prefix="ct" %>
 <html>
 <head>
     <title>第三方券码</title>

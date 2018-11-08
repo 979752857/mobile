@@ -119,7 +119,7 @@ public class PhoneInfoController extends BaseController {
         return replyMap.toJson();
     }
 
-    @RequestMapping(value = "/readExcel")
+    @RequestMapping(value = "/readExcel", method = RequestMethod.POST)
     @ResponseBody
     public String readExcel(@RequestParam(value = "excelFile")MultipartFile excelFile, HttpSession httpSession){
         ReplyMap replyMap = new ReplyMap();
