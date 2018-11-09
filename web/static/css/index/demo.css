@@ -58,6 +58,7 @@ div.screening>ul>li{
 }
 div.screening>ul>li>span{
 	background: url("../../image/on_1.png") no-repeat right center; background-size:0.75em; padding-right:15px;
+	color:#0f0f0f;
 }
 div.screening>ul>.current>span{
 	background: url("../../image/on_2.png") no-repeat  right center;background-size:0.75em; color:#3cb9f3;
