@@ -22,7 +22,8 @@ public class IndexController extends BaseController{
 	@RequestMapping(value = "/phoneList", method = {RequestMethod.GET}, produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String phoneList(@RequestParam(value = "key") String phone, @RequestParam(value = "cid") String cid,
-							@RequestParam(value = "no", required = false) Integer pageNo, @RequestParam(value = "status", required = false) String status){
+							@RequestParam(value = "no", required = false) Integer pageNo, @RequestParam(value = "status", required = false) String status,
+							@RequestParam(value = "tag", required = false) String tag, @RequestParam(value = "notPhone", required = false) String notPhone){
 		ReplyMap replyMap = new ReplyMap();
 		if(ParamUtil.checkParamIsNull(phone, cid)){
 			replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "请输入查询的关键号码");
@@ -35,7 +36,7 @@ public class IndexController extends BaseController{
 			status = "private";
 		}
 		Integer pageSize = 10;
-		replyMap = indexService.getData(phone, cid, pageNo, pageSize, status);
+		replyMap = indexService.getData(phone, cid, pageNo, pageSize, status, tag, notPhone);
 		return replyMap.toJson();
 	}
 	

@@ -15,11 +15,12 @@ public interface UserAccountPhoneMapper {
 
     List<UserAccountPhone> selectListByPhone(@Param("phone")String phone, @Param("businessId")Integer businessId,
                                              @Param("iDisplayStart")Integer iDisplayStart, @Param("iDisplayLength")Integer iDisplayLength,
-                                             @Param("status")String status);
+                                             @Param("status")String status, @Param("tag")String tag, @Param("notPhone")String notPhone);
 
     UserAccountPhone selectByPhoneAndBusId(@Param("phone")String phone, @Param("businessId")Integer businessId);
 
-    int countListByPhone(@Param("phone")String phone, @Param("businessId")Integer businessId, @Param("status")String status);
+    int countListByPhone(@Param("phone")String phone, @Param("businessId")Integer businessId, @Param("status")String status,
+                         @Param("tag")String tag, @Param("notPhone")String notPhone);
 
     int updateByPrimaryKeySelective(UserAccountPhone record);
 

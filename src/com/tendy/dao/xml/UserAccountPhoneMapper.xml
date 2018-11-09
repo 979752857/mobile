@@ -37,7 +37,13 @@
     <if test="status != null" >
       and status = #{status,jdbcType=VARCHAR}
     </if>
-    order by create_time desc
+    <if test="tag != null" >
+      and tag = #{tag,jdbcType=VARCHAR}
+    </if>
+    <if test="notPhone != null" >
+      and phone not like concat('%', #{notPhone,jdbcType=VARCHAR}, '%')
+    </if>
+    order by update_time desc
     limit #{iDisplayStart},#{iDisplayLength}
   </select>
   <select id="selectByPhoneAndBusId" resultMap="BaseResultMap" parameterType="java.util.Map" >
@@ -53,6 +59,12 @@
     and business_id = #{businessId,jdbcType=INTEGER}
     <if test="status != null" >
       and status = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="tag != null" >
+      and tag = #{tag,jdbcType=VARCHAR}
+    </if>
+    <if test="notPhone != null" >
+      and phone not like concat('%', #{notPhone,jdbcType=VARCHAR}, '%')
     </if>
   </select>
   <insert id="insertSelective" parameterType="com.tendy.dao.bean.UserAccountPhone" >

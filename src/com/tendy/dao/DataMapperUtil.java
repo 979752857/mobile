@@ -52,17 +52,17 @@ public class DataMapperUtil {
         return userAccountPhoneMapper.updateByPrimaryKeySelective(accountPhone);
     }
 
-    public static List<UserAccountPhone> selectUserAccountPhoneByPhoneAndBusiness(String phone, Integer businessId,
-                                                                                  Integer iDisplayStart, Integer iDisplayLength, String status){
-        return userAccountPhoneMapper.selectListByPhone(phone, businessId, iDisplayStart, iDisplayLength, status);
+    public static List<UserAccountPhone> selectUserAccountPhoneByPhoneAndBusiness(String phone, Integer businessId, Integer iDisplayStart,
+                                                                                  Integer iDisplayLength, String status, String tag, String notPhone){
+        return userAccountPhoneMapper.selectListByPhone(phone, businessId, iDisplayStart, iDisplayLength, status, tag, notPhone);
     }
 
     public static UserAccountPhone selectUserAccountPhoneByPhoneAndBusId(String phone, Integer businessId){
         return userAccountPhoneMapper.selectByPhoneAndBusId(phone, businessId);
     }
 
-    public static int countUserAccountPhoneByPhoneAndCity(String phone, Integer businessId, String status){
-        return userAccountPhoneMapper.countListByPhone(phone, businessId, status);
+    public static int countUserAccountPhoneByPhoneAndCity(String phone, Integer businessId, String status, String tag, String notPhone){
+        return userAccountPhoneMapper.countListByPhone(phone, businessId, status, tag, notPhone);
     }
 
     public static int insertOrUpdateUserAccountPhoneSelective(UserAccountPhone userAccountPhone){

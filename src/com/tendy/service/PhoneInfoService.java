@@ -34,12 +34,12 @@ public class PhoneInfoService extends BaseService {
 
     public ReplyMap getDataDetail1(String phoneParam, Integer pageNo, Integer pageSize, String status, Integer businessId) {
         ReplyMap replyMap = new ReplyMap();
-        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, businessId, (pageNo - 1) * pageSize, pageSize, status);
+        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, businessId, (pageNo - 1) * pageSize, pageSize, status, null, null);
         if (CollectionUtils.isEmpty(list)) {
             replyMap.fail(BusinessConstants.RESULT_NULL_CODE, BusinessConstants.RESULT_NULL_MSG);
             return replyMap;
         }
-        int total = DataMapperUtil.countUserAccountPhoneByPhoneAndCity(phoneParam, businessId, status);
+        int total = DataMapperUtil.countUserAccountPhoneByPhoneAndCity(phoneParam, businessId, status, null, null);
         List<Map<String, String>> resultList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             Map<String, String> map = new HashMap<>();
@@ -67,12 +67,12 @@ public class PhoneInfoService extends BaseService {
     public Map<String, Object> getDataDetail(String phoneParam, Integer iDisplayStart, Integer pageSize, String status, Integer businessId) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
-        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, businessId, iDisplayStart, pageSize, status);
+        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, businessId, iDisplayStart, pageSize, status, null, null);
         if (CollectionUtils.isEmpty(list)) {
             resultMap.put("total", 0);
             return resultMap;
         }
-        int total = DataMapperUtil.countUserAccountPhoneByPhoneAndCity(phoneParam, businessId, status);
+        int total = DataMapperUtil.countUserAccountPhoneByPhoneAndCity(phoneParam, businessId, status, null, null);
         for (int i = 0; i < list.size(); i++) {
             Map<String, Object> map = new HashMap<>();
             UserAccountPhone accountPhone = list.get(i);
