@@ -26,12 +26,13 @@
                 </ul>
             </div>
             <form class="form-horizontal" method="post">
+                <input type="hidden" id="phoneId" name="phoneId" value="" >
                 <div class="row form-row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">手机号</label>
                             <div class="col-sm-3">
-                                <input type="number" class="form-control notnull" id="phone" name="phone" value="" maxlength="11" required="required">
+                                <input type="number" class="form-control notnull" id="phone" name="phone" value="" maxlength="11" required="required" disabled>
                             </div>
                         </div>
                         <div class="form-group">

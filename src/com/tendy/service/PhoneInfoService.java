@@ -94,6 +94,18 @@ public class PhoneInfoService extends BaseService {
         return resultMap;
     }
 
+    public ReplyMap getPhoneInfo(String phone, Integer businessId) {
+        ReplyMap replyMap = new ReplyMap();
+        UserAccountPhone userAccountPhone = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusId(phone, businessId);
+        if(userAccountPhone == null){
+            replyMap.fail(BusinessConstants.RESULT_NULL_CODE, BusinessConstants.RESULT_NULL_MSG);
+            return replyMap;
+        }
+        replyMap.put("userAccountPhone", userAccountPhone);
+        replyMap.success();
+        return replyMap;
+    }
+
     public ReplyMap updateUserAccountPhone(UserAccountPhone accountPhone, Integer businessId) {
         ReplyMap replyMap = new ReplyMap();
         UserAccountPhone phone = DataMapperUtil.selectUserAccountPhoneByPrimaryKey(accountPhone.getId());
