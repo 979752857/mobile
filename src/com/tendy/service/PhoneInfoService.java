@@ -11,14 +11,12 @@ import com.tendy.utils.ItemRule;
 import com.tendy.utils.JsonMapper;
 import com.tendy.utils.MobileRule;
 import com.tendy.utils.ParamUtil;
-import com.tendy.utils.StringUtils;
 import com.tendy.utils.TimeUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -145,6 +143,117 @@ public class PhoneInfoService extends BaseService {
         return replyMap;
     }
 
+    public ReplyMap processExcel(MultipartFile excelFile, String busName) throws Exception {
+        ReplyMap replyMap = new ReplyMap();
+        MobileBussiness business = DataMapperUtil.selectMobileBussinessByName(busName);
+        if(business == null){
+            replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "请输入运营商账号");
+            return replyMap;
+        }
+        File excelReadFile = new File(System.getProperty("java.io.tmpdir"),
+                TimeUtil.formatDate(new Date(), TimeUtil.YYYYMMDDHHMMSS) + FileUtil.getExtensionName(excelFile.getOriginalFilename()));
+        if (!excelReadFile.exists()) {
+            excelReadFile.mkdirs();
+        }
+        excelFile.transferTo(excelReadFile);
+        int successNum = 0;
+        int failNum = 0;
+        int processRow = 0;
+        //excel格式：phone,price
+        List<String[]> infoList = ExcelUtil.readExcelReturnList(excelReadFile, null);
+        if (CollectionUtils.isEmpty(infoList)) {
+            replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "没有获取到excel的内容");
+            return replyMap;
+        }
+        List<Map<String, String>> failList = new ArrayList<>();
+        replyMap.put("failList", failList);
+        replyMap.put("processRow", processRow);
+        replyMap.put("successNum", successNum);
+        replyMap.put("failNum", failNum);
+        //每次截取100个进行插入操作
+        int processSize = 100;
+        List<String[]> processList = new ArrayList<>();
+        for(int i = infoList.size()-1; i >= 0; i--){
+            String[] item = infoList.get(i);
+            processList.add(item);
+            infoList.remove(i);
+            if(processList.size() == processSize){
+                replyMap = insertPhoneProcessExcel(processList, business.getId(), business.getCityId(), replyMap);
+                processList.clear();
+                Thread.sleep(1000);
+            }
+        }
+        if(!CollectionUtils.isEmpty(processList)){
+            replyMap = insertPhoneProcessExcel(processList, business.getId(), business.getCityId(), replyMap);
+            processList.clear();
+        }
+        replyMap.success();
+        return replyMap;
+    }
+
+    public ReplyMap insertPhoneProcessExcel(List<String[]> infoList, Integer businessId, Integer cityId, ReplyMap replyMap){
+        int successNum = Integer.parseInt(String.valueOf(replyMap.get("failNum")));
+        int failNum = Integer.parseInt(String.valueOf(replyMap.get("successNum")));
+        int processRow = Integer.parseInt(String.valueOf(replyMap.get("processRow")));
+        List<Map<String, String>> failList = (List<Map<String, String>>) replyMap.get("failList");
+        if (CollectionUtils.isEmpty(infoList)) {
+            replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "没有获取到excel的内容");
+            return replyMap;
+        }
+        for (int i = 0; i < infoList.size(); i++) {
+            String[] codeArr = infoList.get(i);
+            processRow++;
+            if (codeArr == null || codeArr.length < 2 || ParamUtil.checkParamIsNull(codeArr[0], codeArr[1]) || ParamUtil.checkPhoneIllegal(codeArr[0])) {
+                failNum++;
+                continue;
+            }
+            try {
+                UserAccountPhone userAccountPhone = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusId(codeArr[0], businessId);
+                if(userAccountPhone == null){
+                    userAccountPhone = new UserAccountPhone();
+                    userAccountPhone.setPhone(codeArr[0]);
+                    userAccountPhone.setCreateTime(new Date());
+                    userAccountPhone.setBusinessId(businessId);
+                    userAccountPhone.setCityId(cityId);
+                }
+                userAccountPhone.setPrice(new BigDecimal(codeArr[1]));
+                userAccountPhone.setUpdateTime(new Date());
+                userAccountPhone.setStatus("private");
+                ItemRule item = MobileRule.checkPhone(userAccountPhone.getPhone());
+                if(item != null){
+                    userAccountPhone.setTag(item.getTag());
+                    userAccountPhone.setRemark(item.getRemark());
+                }
+                int num = DataMapperUtil.insertOrUpdateUserAccountPhoneSelective(userAccountPhone);
+                if (num > 0) {
+                    successNum++;
+                } else {
+                    failNum++;
+                }
+            } catch (Exception e) {
+                failNum++;
+                Map<String, String> failMap = new HashMap<String, String>();
+                failMap.put("row", String.valueOf(i + 1));
+                failMap.put("phone", codeArr[0]);
+                failMap.put("failReason", e.getMessage());
+                failList.add(failMap);
+                logger.error("insertPhoneProcessExcel failed title:{}  message:{}", codeArr[0], e.getMessage(), e);
+            }
+        }
+        replyMap.put("failList", failList);
+        replyMap.put("successNum", successNum);
+        replyMap.put("failNum", failNum);
+        replyMap.put("processRow", processRow);
+        return replyMap;
+    }
+
+    /**
+     * 以后商户自己导入使用
+     * @param excelFile
+     * @param businessId
+     * @return
+     * @throws Exception
+     */
     public ReplyMap insertPhoneProcessExcel(MultipartFile excelFile, Integer businessId) throws Exception {
         ReplyMap replyMap = new ReplyMap();
         MobileBussiness business = DataMapperUtil.selectMobileBussinessByPrimaryKey(businessId);
@@ -183,7 +292,7 @@ public class PhoneInfoService extends BaseService {
                     userAccountPhone.setTag(item.getTag());
                     userAccountPhone.setRemark(item.getRemark());
                 }
-                int num = DataMapperUtil.insertUserAccountPhoneSelective(userAccountPhone);
+                int num = DataMapperUtil.insertOrUpdateUserAccountPhoneSelective(userAccountPhone);
                 if (num > 0) {
                     successNum++;
                 } else {

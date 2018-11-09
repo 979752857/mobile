@@ -33,6 +33,20 @@
     </foreach>
     order by sequence desc
   </select>
+  <select id="getMenuListBySelective" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select <include refid="Base_Column_List" />
+    from sys_cms_menu m
+    <where>
+      <if test="level!=null">
+        level = #{level}
+      </if>
+
+      <if test="pid!=null">
+        and menu_pid = #{pid}
+      </if>
+    </where>
+    order by sequence desc
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sys_cms_menu
     where sys_menu_id = #{sysMenuId,jdbcType=INTEGER}

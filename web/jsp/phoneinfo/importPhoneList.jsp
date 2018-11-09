@@ -22,6 +22,9 @@
                         <div class="col-md-2">
                             <input type="file" id="excelFile" name="excelFile" onchange="checkFile()"/>
                         </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" name="busName" placeholder="请输入券码">
+                        </div>
                         <button type="button" class="btn btn-info" id="impBtn" style="width: 83px; height: 34px;" onclick="readExcel()">导入</button>
                 </div>
                 <div class="row">
@@ -31,13 +34,13 @@
                         2、范例文档如下格式：
                         <table border="1px">
                             <tr align="center" style="font-weight: bold">
-                                <td>1001</td>
+                                <td>1001</td><td>1001</td>
                             </tr>
                             <tr align="center" style="font-weight: bold">
-                                <td>1002</td>
+                                <td>1002</td><td>1002</td>
                             </tr>
                             <tr align="center" style="font-weight: bold">
-                                <td>......</td>
+                                <td>......</td><td>......</td>
                             </tr>
                         </table>
                     </div>

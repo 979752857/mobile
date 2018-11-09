@@ -40,6 +40,12 @@
     order by create_time desc
     limit #{iDisplayStart},#{iDisplayLength}
   </select>
+  <select id="selectByPhoneAndBusId" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from user_account_phone
+    where phone = #{phone,jdbcType=VARCHAR} and business_id = #{businessId,jdbcType=INTEGER}
+  </select>
   <select id="countListByPhone" resultType="java.lang.Integer" parameterType="java.util.Map" >
     select count(1)
     from user_account_phone

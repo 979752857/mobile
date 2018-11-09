@@ -75,10 +75,11 @@ function readExcel(){
     if(!checkFile()){
         return;
     }
+    var busName = $("input[name= busName]").val();
     $.ajaxFileUpload({
         url: all_scope_path + "/phoneInfo/readExcel",
         type: "post",
-        data: {},
+        data: {busName:busName},
         secureuri: false,
         fileElementId: "excelFile",
         dataType: 'json',
@@ -88,7 +89,7 @@ function readExcel(){
         success: function (data, status) {
             var code = data.code;
             var failList = data.data;
-            if (code==0) {
+            if (code == 0) {
                 Ewin.unblock();
                 if(failList.length < 1){
                     Ewin.success({

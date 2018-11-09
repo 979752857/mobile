@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/index/demo.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/index/style.css">
     <script src="${pageContext.request.contextPath}/static/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/js/common/common.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/common/util.js"></script>
 </head>
 <body>
 <div class="search d5">

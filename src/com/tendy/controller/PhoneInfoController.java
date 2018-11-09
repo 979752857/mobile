@@ -2,6 +2,8 @@ package com.tendy.controller;
 
 import com.tendy.common.BusinessConstants;
 import com.tendy.common.ReplyMap;
+import com.tendy.dao.DataMapperUtil;
+import com.tendy.dao.bean.MobileBussiness;
 import com.tendy.dao.bean.UserAccountPhone;
 import com.tendy.service.LoginService;
 import com.tendy.service.PhoneInfoService;
@@ -14,6 +16,7 @@ import com.tendy.utils.TimeUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -111,15 +114,56 @@ public class PhoneInfoController extends BaseController {
 
     @RequestMapping(value = "/readExcel", method = RequestMethod.POST)
     @ResponseBody
-    public String readExcel(@RequestParam(value = "excelFile")MultipartFile excelFile, HttpSession httpSession){
+    public String readExcel(@RequestParam(value = "excelFile")MultipartFile excelFile, @RequestParam(value = "busName")String busName, HttpSession httpSession){
         ReplyMap replyMap = new ReplyMap();
         try{
-            if(excelFile == null){
+            if(excelFile == null || ParamUtil.checkParamIsNull(busName)){
                 replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, BusinessConstants.PARAM_ERROR_MSG);
                 return replyMap.toJson();
             }
-            Integer businessId = Integer.valueOf(String.valueOf(httpSession.getAttribute("id")));
-            replyMap = phoneInfoService.insertPhoneProcessExcel(excelFile, businessId);
+            MobileBussiness business = DataMapperUtil.selectMobileBussinessByName(busName);
+            if(business == null){
+                replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "请输入运营商账号");
+                return replyMap.toJson();
+            }
+            File excelReadFile = new File(System.getProperty("java.io.tmpdir"),
+                    TimeUtil.formatDate(new Date(), TimeUtil.YYYYMMDDHHMMSS) + FileUtil.getExtensionName(excelFile.getOriginalFilename()));
+            if (!excelReadFile.exists()) {
+                excelReadFile.mkdirs();
+            }
+            excelFile.transferTo(excelReadFile);
+            int successNum = 0;
+            int failNum = 0;
+            int processRow = 0;
+            //excel格式：phone,price
+            List<String[]> infoList = ExcelUtil.readExcelReturnList(excelReadFile, null);
+            if (CollectionUtils.isEmpty(infoList)) {
+                replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "没有获取到excel的内容");
+                return replyMap.toJson();
+            }
+            List<Map<String, String>> failList = new ArrayList<>();
+            replyMap.put("failList", failList);
+            replyMap.put("processRow", processRow);
+            replyMap.put("successNum", successNum);
+            replyMap.put("failNum", failNum);
+            //每次截取100个进行插入操作
+            int processSize = 100;
+            List<String[]> processList = new ArrayList<>();
+            for(int i = infoList.size()-1; i >= 0; i--){
+                String[] item = infoList.get(i);
+                processList.add(item);
+                infoList.remove(i);
+                if(processList.size() == processSize){
+                    replyMap = phoneInfoService.insertPhoneProcessExcel(processList, business.getId(), business.getCityId(), replyMap);
+                    processList.clear();
+                    Thread.sleep(1000);
+                }
+            }
+            if(!CollectionUtils.isEmpty(processList)){
+                replyMap = phoneInfoService.insertPhoneProcessExcel(processList, business.getId(), business.getCityId(), replyMap);
+                processList.clear();
+            }
+            replyMap.success();
         }catch(Exception e){
             logger.error("PhoneInfoController readExcel is error fileName:{}", excelFile.getOriginalFilename(),e);
             replyMap.fail(BusinessConstants.SERVER_ERROR_CODE, BusinessConstants.SERVER_ERROR_MSG);

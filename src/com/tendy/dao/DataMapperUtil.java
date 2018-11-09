@@ -57,11 +57,18 @@ public class DataMapperUtil {
         return userAccountPhoneMapper.selectListByPhone(phone, businessId, iDisplayStart, iDisplayLength, status);
     }
 
+    public static UserAccountPhone selectUserAccountPhoneByPhoneAndBusId(String phone, Integer businessId){
+        return userAccountPhoneMapper.selectByPhoneAndBusId(phone, businessId);
+    }
+
     public static int countUserAccountPhoneByPhoneAndCity(String phone, Integer businessId, String status){
         return userAccountPhoneMapper.countListByPhone(phone, businessId, status);
     }
 
-    public static int insertUserAccountPhoneSelective(UserAccountPhone userAccountPhone){
+    public static int insertOrUpdateUserAccountPhoneSelective(UserAccountPhone userAccountPhone){
+        if(userAccountPhone.getId() != null && userAccountPhone.getId() > 0){
+            return userAccountPhoneMapper.updateByPrimaryKeySelective(userAccountPhone);
+        }
         return userAccountPhoneMapper.insertSelective(userAccountPhone);
     }
 
@@ -75,6 +82,10 @@ public class DataMapperUtil {
 
     public static List<SysCmsMenu> getSysCmsMenuMenuList(List<Integer> menuIdList) {
         return sysCmsMenuMapper.getMenuList(menuIdList);
+    }
+
+    public static List<SysCmsMenu> getSysCmsMenuMenuListBySelective(Integer level, String pid) {
+        return sysCmsMenuMapper.getMenuListBySelective(level, pid);
     }
 
 }
