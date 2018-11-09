@@ -22,25 +22,11 @@ import java.util.List;
  */
 public class DataMapperUtil {
 
-    private static AccountPhoneMapper accountPhoneMapper = SpringUtils.getBean(AccountPhoneMapper.class);
     private static MobileBussinessMapper mobileBussinessMapper = SpringUtils.getBean(MobileBussinessMapper.class);
     private static UserAccountPhoneMapper userAccountPhoneMapper = SpringUtils.getBean(UserAccountPhoneMapper.class);
     private static SysCmsMenuMapper sysCmsMenuMapper = SpringUtils.getBean(SysCmsMenuMapper.class);
     private static SysUserRoleMapper sysUserRoleMapper = SpringUtils.getBean(SysUserRoleMapper.class);
     private static SysCmsRoleMenuMapper sysCmsRoleMenuMapper = SpringUtils.getBean(SysCmsRoleMenuMapper.class);
-
-    public static AccountPhone selectAccountPhoneById(Integer id){
-        return accountPhoneMapper.selectByPrimaryKey(id);
-    }
-
-    public static List<AccountPhone> selectAccountPhoneByPhoneAndCity(String phone, Integer city,
-                                                                      Integer iDisplayStart, Integer iDisplayLength, String status){
-        return accountPhoneMapper.selectListByPhone(phone, city, iDisplayStart, iDisplayLength, status);
-    }
-
-    public static int countAccountPhoneByPhoneAndCity(String phone, Integer city, String status){
-        return accountPhoneMapper.countListByPhone(phone, city, status);
-    }
 
     public static MobileBussiness selectMobileBussinessByPrimaryKey(Integer id){
         return mobileBussinessMapper.selectByPrimaryKey(id);

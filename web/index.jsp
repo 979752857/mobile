@@ -12,12 +12,12 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/index/demo.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/index/style.css">
     <script src="${pageContext.request.contextPath}/static/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/common/common.js"></script>
 </head>
 <body>
 <div class="search d5">
     <form id="phone-form" method="get">
         <input type="text" id="key" name="key" value="" placeholder="搜索从这里开始...">
-        <input type="hidden" id="city" name="city" value="769">
         <input type="hidden" id="status" name="status" value="private">
         <button type="button" id="form-button" onclick="searchData()"></button>
     </form>
@@ -39,16 +39,17 @@
         if(!keyword){
             keyword = "888";
         }
-        var city = $("#city").val();
+        var Request = GetRequest();
+        var cid = Request['cid'];
         var status = $("#status").val();
-        if(!keyword || !city){
+        if(!keyword || !cid){
             $("#phone-data").html("");
             $("#phone-data").html("<li><div><p>请输入查询的关键号码</p></div></li>");
         }
         $.ajax({
-            url:"${pageContext.request.contextPath}/data/phoneList",
+            url:"${pageContext.request.contextPath}/index/phoneList",
             type:"get",
-            data:{key:keyword,city:city,status:status,no:pageNo},
+            data:{key:keyword,cid:cid,status:status,no:pageNo},
             success:function(data){
                 if(data){
                     var result = eval('(' + data + ')');

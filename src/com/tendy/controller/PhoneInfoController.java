@@ -36,16 +36,6 @@ public class PhoneInfoController extends BaseController {
     @Autowired
     private PhoneInfoService phoneInfoService;
 
-    @ResponseBody
-    @RequestMapping(value = "/phoneList1", method = RequestMethod.GET)
-    public String phoneList1(@RequestParam("keyword") String keyword, @RequestParam("pageNo") Integer pageNo,
-                             @RequestParam("pageSize") Integer pageSize, @RequestParam("status") String status,
-                             HttpSession httpSession) {
-        ReplyMap replyMap = new ReplyMap();
-
-        return replyMap.toJson();
-    }
-
     /**
      * 分页查询显示table实例
      * @param aoData
