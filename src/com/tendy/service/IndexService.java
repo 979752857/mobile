@@ -6,9 +6,7 @@ import com.tendy.dao.DataMapperUtil;
 import com.tendy.dao.bean.AccountPhone;
 import com.tendy.dao.bean.MobileBussiness;
 import com.tendy.dao.bean.UserAccountPhone;
-import com.tendy.utils.JsonMapper;
-import com.tendy.utils.StringUtils;
-import com.tendy.utils.TimeUtil;
+import com.tendy.utils.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -28,10 +26,6 @@ public class IndexService {
 
     public ReplyMap getData(String phoneParam, String businessCid, Integer pageNo, Integer pageSize, String status, String tag, String notPhone){
         ReplyMap replyMap = new ReplyMap();
-        if(null == phoneParam || "".equals(phoneParam)){
-            replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "请输入查询的关键号码");
-            return replyMap;
-        }
         if(StringUtils.isBlank(businessCid)){
             replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "运营商查询错误，请重新扫码");
             return replyMap;
@@ -49,7 +43,17 @@ public class IndexService {
             List<String> phoneList = new ArrayList<>();
             for(int i = 0; i<list.size(); i++){
                 UserAccountPhone accountPhone = list.get(i);
-                phoneList.add(showKeyString(accountPhone.getPhone(), accountPhone.getPrice(), phoneParam));
+                String key = null;
+                if(StringUtils.isNotBlank(tag)){
+                    ItemRule itemRule = MobileRule.checkPhone(accountPhone.getPhone());
+                    if(itemRule != null){
+                        key = itemRule.getKeyword();
+                    }
+                }
+                if(StringUtils.isNotBlank(phoneParam)){
+                    key = phoneParam;
+                }
+                phoneList.add(showKeyString(accountPhone.getPhone(), accountPhone.getPrice(), key));
             }
             replyMap.put("list", phoneList);
         }
@@ -65,7 +69,9 @@ public class IndexService {
             str += price.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
         }
         str += "</span>";
-        phone = str.replace(key, "<span class=\"text-red\">"+key+"</span>");
+        if(StringUtils.isNotBlank(key)){
+            phone = str.replace(key, "<span class=\"text-red\">"+key+"</span>");
+        }
         StringBuilder sb = new StringBuilder("<li><div><p>").append(phone).append("</p></div></li>");
         sb = indexKeyWord(sb, 4);
         sb = indexKeyWord(sb, 8);

@@ -22,7 +22,7 @@ public class MobileRule {
         listRule.add(new ItemRule("([\\d])[0-9]\\1[0-9]\\1[0-9]", "ABACAD精品靓号", "ABACAD"));
         listRule.add(new ItemRule("(\\d)\\1{3}", "4A精品靓号", "AAAA"));
         listRule.add(new ItemRule("(?:(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){3}|(?:9(?=8)|8(?=7)|7(?=6)|6(?=5)|5(?=4)|4(?=3)|3(?=2)|2(?=1)|1(?=0)){3})\\d", "4顺精品靓号", "ABCD"));
-        listRule.add(new ItemRule("([\\d])\\1{1,}([\\d])\\2{1,}", "AABB靓号", "AABB"));
+        listRule.add(new ItemRule("([\\d])\\1{1,}([\\d])\\2{1,}", "AABB精品靓号", "AABB"));
         listRule.add(new ItemRule("(([\\d])\\1{0,}([\\d])\\2{0,})\\1{1,}", "ABAB精品靓号", "ABAB"));
         listRule.add(new ItemRule("(\\d)\\1{2}", "3A精品靓号", "AAA"));
         listRule.add(new ItemRule("(?:(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){2}|(?:9(?=8)|8(?=7)|7(?=6)|6(?=5)|5(?=4)|4(?=3)|3(?=2)|2(?=1)|1(?=0)){2})\\d", "3顺精品靓号", "ABC"));

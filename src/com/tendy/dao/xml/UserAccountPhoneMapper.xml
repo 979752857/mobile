@@ -33,14 +33,17 @@
     select
     <include refid="Base_Column_List" />
     from user_account_phone
-    where phone like concat('%', #{phone,jdbcType=VARCHAR}, '%') and business_id = #{businessId,jdbcType=INTEGER}
-    <if test="status != null" >
+    where business_id = #{businessId,jdbcType=INTEGER}
+    <if test="phone != null and phone != ''" >
+      and phone like concat('%', #{phone,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test="status != null and status != ''" >
       and status = #{status,jdbcType=VARCHAR}
     </if>
-    <if test="tag != null" >
+    <if test="tag != null and tag != ''" >
       and tag = #{tag,jdbcType=VARCHAR}
     </if>
-    <if test="notPhone != null" >
+    <if test="notPhone != null and notPhone != ''" >
       and phone not like concat('%', #{notPhone,jdbcType=VARCHAR}, '%')
     </if>
     order by update_time desc
@@ -55,15 +58,17 @@
   <select id="countListByPhone" resultType="java.lang.Integer" parameterType="java.util.Map" >
     select count(1)
     from user_account_phone
-    where phone like concat('%', #{phone,jdbcType=VARCHAR}, '%')
-    and business_id = #{businessId,jdbcType=INTEGER}
-    <if test="status != null" >
+    where business_id = #{businessId,jdbcType=INTEGER}
+    <if test="phone != null and phone != ''" >
+      and phone like concat('%', #{phone,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test="status != null and status != ''" >
       and status = #{status,jdbcType=VARCHAR}
     </if>
-    <if test="tag != null" >
+    <if test="tag != null and tag != ''" >
       and tag = #{tag,jdbcType=VARCHAR}
     </if>
-    <if test="notPhone != null" >
+    <if test="notPhone != null and notPhone != ''" >
       and phone not like concat('%', #{notPhone,jdbcType=VARCHAR}, '%')
     </if>
   </select>

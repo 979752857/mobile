@@ -21,12 +21,16 @@ public class IndexController extends BaseController{
 
 	@RequestMapping(value = "/phoneList", method = {RequestMethod.GET}, produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String phoneList(@RequestParam(value = "key") String phone, @RequestParam(value = "cid") String cid,
+	public String phoneList(@RequestParam(value = "key") String phone, @RequestParam(value = "cid", required = false) String cid,
 							@RequestParam(value = "no", required = false) Integer pageNo, @RequestParam(value = "status", required = false) String status,
 							@RequestParam(value = "tag", required = false) String tag, @RequestParam(value = "notPhone", required = false) String notPhone){
 		ReplyMap replyMap = new ReplyMap();
-		if(ParamUtil.checkParamIsNull(phone, cid)){
+		if(StringUtils.isBlank(phone) && StringUtils.isBlank(tag) && StringUtils.isBlank(notPhone)){
 			replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "请输入查询的关键号码");
+			return replyMap.toJson();
+		}
+		if(ParamUtil.checkParamIsNull(cid)){
+			replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "请重新扫描二维码");
 			return replyMap.toJson();
 		}
 		if(pageNo == null){
