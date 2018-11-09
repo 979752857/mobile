@@ -171,12 +171,14 @@ public class PhoneInfoController extends BaseController {
                     replyMap = phoneInfoService.insertPhoneProcessExcel(processList, business.getId(), business.getCityId(), replyMap);
                     processList.clear();
                     Thread.sleep(1000);
+                    logger.info("PhoneInfoController readExcel  replyMap:{}", replyMap.toJson());
                 }
             }
             if(!CollectionUtils.isEmpty(processList)){
                 replyMap = phoneInfoService.insertPhoneProcessExcel(processList, business.getId(), business.getCityId(), replyMap);
                 processList.clear();
             }
+            logger.info("PhoneInfoController readExcel  处理完毕  replyMap:{}", replyMap.toJson());
             replyMap.success();
         }catch(Exception e){
             logger.error("PhoneInfoController readExcel is error fileName:{}", excelFile.getOriginalFilename(),e);
