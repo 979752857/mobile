@@ -12,8 +12,7 @@
         <div class="box">
             <div class="box-header">
                 <ul class="nav nav-tabs">
-                        <li><a href="${pageContext.request.contextPath }/raffleActivity/rafflePrizeList?raffleActivityId=${raffleActivityId}">抽奖转盘奖品列表</a></li>
-                    <li class="active"><a href="javascript:void(0)">第三方券码列表</a></li>
+                    <li class="active"><a href="javascript:void(0)">导入手机号</a></li>
                 </ul>
             </div>
             <div class="box-body">
@@ -23,24 +22,24 @@
                             <input type="file" id="excelFile" name="excelFile" onchange="checkFile()"/>
                         </div>
                         <div class="col-md-2">
-                            <input type="text" class="form-control" name="busName" placeholder="请输入券码">
+                            <input type="text" class="form-control" name="busName" placeholder="请输入运营商账号">
                         </div>
                         <button type="button" class="btn btn-info" id="impBtn" style="width: 83px; height: 34px;" onclick="readExcel()">导入</button>
                 </div>
                 <div class="row">
                     <div style="width: 420px; font-size: 12px;padding-left: 20px;padding-top:5px;padding-bottom:10px;float: left;">
                         导入说明：<br/>
-                        1、仅支持excel文件（后缀为xls,xlsx）。请将券号写在第一列，无需表头<br />
+                        1、仅支持excel文件（后缀为xls,xlsx）。请将手机号写在第一列，价格写在第二列，无需表头<br />
                         2、范例文档如下格式：
                         <table border="1px">
                             <tr align="center" style="font-weight: bold">
-                                <td>1001</td><td>1001</td>
+                                <td>13701254131</td><td>1000</td>
                             </tr>
                             <tr align="center" style="font-weight: bold">
-                                <td>1002</td><td>1002</td>
+                                <td>13701254131</td><td>1000</td>
                             </tr>
                             <tr align="center" style="font-weight: bold">
-                                <td>......</td><td>......</td>
+                                <td>13701254131</td><td>1000</td>
                             </tr>
                         </table>
                     </div>
