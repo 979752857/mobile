@@ -9,7 +9,7 @@ $(function () {
 function getParamData(){
     var source = $("input[name= source]").val();
     var code = $("input[name= code]").val();
-    initBaseStringReload(all_scope_path+'/phoneInfo/phoneInfo',source,code);
+    // initBaseStringReload(all_scope_path+'/phoneInfo/phoneInfo',source,code);
 }
 
 /**
@@ -87,10 +87,9 @@ function readExcel(){
             Ewin.loading();
         },
         success: function (data, status) {
-            var code = data.code;
-            var failList = data.data;
-            if (code == 0) {
+            if (data.code == 0) {
                 Ewin.unblock();
+                var failList = data.failList;
                 if(failList.length < 1){
                     Ewin.success({
                         message:"操作成功！"

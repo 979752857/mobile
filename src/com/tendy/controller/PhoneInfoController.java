@@ -10,6 +10,7 @@ import com.tendy.service.PhoneInfoService;
 import com.tendy.utils.DataTablesUtil;
 import com.tendy.utils.ExcelUtil;
 import com.tendy.utils.FileUtil;
+import com.tendy.utils.JsonMapper;
 import com.tendy.utils.ParamUtil;
 import com.tendy.utils.StringUtils;
 import com.tendy.utils.TimeUtil;
@@ -168,6 +169,7 @@ public class PhoneInfoController extends BaseController {
             logger.error("PhoneInfoController readExcel is error fileName:{}", excelFile.getOriginalFilename(),e);
             replyMap.fail(BusinessConstants.SERVER_ERROR_CODE, BusinessConstants.SERVER_ERROR_MSG);
         }
+        logger.info("PhoneInfoController readExcel  busName:{}   replyMap:{}", busName, JsonMapper.toJson(replyMap));
         return replyMap.toJson();
     }
 }
