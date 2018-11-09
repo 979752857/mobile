@@ -12,7 +12,7 @@
   <%@include file="/jsp/common/common.jsp"%>
   <!-- Ionicons -->
   <link rel="stylesheet" href="${pageContext.request.contextPath }/static/adminlte/bower_components/Ionicons/css/ionicons.min.css">
-  <script type="text/javascript" src="${pageContext.request.contextPath }/js/cms/menu.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath }/static/js/menu.js"></script>
 </head>
 <body class="hold-transition skin-purple sidebar-mini">
 <div class="wrapper">

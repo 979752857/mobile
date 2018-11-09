@@ -1,0 +1,38 @@
+package com.tendy.controller;
+
+import com.tendy.common.BusinessConstants;
+import com.tendy.common.ReplyMap;
+import com.tendy.service.LoginService;
+import com.tendy.service.UserInfoService;
+import com.tendy.utils.ParamUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
+
+@Controller
+@RequestMapping("/userInfo")
+public class UserInfoController extends BaseController {
+
+    @Autowired
+    private UserInfoService userInfoService;
+
+    @RequestMapping(value = "/updateInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public String checkLogin(@RequestParam("name") String name, @RequestParam("password") String password,
+                             @RequestParam("phone") String phone, @RequestParam("address") String address,
+                             @RequestParam("remark") String remark, HttpSession httpSession) {
+        ReplyMap replyMap = new ReplyMap();
+        if(ParamUtil.checkParamIsNull(name, phone)){
+            replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, BusinessConstants.PARAM_ERROR_MSG);
+            return replyMap.toJson();
+        }
+        Integer businessId = Integer.valueOf(String.valueOf(httpSession.getAttribute("id")));
+        replyMap = userInfoService.updateUserInfo(businessId, name, password, phone, address, remark);
+        return replyMap.toJson();
+    }
+}

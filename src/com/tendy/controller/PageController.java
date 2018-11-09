@@ -64,4 +64,9 @@ public class PageController extends BaseController {
     public ModelAndView toImportPhoneList() {
         return new ModelAndView("phoneinfo/importPhoneList");
     }
+
+    @RequestMapping(value = {"/toEditUser"}, method = {RequestMethod.GET})
+    public ModelAndView toEditUser() {
+        return new ModelAndView("userinfo/editUser");
+    }
 }

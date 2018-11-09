@@ -40,6 +40,10 @@ public class DataMapperUtil {
         return mobileBussinessMapper.selectByName(name);
     }
 
+    public static int updateMobileBussinessByPrimaryKeySelective(MobileBussiness mobileBussiness){
+        return mobileBussinessMapper.updateByPrimaryKeySelective(mobileBussiness);
+    }
+
     public static UserAccountPhone selectUserAccountPhoneByPrimaryKey(Long id){
         return userAccountPhoneMapper.selectByPrimaryKey(id);
     }
