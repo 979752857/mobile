@@ -3,11 +3,13 @@ package com.tendy.controller;
 import com.tendy.dao.bean.SysCmsMenu;
 import com.tendy.model.MenuModel;
 import com.tendy.service.LoginService;
+import com.tendy.utils.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -56,8 +58,12 @@ public class PageController extends BaseController {
     }
 
     @RequestMapping(value = {"/toPhoneInfo"}, method = {RequestMethod.GET})
-    public ModelAndView toPhoneInfo() {
-        return new ModelAndView("phoneinfo/phoneInfo");
+    public ModelAndView toPhoneInfo(@RequestParam(value = "phone", required = false) String phone) {
+        Map<String, String> map = new HashMap<>();
+        if(StringUtils.isNotBlank(phone)){
+            map.put("phone", phone);
+        }
+        return new ModelAndView("phoneinfo/phoneInfo", map);
     }
 
     @RequestMapping(value = {"/toImportPhoneList"}, method = {RequestMethod.GET})
@@ -68,5 +74,12 @@ public class PageController extends BaseController {
     @RequestMapping(value = {"/toEditUser"}, method = {RequestMethod.GET})
     public ModelAndView toEditUser() {
         return new ModelAndView("userinfo/editUser");
+    }
+
+    @RequestMapping(value = {"/logout"}, method = {RequestMethod.GET})
+    public ModelAndView logout(HttpSession httpSession) {
+        httpSession.removeAttribute("name");
+        httpSession.removeAttribute("id");
+        return new ModelAndView("login");
     }
 }

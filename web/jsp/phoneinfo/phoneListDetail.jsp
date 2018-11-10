@@ -22,15 +22,22 @@
                         <div class="row">
                             <div class="col-md-10">
                                 <div class="sear_cond" style="float: left">
-                                    <span class="title">出租车公司：</span>
+                                    <span class="title">类型：</span>
                                 </div>
-                                <div class="col-md-3" style="margin-left: 5px; padding: 0px">
-                                    <select id="form-district" class="form-control select2" style="width: 100%;">
+                                <div class="col-md-2" style="margin-left: 5px; padding: 0px">
+                                    <select id="tag" class="form-control select2" style="width: 100%;">
                                         <option selected="selected" value="">不限</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3" style="margin-left: 5px; padding: 0px">
-                                    <select id="form-company" class="form-control select2" style="width: 100%;">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="sear_cond" style="float: left">
+                                    <span class="title">特征：</span>
+                                </div>
+                                <div class="col-md-2" style="margin-left: 5px; padding: 0px">
+                                    <select id="notPhone" class="form-control select2" style="width: 100%;">
                                         <option selected="selected" value="">不限</option>
                                     </select>
                                 </div>

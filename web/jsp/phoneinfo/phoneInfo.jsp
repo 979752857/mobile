@@ -15,13 +15,11 @@
     </style>
     <body>
         <div class="box-body">
-            <div class="box-header">
+            <div class="row">
                 <ul class="nav nav-tabs">
                     <li><a href="${pageContext.request.contextPath }/page/toPhoneListDetail">手机号管理</a></li>
                     <li class="active">
-                        <a href="javascript:void(0)"><i class="fa fa-plus"></i>
-                            <c:choose><c:when test="${id != null}">编辑</c:when><c:otherwise>添加</c:otherwise></c:choose>
-                        </a>
+                        <a href="javascript:void(0)"><i class="fa fa-plus"></i>&nbsp;<c:choose><c:when test="${phone != null}">编辑</c:when><c:otherwise>添加</c:otherwise></c:choose></a>
                     </li>
                 </ul>
             </div>
@@ -32,7 +30,11 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">手机号</label>
                             <div class="col-sm-3">
-                                <input type="number" class="form-control notnull" id="phone" name="phone" value="" maxlength="11" required="required" disabled>
+                                <c:choose><c:when test="${phone != null}">
+                                    <input type="number" class="form-control notnull" id="phone" name="phone" value="" maxlength="11" required="required" disabled>
+                                </c:when><c:otherwise>
+                                    <input type="number" class="form-control notnull" id="phone" name="phone" value="" maxlength="11" required="required">
+                                </c:otherwise></c:choose>
                             </div>
                         </div>
                         <div class="form-group">
@@ -54,9 +56,17 @@
                                 <input type="radio" name="status" value="locked" style="margin-left:50px;">作废
                             </div>
                         </div>
+                        <div class="box-footer" style="">
+                            <div class="text-center">
+                                <button type="button" class="btn btn-primary" onclick = "updatePhone()">
+                                    <i class="fa fa-save">&nbsp;保存</i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
         </div>
     </body>
+    <script src="${pageContext.request.contextPath }/static/js/phoneinfo/phoneInfo.js"></script>
 </html>

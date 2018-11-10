@@ -1,5 +1,6 @@
 $(function () {
     $('.select2').select2();
+    initSelect();
     //点击实时生效
     $.each($(".sear_cond .option"),function(i,obj){
         $(obj).click(function(){
@@ -13,17 +14,19 @@ $(function () {
 
 function initParam() {
     var keyword = $("input[name='phone']").val();
-    var status = "private";
-    initBaseStringReload(all_scope_path+'/phoneInfo/phoneList', keyword, status);
+    var status = "";
+    var tag = $("#tag").val();
+    var notPhone = $("#notPhone").val();
+    initBaseStringReload(all_scope_path+'/phoneInfo/phoneList', keyword, status, tag, notPhone);
 }
 
 /**
  * 初始化userTable表
  * @param url
  */
-function initBaseStringReload(url, keyword, status){
+function initBaseStringReload(url, keyword, status, tag, notPhone){
     var arrcol = getCloumJson();
-    var param = {"keyword":keyword, "status":status};
+    var param = {"keyword":keyword, "status":status, "tag":tag, "notPhone":notPhone};
     initDataTable("baseStringTable", url, arrcol, param);
 }
 
@@ -44,7 +47,16 @@ function getCloumJson() {
         }, {
             "sWidth":"20%",
             "sTitle" : "状态",
-            "mData" : "status"
+            "mData" : "status",
+            "mRender" : function test(data, type, full) {
+                var resultHtml = '';
+                if(data == 'private'){
+                    resultHtml = '可用';
+                }else if(data == 'locked'){
+                    resultHtml = '作废';
+                }
+                return resultHtml;
+            }
         }, {
             "sWidth":"15%",
             "sTitle" : "日期",
@@ -55,8 +67,12 @@ function getCloumJson() {
             "mData" : "phone",
             "mRender" : function test(data, type, full) {
                 var resultHtml = '';
-                resultHtml += '<a class="btn btn-primary btn-xs" href="#"><i class="fa fa-search"></i> 修改</a>';
-                resultHtml += '&nbsp;<a class="btn btn-danger btn-xs" href="javascript:void(0)" onclick="lockPhone(\''+data+'\', \'locked\')"><i class="fa fa-search"></i> 作废</a>';
+                resultHtml += '<a class="btn btn-primary btn-xs" href="'+all_scope_path+'/page/toPhoneInfo?phone='+data+'"><i class="fa fa-edit"></i> 修改</a>';
+                if(full.status == 'private'){
+                    resultHtml += '&nbsp;<a class="btn btn-danger btn-xs" href="javascript:void(0)" onclick="lockPhone(\''+data+'\', \'locked\')"><i class="fa fa-search"></i> 作废</a>';
+                }else{
+                    resultHtml += '&nbsp;<a class="btn btn-warning btn-xs" href="javascript:void(0)" onclick="lockPhone(\''+data+'\', \'private\')"><i class="fa fa-search"></i> 可用</a>';
+                }
                 return resultHtml;
             }
         }];
@@ -81,4 +97,35 @@ function lockPhone(phone, status){
             }
         }
     });
+}
+
+function initSelect() {
+    $("#tag").append("<option value='ABAC'>ABAC靓号</option>");//>ABAC靓号
+    $("#tag").append("<option value='ABC'>3顺精品靓号</option>");//>3顺精品靓号
+    $("#tag").append("<option value='AAA'>3A精品靓号</option>");//>3A精品靓号
+    $("#tag").append("<option value='ABAB'>ABAB靓号</option>");//>ABAB靓号
+    $("#tag").append("<option value='AABB'>AABB靓号</option>");//>AABB靓号
+    $("#tag").append("<option value='ABCD'>4顺精品靓号</option>");//>4顺精品靓号
+    $("#tag").append("<option value='AAAA'>4A精品靓号</option>");//>4A精品靓号
+    $("#tag").append("<option value='ABACAD'>ABACAD靓号</option>");//>ABACAD靓号
+    $("#tag").append("<option value='ABABAB'>ABABAB靓号</option>");//>ABABAB靓号
+    $("#tag").append("<option value='ABCCBA'>3位回环靓号</option>");//>3位回环靓号
+    $("#tag").append("<option value='AABBCC'>AABBCC靓号</option>");//>AABBCC靓号
+    $("#tag").append("<option value='ABCABC'>ABCABC靓号</option>");//>ABCABC靓号
+    $("#tag").append("<option value='AAABCCC'>AAABCCC靓号</option>");//>AAABCCC靓号
+    $("#tag").append("<option value='ABCDE'>5顺精品靓号</option>");//>5顺精品靓号
+    $("#tag").append("<option value='AAAAA'>5A精品靓号</option>");//>5A精品靓号
+    $("#tag").append("<option value='ABCDEF'>6顺精品靓号</option>");//>6顺精品靓号
+    $("#tag").append("<option value='AAAAAA'>6A精品靓号</option>");//>6A精品靓号
+
+    $("#notPhone").append("<option value='0'>不含0</option>");//不含0
+    $("#notPhone").append("<option value='1'>不含1</option>");//不含1
+    $("#notPhone").append("<option value='2'>不含2</option>");//不含2
+    $("#notPhone").append("<option value='3'>不含3</option>");//不含3
+    $("#notPhone").append("<option value='4'>不含4</option>");//不含4
+    $("#notPhone").append("<option value='5'>不含5</option>");//不含5
+    $("#notPhone").append("<option value='6'>不含6</option>");//不含6
+    $("#notPhone").append("<option value='7'>不含7</option>");//不含7
+    $("#notPhone").append("<option value='8'>不含8</option>");//不含8
+    $("#notPhone").append("<option value='9'>不含9</option>");//不含9
 }

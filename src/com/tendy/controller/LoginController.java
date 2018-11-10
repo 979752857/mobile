@@ -30,6 +30,10 @@ public class LoginController extends BaseController {
             replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, BusinessConstants.PARAM_ERROR_MSG);
             return replyMap.toJson();
         }
+        if(password.length() < 6){
+            replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "密码至少6位以上");
+            return replyMap.toJson();
+        }
         replyMap = loginService.checkLogin(name, password, httpSession);
         return replyMap.toJson();
     }

@@ -10,16 +10,33 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath }/static/adminlte/plugins/iCheck/square/blue.css">
 
   <script type="text/javascript" src="${pageContext.request.contextPath }/static/js/login.js"></script>
+  <style>
+    .login-page{
+      position:fixed;
+      top: 0;
+      left: 0;
+      width:100%;
+      height:100%;
+      min-width: 1000px;
+      z-index:-10;
+      zoom: 1;
+      background-color: #d2d6de;
+      background-repeat: no-repeat;
+      background-size: cover;
+      -webkit-background-size: cover;
+      -o-background-size: cover;
+      background-position: center 0;
+    }
+  </style>
 </head>
-<body class="hold-transition login-page" style="background:#d2d6de;background-image:url(${pageContext.request.contextPath }/image/login_img.jpg); color:#fff ">
+<body class="hold-transition login-page" style="background-image:url(${pageContext.request.contextPath }/static/image/login_img.jpg); color:#fff; ">
 <div class="login-box">
   <div class="login-logo" style="color: #fff;font-size: 40px">
-    <b>嘀嗒出行</b>CMS
+    <b>手机号信息</b>CMS
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">您好，欢迎来到cms管理后台</p>
-
     <form action="#" method="post">
       <div class="input-group" style="margin: 10px 0px">
         <span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
@@ -31,10 +48,10 @@
       </div>
       <div class="row">
         <div class="col-xs-4">
-            <button type="button" onclick = "" class="btn btn-block btn-danger">注 册</button>
+            <%--<button type="button" onclick = "" class="btn btn-block btn-danger">注 册</button>--%>
         </div>
         <div class="col-xs-4">
-          <p style="text-align:center">- OR -</p>
+          <%--<p style="text-align:center">- OR -</p>--%>
         </div>
         <div class="col-xs-4">
           <button type="button" onclick = "login()" class="btn btn-block btn-success">登 陆</button>

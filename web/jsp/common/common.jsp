@@ -31,9 +31,10 @@ folder instead of downloading all of them to reduce the load. -->
 <script src="${pageContext.request.contextPath }/static/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="${pageContext.request.contextPath }/static/adminlte/dist/js/adminlte.min.js"></script>
-<script src="${pageContext.request.contextPath }/static/js/common/common.js?time=<%=new Date().getTime()%>"></script>
+<script src="${pageContext.request.contextPath }/static/js/common/common.js"></script>
 <script src="${pageContext.request.contextPath }/static/js/common/ajaxfileupload.js"></script>
-<script src="${pageContext.request.contextPath }/static/js/common/dateUtil.js?v=<%=new Date()%>"></script>
+<script src="${pageContext.request.contextPath }/static/js/common/dateUtil.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/common/util.js"></script>
 
 <!-- FastClick -->
 <script src="${pageContext.request.contextPath }/static/adminlte/bower_components/fastclick/lib/fastclick.js"></script>

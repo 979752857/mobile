@@ -6,6 +6,9 @@ $(function () {
 function getPhoneInfo() {
     var Request = GetRequest();
     var phone = Request['phone'];
+    if(!phone){
+        return;
+    }
     var url = all_scope_path+'/phoneInfo/phoneInfo';
     $.ajax({
         "type" : 'GET',
@@ -32,7 +35,7 @@ function getPhoneInfo() {
 /**
  * 更新认证数据
  */
-function updateTaxiDriver() {
+function updatePhone() {
     var url = all_scope_path+'/phoneInfo/updatePhone';
     var id = $("input[name=phoneId]").val();
     var phone = $("input[name=phone]").val();

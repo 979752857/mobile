@@ -5,13 +5,7 @@ import com.tendy.common.ReplyMap;
 import com.tendy.dao.DataMapperUtil;
 import com.tendy.dao.bean.MobileBussiness;
 import com.tendy.dao.bean.UserAccountPhone;
-import com.tendy.utils.ExcelUtil;
-import com.tendy.utils.FileUtil;
-import com.tendy.utils.ItemRule;
-import com.tendy.utils.JsonMapper;
-import com.tendy.utils.MobileRule;
-import com.tendy.utils.ParamUtil;
-import com.tendy.utils.TimeUtil;
+import com.tendy.utils.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,15 +58,15 @@ public class PhoneInfoService extends BaseService {
         return replyMap;
     }
 
-    public Map<String, Object> getDataDetail(String phoneParam, Integer iDisplayStart, Integer pageSize, String status, Integer businessId) {
+    public Map<String, Object> getDataDetail(String phoneParam, Integer iDisplayStart, Integer pageSize, String status, Integer businessId, String tag, String notPhone) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
-        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, businessId, iDisplayStart, pageSize, status, null, null);
+        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, businessId, iDisplayStart, pageSize, status, tag, notPhone);
         if (CollectionUtils.isEmpty(list)) {
             resultMap.put("total", 0);
             return resultMap;
         }
-        int total = DataMapperUtil.countUserAccountPhoneByPhoneAndCity(phoneParam, businessId, status, null, null);
+        int total = DataMapperUtil.countUserAccountPhoneByPhoneAndCity(phoneParam, businessId, status, tag, notPhone);
         for (int i = 0; i < list.size(); i++) {
             Map<String, Object> map = new HashMap<>();
             UserAccountPhone accountPhone = list.get(i);
@@ -108,17 +102,27 @@ public class PhoneInfoService extends BaseService {
 
     public ReplyMap updateUserAccountPhone(UserAccountPhone accountPhone, Integer businessId) {
         ReplyMap replyMap = new ReplyMap();
-        UserAccountPhone phone = DataMapperUtil.selectUserAccountPhoneByPrimaryKey(accountPhone.getId());
-        if (phone == null) {
-            replyMap.fail(BusinessConstants.USER_NULL_CODE, "手机信息不存在");
-            return replyMap;
-        }
-        if (phone.getBusinessId().equals(businessId)) {
-            replyMap.fail(BusinessConstants.USER_NULL_CODE, "这个号码不是您的哦！");
-            return replyMap;
+        if(accountPhone.getId() == null || accountPhone.getId() == 0){
+            accountPhone.setId(null);
+            accountPhone.setBusinessId(businessId);
+            MobileBussiness mobileBussiness = DataMapperUtil.selectMobileBussinessByPrimaryKey(businessId);
+            if(mobileBussiness == null){
+                replyMap.fail(BusinessConstants.USER_NULL_CODE, BusinessConstants.USER_NULL_MSG);
+                return replyMap;
+            }
+            accountPhone.setCityId(mobileBussiness.getCityId());
+            accountPhone.setCreateTime(new Date());
+            if(StringUtils.isBlank(accountPhone.getStatus())){
+                accountPhone.setStatus("private");
+            }
         }
         accountPhone.setUpdateTime(new Date());
-        int num = DataMapperUtil.updateUserAccountPhoneByPrimaryKeySelective(accountPhone);
+        ItemRule item = MobileRule.checkPhone(accountPhone.getPhone());
+        if(item != null){
+            accountPhone.setTag(item.getTag());
+            accountPhone.setRemark(item.getRemark());
+        }
+        int num = DataMapperUtil.insertOrUpdateUserAccountPhoneSelective(accountPhone);
         if (num <= 0) {
             replyMap.fail(BusinessConstants.SERVER_BUSY_CODE, BusinessConstants.SERVER_BUSY_MSG);
             return replyMap;
@@ -129,13 +133,9 @@ public class PhoneInfoService extends BaseService {
 
     public ReplyMap updateLockPhone(String phone, String status, Integer businessId) {
         ReplyMap replyMap = new ReplyMap();
-        UserAccountPhone accountPhone = DataMapperUtil.selectUserAccountPhoneByPhone(phone);
+        UserAccountPhone accountPhone = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusId(phone, businessId);
         if (accountPhone == null) {
             replyMap.fail(BusinessConstants.USER_NULL_CODE, "手机信息不存在");
-            return replyMap;
-        }
-        if (!accountPhone.getBusinessId().equals(businessId)) {
-            replyMap.fail(BusinessConstants.USER_NULL_CODE, "这个号码不是您的哦！");
             return replyMap;
         }
         if (accountPhone.getStatus().equals(status)) {

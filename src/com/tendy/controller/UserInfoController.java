@@ -23,7 +23,7 @@ public class UserInfoController extends BaseController {
 
     @RequestMapping(value = "/updateInfo", method = RequestMethod.POST)
     @ResponseBody
-    public String checkLogin(@RequestParam("name") String name, @RequestParam("password") String password,
+    public String updateInfo(@RequestParam("name") String name, @RequestParam("password") String password,
                              @RequestParam("phone") String phone, @RequestParam("address") String address,
                              @RequestParam("remark") String remark, HttpSession httpSession) {
         ReplyMap replyMap = new ReplyMap();
@@ -33,6 +33,15 @@ public class UserInfoController extends BaseController {
         }
         Integer businessId = Integer.valueOf(String.valueOf(httpSession.getAttribute("id")));
         replyMap = userInfoService.updateUserInfo(businessId, name, password, phone, address, remark);
+        return replyMap.toJson();
+    }
+
+    @RequestMapping(value = "/userInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public String userInfo(HttpSession httpSession) {
+        ReplyMap replyMap = new ReplyMap();
+        Integer businessId = Integer.valueOf(String.valueOf(httpSession.getAttribute("id")));
+        replyMap = userInfoService.getUserInfo(businessId);
         return replyMap.toJson();
     }
 }

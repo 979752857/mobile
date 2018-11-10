@@ -60,8 +60,10 @@ public class PhoneInfoController extends BaseController {
 		/*----------   数据库操作返回list数据   ----------*/
 		String keyword = String.valueOf(map.get("keyword"));
 		String status = String.valueOf(map.get("status"));
+		String tag = String.valueOf(map.get("tag"));
+		String notPhone = String.valueOf(map.get("notPhone"));
         Integer businessId = Integer.valueOf(String.valueOf(httpSession.getAttribute("id")));
-        Map<String, Object> resultMap = phoneInfoService.getDataDetail(keyword, iDisplayStart, iDisplayLength, status, businessId);
+        Map<String, Object> resultMap = phoneInfoService.getDataDetail(keyword, iDisplayStart, iDisplayLength, status, businessId, tag, notPhone);
         Integer total = (Integer) resultMap.get("total");
         if(resultMap.get("list") != null){
             list = (List<Map<String, Object>>) resultMap.get("list");
@@ -74,16 +76,18 @@ public class PhoneInfoController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/updatePhone", method = RequestMethod.GET)
-    public String updatePhone(@RequestParam("id") Long id, @RequestParam("phone") String phone,
+    public String updatePhone(@RequestParam("id") String id, @RequestParam("phone") String phone,
                               @RequestParam("url") String url, @RequestParam("price") String price,
                               @RequestParam("status") String status, HttpSession httpSession) {
         ReplyMap replyMap = new ReplyMap();
-        if(ParamUtil.checkParamIsNull(phone) || id == null || id <= 0){
+        if(ParamUtil.checkParamIsNull(phone)){
             replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, BusinessConstants.PARAM_ERROR_MSG);
             return replyMap.toJson();
         }
         UserAccountPhone accountPhone = new UserAccountPhone();
-        accountPhone.setId(id);
+        if(StringUtils.isNotBlank(id)){
+            accountPhone.setId(Long.valueOf(id));
+        }
         accountPhone.setPhone(phone);
         if(!StringUtils.isBlank(url)){
             accountPhone.setUrl(url);

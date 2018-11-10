@@ -2,6 +2,9 @@
 function login(){
 	var user_name = $.trim($("#user_name").val());
 	var password = $.trim($("#password").val());
+	if(password.length < 6){
+		Ewin.error({message:"密码至少6位以上"});
+	}
 	$.ajax({
 		type: "post",
 		url: all_scope_path+"/login/checkLogin",
@@ -11,12 +14,16 @@ function login(){
 			 //loading();
 		},
 		success: function(data, textStatus){
-			if (!data) {
-				alert("用户名或密码有误！");
+			if (data.code == 0) {
+                // TODO 登录成功，转到首页
+                console.log("login success");
+                location.href = "/page/toHomePage";
 			} else {
-				// TODO 登录成功，转到首页
-				console.log("login success");
-				location.href = "/page/toHomePage";
+                if(!data){
+                    Ewin.error({message:"登录失败请重试"});
+                }else{
+                    Ewin.error({message:data.message});
+                }
 			}
 		},
 		error: function(){

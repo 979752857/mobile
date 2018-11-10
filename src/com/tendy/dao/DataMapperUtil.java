@@ -1,16 +1,7 @@
 package com.tendy.dao;
 
-import com.tendy.dao.bean.AccountPhone;
-import com.tendy.dao.bean.MobileBussiness;
-import com.tendy.dao.bean.SysCmsMenu;
-import com.tendy.dao.bean.SysUserRole;
-import com.tendy.dao.bean.UserAccountPhone;
-import com.tendy.dao.mapper.AccountPhoneMapper;
-import com.tendy.dao.mapper.MobileBussinessMapper;
-import com.tendy.dao.mapper.SysCmsMenuMapper;
-import com.tendy.dao.mapper.SysCmsRoleMenuMapper;
-import com.tendy.dao.mapper.SysUserRoleMapper;
-import com.tendy.dao.mapper.UserAccountPhoneMapper;
+import com.tendy.dao.bean.*;
+import com.tendy.dao.mapper.*;
 import com.tendy.utils.SpringUtils;
 
 import java.util.List;
@@ -27,6 +18,7 @@ public class DataMapperUtil {
     private static SysCmsMenuMapper sysCmsMenuMapper = SpringUtils.getBean(SysCmsMenuMapper.class);
     private static SysUserRoleMapper sysUserRoleMapper = SpringUtils.getBean(SysUserRoleMapper.class);
     private static SysCmsRoleMenuMapper sysCmsRoleMenuMapper = SpringUtils.getBean(SysCmsRoleMenuMapper.class);
+    private static BaseCityMapper baseCityMapper = SpringUtils.getBean(BaseCityMapper.class);
 
     public static MobileBussiness selectMobileBussinessByPrimaryKey(Integer id){
         return mobileBussinessMapper.selectByPrimaryKey(id);
@@ -90,6 +82,10 @@ public class DataMapperUtil {
 
     public static List<SysCmsMenu> getSysCmsMenuMenuListBySelective(Integer level, String pid) {
         return sysCmsMenuMapper.getMenuListBySelective(level, pid);
+    }
+
+    public static BaseCity selectBaseCityByPrimaryKey(Integer cityId) {
+        return baseCityMapper.selectByPrimaryKey(cityId);
     }
 
 }

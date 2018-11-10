@@ -14,6 +14,11 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath }/static/adminlte/bower_components/Ionicons/css/ionicons.min.css">
   <script type="text/javascript" src="${pageContext.request.contextPath }/static/js/menu.js"></script>
 </head>
+<%
+  String name = String.valueOf(request.getSession().getAttribute("name"));
+  String businessName = String.valueOf(request.getSession().getAttribute("businessName"));
+  String endTime = String.valueOf(request.getSession().getAttribute("endTime"));
+%>
 <body class="hold-transition skin-purple sidebar-mini">
 <div class="wrapper">
 
@@ -39,18 +44,18 @@
 		  <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="${pageContext.request.contextPath }/static/adminlte/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">xxx</span>
+              <span class="hidden-xs">${businessName}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
                 <img src="${pageContext.request.contextPath }/static/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                 <p>
-                  ${operator.userName} - ${operator.realName}
-                  <small>注册时间<fmt:formatDate value="${operator.regTime }" pattern="yyyy-MM-dd"/></small>
+                  ${name}
+                  <small>到期时间：${endTime}</small>
                 </p>
               </li>
-              <!-- Menu Body -->
+              <!-- Menu Body
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
@@ -63,14 +68,14 @@
                     <a href="#">配置</a>
                   </div>
                 </div>
-              </li>
+              </li>-->
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a target="right" href="${pageContext.request.contextPath }/toEditUser?userId=${operator.userId}" class="btn btn-default btn-flat">修改个人信息</a>
+                  <a target="right" href="${pageContext.request.contextPath }/page/toEditUser" class="btn btn-default btn-flat">修改个人信息</a>
                 </div>
                 <div class="pull-right">
-                  <a href="${pageContext.request.contextPath }/logout" class="btn btn-default btn-flat">退出</a>
+                  <a href="${pageContext.request.contextPath }/page/logout" class="btn btn-default btn-flat">退出</a>
                 </div>
               </li>
             </ul>
@@ -89,8 +94,8 @@
           <img src="${pageContext.request.contextPath }/static/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>${operator.realName}</p>
-          <a href="#"><i class="fa fa-circle text-success"></i>${operator.userName}</a>
+          <p>${businessName}</p>
+          <a href="#"><i class="fa fa-circle text-success"></i>${name}</a>
         </div>
       </div>
       <form action="#" method="get" class="sidebar-form">
@@ -121,7 +126,7 @@
   </aside>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-	<iframe class="content-wrapper" name="right" src="${pageContext.request.contextPath }/notice" style="width:100%;margin:0px" ></iframe>
+	<iframe class="content-wrapper" name="right" src="${pageContext.request.contextPath }/page/toEditUser" style="width:100%;margin:0px" ></iframe>
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
@@ -132,7 +137,6 @@
   </footer>
 </div>
 <!-- ./wrapper -->
-
 <!-- SlimScroll -->
 <script src="${pageContext.request.contextPath }/static/adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->

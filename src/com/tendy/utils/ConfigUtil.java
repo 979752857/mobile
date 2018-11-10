@@ -4,11 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
-/**
- * @author dida
- */
 public class ConfigUtil {
 
         private static final String[] CONFIGFILES = {"config.properties"};
@@ -17,7 +15,7 @@ public class ConfigUtil {
         static {
             try {
                 properties = new Properties();
-                String path = ConfigUtil.class.getResource("/").getPath();
+                String path = ConfigUtil.class.getResource("/").toURI().getPath();
                 for(String CONFIGFILE : CONFIGFILES){
                     FileInputStream fis = new FileInputStream(path + CONFIGFILE);
                     //处理中文乱码问题
@@ -28,6 +26,8 @@ public class ConfigUtil {
                 }
 
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
         }
