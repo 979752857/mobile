@@ -12,6 +12,17 @@
 				<div class="box-body">
 					<form class="form-horizontal" id="function-form" action="${pageContext.request.contextPath }/sysUser/addUser" method="post">
 						<input type="hidden" name="userId" value="${tSysUser.userId }"/>
+						<c:choose><c:when test="${cid != null}">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">下载二维码</label>
+								<div class="col-sm-2">
+									<a class="btn btn-success" href="${pageContext.request.contextPath }/static/qrcode/${cid}-1000X1000.png" download="${businessName}"><i class="fa fa-cloud-download">&nbsp;1000X1000</i></a>
+								</div>
+								<div class="col-sm-2">
+									<a class="btn btn-success" href="${pageContext.request.contextPath }/static/qrcode/${cid}-500X500.png" download="${businessName}><i class="fa fa-cloud-download">&nbsp;500X500</i></a>
+								</div>
+							</div>
+						</c:when></c:choose>
 						<div class="form-group">
 							<label  class="col-sm-2 control-label"><i class="fa fa-user"></i> 账户</label>
 
@@ -38,6 +49,13 @@
 							<label for="phone" class="col-sm-2 control-label"><i class="fa fa-mobile"></i> 手机号</label>
 							<div class="col-sm-9">
 								<input type="text" class="form-control" id="phone" name="phone" value="" placeholder="手机号" >
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="busName" class="col-sm-2 control-label"><i class="fa fa-mobile"></i> 运营商名</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="busName" name="busName" value="" placeholder="北京市XX移动运营商" >
 							</div>
 						</div>
 

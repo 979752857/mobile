@@ -5,12 +5,13 @@ function editUser(){
     var name = $("#name").html();
     var password = $("#password").val();
     var phone = $("#phone").val();
+    var busName = $("#busName").val();
     var address = $("#address").val();
     var remark = $("#remark").val();
 	$.ajax({
 		type: "post",
 		url: all_scope_path + "/userInfo/updateInfo",
-		data: {"name":name, "phone":phone, "password":$("input[name=password]").val(),
+		data: {"name":name, "phone":phone, "password":password, "busName":busName,
 			"address":address, "remark":remark},
 		dataType: "json",
 		beforeSend: function(XMLHttpRequest){
@@ -50,6 +51,7 @@ function getUserInfo(){
 				$("#phone").val(data.phone);
 				$("#address").val(data.address);
 				$("#remark").val(data.remark);
+				$("#busName").val(data.businessName);
             } else {
             	if(!data){
                     Ewin.error({message:"请重试"});

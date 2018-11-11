@@ -15,7 +15,7 @@ import java.util.Date;
 @Service
 public class UserInfoService extends BaseService{
 
-    public ReplyMap updateUserInfo(Integer businessId, String name, String password, String phone, String address, String remark){
+    public ReplyMap updateUserInfo(Integer businessId, String name, String password, String phone, String address, String remark, String busName){
         ReplyMap replyMap = new ReplyMap();
         MobileBussiness mobileBussiness = DataMapperUtil.selectMobileBussinessByPrimaryKey(businessId);
         if(!mobileBussiness.getName().equals(name)){
@@ -34,6 +34,9 @@ public class UserInfoService extends BaseService{
         }
         if(StringUtils.isNotBlank(remark)){
             mobileBussiness.setRemark(remark);
+        }
+        if(StringUtils.isNotBlank(busName)){
+            mobileBussiness.setBussinessName(busName);
         }
         mobileBussiness.setUpdateTime(new Date());
         int num = DataMapperUtil.updateMobileBussinessByPrimaryKeySelective(mobileBussiness);

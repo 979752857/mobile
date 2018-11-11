@@ -25,14 +25,15 @@ public class UserInfoController extends BaseController {
     @ResponseBody
     public String updateInfo(@RequestParam("name") String name, @RequestParam("password") String password,
                              @RequestParam("phone") String phone, @RequestParam("address") String address,
-                             @RequestParam("remark") String remark, HttpSession httpSession) {
+                             @RequestParam("remark") String remark, @RequestParam("busName") String busName,
+                             HttpSession httpSession) {
         ReplyMap replyMap = new ReplyMap();
         if(ParamUtil.checkParamIsNull(name, phone)){
             replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, BusinessConstants.PARAM_ERROR_MSG);
             return replyMap.toJson();
         }
         Integer businessId = Integer.valueOf(String.valueOf(httpSession.getAttribute("id")));
-        replyMap = userInfoService.updateUserInfo(businessId, name, password, phone, address, remark);
+        replyMap = userInfoService.updateUserInfo(businessId, name, password, phone, address, remark, busName);
         return replyMap.toJson();
     }
 

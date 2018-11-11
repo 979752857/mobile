@@ -72,8 +72,11 @@ public class PageController extends BaseController {
     }
 
     @RequestMapping(value = {"/toEditUser"}, method = {RequestMethod.GET})
-    public ModelAndView toEditUser() {
-        return new ModelAndView("userinfo/editUser");
+    public ModelAndView toEditUser(HttpSession httpSession) {
+        Map<String, String> map = new HashMap<>();
+        map.put("cid", String.valueOf(httpSession.getAttribute("cid")));
+        map.put("businessName", String.valueOf(httpSession.getAttribute("businessName")));
+        return new ModelAndView("userinfo/editUser", map);
     }
 
     @RequestMapping(value = {"/logout"}, method = {RequestMethod.GET})
