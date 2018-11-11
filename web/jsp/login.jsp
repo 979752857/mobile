@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>嘀嗒出行 | 登录首页</title>
+  <title>登录首页</title>
   <%@include file="/jsp/common/common.jsp"%>
   <!-- Ionicons -->
   <link rel="stylesheet" href="${pageContext.request.contextPath }/static/adminlte/bower_components/Ionicons/css/ionicons.min.css">
