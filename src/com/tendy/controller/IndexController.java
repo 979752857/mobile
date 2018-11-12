@@ -41,6 +41,8 @@ public class IndexController extends BaseController{
 		}
 		Integer pageSize = 10;
 		replyMap = indexService.getData(phone, cid, pageNo, pageSize, status, tag, notPhone);
+		logger.info("IndexController.phoneList   key:{}   cid:{}   pageNo:{}   status:{}   tag:{}   notPhone:{}   replyMap:{}",
+				phone, cid, pageNo, status, tag, notPhone, replyMap.toJson());
 		return replyMap.toJson();
 	}
 	

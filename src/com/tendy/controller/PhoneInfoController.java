@@ -69,7 +69,6 @@ public class PhoneInfoController extends BaseController {
         }
 		/*------------------------------------------------*/
         String result = DataTablesUtil.getResultString(list, total, map);
-        logger.info(result);
         return result;
     }
 
@@ -99,12 +98,13 @@ public class PhoneInfoController extends BaseController {
         }
         Integer businessId = Integer.valueOf(String.valueOf(httpSession.getAttribute("id")));
         replyMap = phoneInfoService.updateUserAccountPhone(accountPhone, businessId);
+        logger.info("PhoneInfoController.updatePhone   accountPhone:{}   replyMap:{}", JsonMapper.toJson(accountPhone), replyMap.toJson());
         return replyMap.toJson();
     }
 
     @ResponseBody
     @RequestMapping(value = "/phoneInfo", method = RequestMethod.GET)
-    public String updatePhone(@RequestParam("phone") String phone, HttpSession httpSession) {
+    public String phoneInfo(@RequestParam("phone") String phone, HttpSession httpSession) {
         ReplyMap replyMap = new ReplyMap();
         if(StringUtils.isBlank(phone) || ParamUtil.checkPhoneIllegal(phone)){
             replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, BusinessConstants.PARAM_ERROR_MSG);
@@ -126,6 +126,7 @@ public class PhoneInfoController extends BaseController {
         }
         Integer businessId = Integer.valueOf(String.valueOf(httpSession.getAttribute("id")));
         replyMap = phoneInfoService.updateLockPhone(phone, status, businessId);
+        logger.info("PhoneInfoController.lockedPhone   phone:{}   status:{}   replyMap:{}", phone, status, replyMap.toJson());
         return replyMap.toJson();
     }
 
