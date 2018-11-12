@@ -21,6 +21,7 @@
     <ul>
         <li class="Sort"><span id="sort-word">类型</span></li>
         <li class="Brand"><span id="brand-word">特征</span></li>
+        <li class="Position"><span id="position-word">位置</span></li>
     </ul>
 </div>
 <!-- End screening -->
@@ -61,6 +62,13 @@
         <li onclick="Categorytw(this, '9', '不含9')">不含9</li>
     </ul>
 </div>
+<div class="Position-eject">
+    <ul class="Position-w" id="Positiontw">
+        <li onclick="Positiontw(this, '', '位置')">不限</li>
+        <li onclick="Positiontw(this, '0', '中间')">中间</li>
+        <li onclick="Positiontw(this, '1', '末尾')">末尾</li>
+    </ul>
+</div>
 <!-- End 专业 -->
 <div class="search d5">
     <form id="phone-form" method="get">
@@ -68,7 +76,9 @@
         <input type="hidden" id="status" name="status" value="private">
         <input type="hidden" id="tag" name="tag" value="">
         <input type="hidden" id="notPhone" name="notPhone" value="">
+        <input type="hidden" id="position" name="position" value="">
         <button type="button" id="form-button" onclick="searchData()"></button>
+        <%--<button class="search-button" href="javascript:searchData();" id="form-button" ></button>--%>
     </form>
 </div>
 <div id="nav">
@@ -132,7 +142,7 @@
                 alert("网络传输错误！！");
             }
         });
-        setTimeout("$(\"#form-button\").show()",3000);
+        setTimeout("$(\"#form-button\").show()",500);
     }
     $('#load-more').on('click', function(){
         pageNo++;

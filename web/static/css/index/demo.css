@@ -50,7 +50,7 @@ div.screening>ul{
 div.screening>ul>li{
 	float: left;
 	font-size:0.75em;
-	width: 50%;
+	width: 33%;
 	text-align: center;
 	line-height: 3rem;
 	border-left: solid 1px #d3d3d3;
@@ -66,7 +66,7 @@ div.screening>ul>.current>span{
 
 /* grade */
 
-.Category-eject,.Sort-eject{
+.Category-eject,.Sort-eject,.Position-eject{
 	position:fixed;
 	top: -65%;
 	width: 100%;
@@ -75,7 +75,7 @@ div.screening>ul>.current>span{
 	-webkit-transition-duration: 0.4s;
 }
 
-.Category-eject>ul,.Sort-eject>ul{
+.Category-eject>ul,.Sort-eject>ul,.Position-eject>ul{
 	margin: 0;
 	padding: 0;
 	overflow: auto;
@@ -83,7 +83,7 @@ div.screening>ul>.current>span{
 	width: 100%;
 	-webkit-transition-duration: 0.4s;
 }
-.Category-eject>ul>li,.Sort-eject>ul>li{
+.Category-eject>ul>li,.Sort-eject>ul>li,.Position-eject>ul>li{
 	height: 3rem;
 	line-height: 3rem;
 	font-size: 0.75em;
@@ -95,26 +95,10 @@ div.screening>ul>.current>span{
 	position: absolute;
 	z-index: 1;
 }
-.Category-eject>ul.Category-t{
-	background: #eee;
-	position: absolute;
-	z-index: 2;
-	left: 100%;
-}
-.Category-eject>ul.Category-t>li{
-	border-bottom: solid 1px #e5e5e5;
-}
-.Category-eject>ul.Category-s{
+.Position-eject>ul.Position-w{
 	background: #fff;
 	position: absolute;
-	z-index: 3;
-	left: 100%;
-	list-style-type: none;
-}
-.Category-eject>ul.Category-s>li{
-	border-bottom: solid 1px #eee;
-	margin-left: 1rem;
-	padding: 0;
+	z-index: 1;
 }
 .grade-w-roll{
 	top: 3rem;
