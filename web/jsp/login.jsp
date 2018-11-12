@@ -2,13 +2,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>登录首页</title>
+  <title>手机号管理 | 登录首页</title>
   <%@include file="/jsp/common/common.jsp"%>
   <!-- Ionicons -->
   <link rel="stylesheet" href="${pageContext.request.contextPath }/static/adminlte/bower_components/Ionicons/css/ionicons.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="${pageContext.request.contextPath }/static/adminlte/plugins/iCheck/square/blue.css">
-
   <script type="text/javascript" src="${pageContext.request.contextPath }/static/js/login.js"></script>
   <style>
     .login-page{
@@ -20,6 +19,10 @@
       min-width: 1000px;
       z-index:-10;
       zoom: 1;
+      background: -webkit-radial-gradient(circle, #5799f2, #bbc9dc); /* Safari 5.1 - 6.0 */
+      background: -o-radial-gradient(circle, #5799f2, #bbc9dc); /* Opera 11.6 - 12.0 */
+      background: -moz-radial-gradient(circle, #5799f2, #bbc9dc); /* Firefox 3.6 - 15 */
+      background: radial-gradient(circle, #5799f2, #bbc9dc);
       background-color: #d2d6de;
       background-repeat: no-repeat;
       background-size: cover;
@@ -29,7 +32,7 @@
     }
   </style>
 </head>
-<body class="hold-transition login-page" style="background-image:url(${pageContext.request.contextPath }/static/image/login_img1.jpg); color:#fff; ">
+<body class="hold-transition login-page" style="color:#fff; ">
 <div class="login-box">
   <div class="login-logo" style="color: #fff;font-size: 40px">
     <b>手机号信息</b>CMS
