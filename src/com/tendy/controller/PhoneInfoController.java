@@ -50,8 +50,6 @@ public class PhoneInfoController extends BaseController {
     public String getPhoneList(@RequestParam(value = "aoData") String aoData, HttpSession httpSession) {
         //解析参数
         Map<String, Object> map = DataTablesUtil.getParamMap(aoData);
-        String start = (String) map.get("start");
-        String end = (String) map.get("end");
         //插件返回的起始行数
         Integer iDisplayStart = (Integer) map.get("iDisplayStart");
         //插件返回的每页长度
@@ -63,7 +61,8 @@ public class PhoneInfoController extends BaseController {
 		String tag = String.valueOf(map.get("tag"));
 		String notPhone = String.valueOf(map.get("notPhone"));
         Integer businessId = Integer.valueOf(String.valueOf(httpSession.getAttribute("id")));
-        Map<String, Object> resultMap = phoneInfoService.getDataDetail(keyword, iDisplayStart, iDisplayLength, status, businessId, tag, notPhone);
+        Integer cityId = Integer.valueOf(String.valueOf(httpSession.getAttribute("city")));
+        Map<String, Object> resultMap = phoneInfoService.getDataDetail(keyword, iDisplayStart, iDisplayLength, status, businessId, tag, notPhone, cityId);
         Integer total = (Integer) resultMap.get("total");
         if(resultMap.get("list") != null){
             list = (List<Map<String, Object>>) resultMap.get("list");

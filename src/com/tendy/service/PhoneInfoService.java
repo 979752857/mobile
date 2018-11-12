@@ -26,47 +26,19 @@ import java.util.Map;
 @Service
 public class PhoneInfoService extends BaseService {
 
-    public ReplyMap getDataDetail1(String phoneParam, Integer pageNo, Integer pageSize, String status, Integer businessId) {
-        ReplyMap replyMap = new ReplyMap();
-        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, businessId, (pageNo - 1) * pageSize, pageSize, status, null, null);
-        if (CollectionUtils.isEmpty(list)) {
-            replyMap.fail(BusinessConstants.RESULT_NULL_CODE, BusinessConstants.RESULT_NULL_MSG);
-            return replyMap;
-        }
-        int total = DataMapperUtil.countUserAccountPhoneByPhoneAndCity(phoneParam, businessId, status, null, null);
-        List<Map<String, String>> resultList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            Map<String, String> map = new HashMap<>();
-            UserAccountPhone accountPhone = list.get(i);
-            map.put("phone", accountPhone.getPhone());
-            map.put("url", accountPhone.getUrl());
-            if (accountPhone.getPrice() != null) {
-                map.put("price", accountPhone.getPrice().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
-            }
-            map.put("status", accountPhone.getStatus());
-            if (accountPhone.getUpdateTime() != null && (accountPhone.getUpdateTime().getTime() > accountPhone.getCreateTime().getTime())) {
-                map.put("time", TimeUtil.formatDate(accountPhone.getUpdateTime(), TimeUtil.YYYY_MM_DD));
-            } else {
-                map.put("time", TimeUtil.formatDate(accountPhone.getCreateTime(), TimeUtil.YYYY_MM_DD));
-            }
-            resultList.add(map);
-        }
-        replyMap.success();
-        replyMap.put("list", JsonMapper.toJson(resultList));
-        replyMap.put("total", total);
-
-        return replyMap;
-    }
-
-    public Map<String, Object> getDataDetail(String phoneParam, Integer iDisplayStart, Integer pageSize, String status, Integer businessId, String tag, String notPhone) {
+    public Map<String, Object> getDataDetail(String phoneParam, Integer iDisplayStart, Integer pageSize, String status, Integer businessId, String tag, String notPhone, Integer cityId) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
-        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, businessId, iDisplayStart, pageSize, status, tag, notPhone);
+        Integer openBusinessId = null;
+        if(ConfigUtil.getValue("open_businessid_"+cityId) != null){
+            openBusinessId = Integer.valueOf(ConfigUtil.getValue("open_businessid_"+cityId));
+        }
+        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, businessId, iDisplayStart, pageSize, status, tag, notPhone, openBusinessId);
         if (CollectionUtils.isEmpty(list)) {
             resultMap.put("total", 0);
             return resultMap;
         }
-        int total = DataMapperUtil.countUserAccountPhoneByPhoneAndCity(phoneParam, businessId, status, tag, notPhone);
+        int total = DataMapperUtil.countUserAccountPhoneByPhoneAndCity(phoneParam, businessId, status, tag, notPhone, openBusinessId);
         for (int i = 0; i < list.size(); i++) {
             Map<String, Object> map = new HashMap<>();
             UserAccountPhone accountPhone = list.get(i);

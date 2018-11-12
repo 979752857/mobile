@@ -29,7 +29,7 @@
     }
   </style>
 </head>
-<body class="hold-transition login-page" style="background-image:url(${pageContext.request.contextPath }/static/image/login_img.jpg); color:#fff; ">
+<body class="hold-transition login-page" style="background-image:url(${pageContext.request.contextPath }/static/image/login_img1.jpg); color:#fff; ">
 <div class="login-box">
   <div class="login-logo" style="color: #fff;font-size: 40px">
     <b>手机号信息</b>CMS

@@ -33,7 +33,7 @@
     select
     <include refid="Base_Column_List" />
     from user_account_phone
-    where business_id = #{businessId,jdbcType=INTEGER}
+    where 1=1
     <if test="phone != null and phone != ''" >
       and phone like concat('%', #{phone,jdbcType=VARCHAR}, '%')
     </if>
@@ -46,7 +46,15 @@
     <if test="notPhone != null and notPhone != ''" >
       and phone not like concat('%', #{notPhone,jdbcType=VARCHAR}, '%')
     </if>
-    order by update_time desc
+    <choose>
+      <when test="openBusinessId != null and openBusinessId != 0">
+        and business_id in(#{businessId,jdbcType=INTEGER},#{openBusinessId,jdbcType=INTEGER})
+      </when>
+      <otherwise>
+        and business_id = #{businessId,jdbcType=INTEGER}
+      </otherwise>
+    </choose>
+    order by business_id,update_time desc
     limit #{iDisplayStart},#{iDisplayLength}
   </select>
   <select id="selectByPhoneAndBusId" resultMap="BaseResultMap" parameterType="java.util.Map" >
@@ -58,7 +66,7 @@
   <select id="countListByPhone" resultType="java.lang.Integer" parameterType="java.util.Map" >
     select count(1)
     from user_account_phone
-    where business_id = #{businessId,jdbcType=INTEGER}
+    where 1=1
     <if test="phone != null and phone != ''" >
       and phone like concat('%', #{phone,jdbcType=VARCHAR}, '%')
     </if>
@@ -71,6 +79,14 @@
     <if test="notPhone != null and notPhone != ''" >
       and phone not like concat('%', #{notPhone,jdbcType=VARCHAR}, '%')
     </if>
+    <choose>
+      <when test="openBusinessId != null and openBusinessId != 0">
+        and business_id in(#{businessId,jdbcType=INTEGER},#{openBusinessId,jdbcType=INTEGER})
+      </when>
+      <otherwise>
+        and business_id = #{businessId,jdbcType=INTEGER}
+      </otherwise>
+    </choose>
   </select>
   <insert id="insertSelective" parameterType="com.tendy.dao.bean.UserAccountPhone" >
     insert into user_account_phone

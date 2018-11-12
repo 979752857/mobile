@@ -3,7 +3,6 @@ package com.tendy.service;
 import com.tendy.common.BusinessConstants;
 import com.tendy.common.ReplyMap;
 import com.tendy.dao.DataMapperUtil;
-import com.tendy.dao.bean.AccountPhone;
 import com.tendy.dao.bean.MobileBussiness;
 import com.tendy.dao.bean.UserAccountPhone;
 import com.tendy.utils.*;
@@ -12,9 +11,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author: tendy
@@ -35,7 +32,11 @@ public class IndexService {
             replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "运营商查询错误，请重新扫码");
             return replyMap;
         }
-        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, mobileBussiness.getId(), pageNo*pageSize, pageSize, status, tag, notPhone);
+        Integer openBusinessId = null;
+        if(ConfigUtil.getValue("open_businessid_"+mobileBussiness.getCityId()) != null){
+            openBusinessId = Integer.valueOf(ConfigUtil.getValue("open_businessid_"+mobileBussiness.getCityId()));
+        }
+        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, mobileBussiness.getId(), pageNo*pageSize, pageSize, status, tag, notPhone, openBusinessId);
         if(CollectionUtils.isEmpty(list)){
             replyMap.fail(BusinessConstants.RESULT_NULL_CODE, BusinessConstants.RESULT_NULL_MSG);
             return replyMap;

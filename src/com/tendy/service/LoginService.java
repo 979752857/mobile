@@ -52,6 +52,7 @@ public class LoginService extends BaseService{
         httpSession.setAttribute("id", mobileBussiness.getId());
         httpSession.setAttribute("name", mobileBussiness.getName());
         httpSession.setAttribute("cid", mobileBussiness.getCid());
+        httpSession.setAttribute("city", mobileBussiness.getCityId());
         httpSession.setAttribute("businessName", mobileBussiness.getBussinessName());
         httpSession.setAttribute("endTime", TimeUtil.formatDate(mobileBussiness.getEndTime(), TimeUtil.YYYY_MM_DD));
         // 存储可以访问的菜单
