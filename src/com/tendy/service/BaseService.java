@@ -7,5 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class BaseService {
 
-    protected Logger logger = LoggerFactory.getLogger("phoneLogger");
+    protected Logger logger = LoggerFactory.getLogger(BaseService.class);
+    
 }
