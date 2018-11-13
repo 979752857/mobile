@@ -99,6 +99,7 @@
         var status = $("#status").val();
         var notPhone = $("#notPhone").val();
         var tag = $("#tag").val();
+        var position = $("#position").val();
         var keyword = $("#key").val();
         if(!keyword && !tag && !keyword){
             keyword = "888";
@@ -110,7 +111,7 @@
         $.ajax({
             url:"${pageContext.request.contextPath}/index/phoneList",
             type:"get",
-            data:{key:keyword,cid:cid,status:status,no:pageNo,tag:tag,notPhone:notPhone},
+            data:{key:keyword,cid:cid,status:status,no:pageNo,tag:tag,notPhone:notPhone,position:position},
             success:function(data){
                 if(data){
                     var result = eval('(' + data + ')');

@@ -16,12 +16,12 @@ public interface UserAccountPhoneMapper {
     List<UserAccountPhone> selectListByPhone(@Param("phone")String phone, @Param("businessId")Integer businessId,
                                              @Param("iDisplayStart")Integer iDisplayStart, @Param("iDisplayLength")Integer iDisplayLength,
                                              @Param("status")String status, @Param("tag")String tag, @Param("notPhone")String notPhone,
-                                             @Param("openBusinessId")Integer openBusinessId);
+                                             @Param("openBusinessId")Integer openBusinessId, @Param("position")String position);
 
     UserAccountPhone selectByPhoneAndBusId(@Param("phone")String phone, @Param("businessId")Integer businessId);
 
     int countListByPhone(@Param("phone")String phone, @Param("businessId")Integer businessId, @Param("status")String status,
-                         @Param("tag")String tag, @Param("notPhone")String notPhone, @Param("openBusinessId")Integer openBusinessId);
+                         @Param("tag")String tag, @Param("notPhone")String notPhone, @Param("openBusinessId")Integer openBusinessId, @Param("position")String position);
 
     int updateByPrimaryKeySelective(UserAccountPhone record);
 

@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 public class IndexService {
 
-    public ReplyMap getData(String phoneParam, String businessCid, Integer pageNo, Integer pageSize, String status, String tag, String notPhone){
+    public ReplyMap getData(String phoneParam, String businessCid, Integer pageNo, Integer pageSize, String status, String tag, String notPhone, String position){
         ReplyMap replyMap = new ReplyMap();
         if(StringUtils.isBlank(businessCid)){
             replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "运营商查询错误，请重新扫码");
@@ -36,7 +36,7 @@ public class IndexService {
         if(ConfigUtil.getValue("open_businessid_"+mobileBussiness.getCityId()) != null){
             openBusinessId = Integer.valueOf(ConfigUtil.getValue("open_businessid_"+mobileBussiness.getCityId()));
         }
-        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, mobileBussiness.getId(), pageNo*pageSize, pageSize, status, tag, notPhone, openBusinessId);
+        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, mobileBussiness.getId(), pageNo*pageSize, pageSize, status, tag, notPhone, openBusinessId, position);
         if(CollectionUtils.isEmpty(list)){
             replyMap.fail(BusinessConstants.RESULT_NULL_CODE, BusinessConstants.RESULT_NULL_MSG);
             return replyMap;

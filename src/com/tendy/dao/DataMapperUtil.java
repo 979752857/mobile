@@ -44,16 +44,16 @@ public class DataMapperUtil {
     }
 
     public static List<UserAccountPhone> selectUserAccountPhoneByPhoneAndBusiness(String phone, Integer businessId, Integer iDisplayStart,
-                                                                                  Integer iDisplayLength, String status, String tag, String notPhone, Integer openBusinessId){
-        return userAccountPhoneMapper.selectListByPhone(phone, businessId, iDisplayStart, iDisplayLength, status, tag, notPhone, openBusinessId);
+                                                                                  Integer iDisplayLength, String status, String tag, String notPhone, Integer openBusinessId, String position){
+        return userAccountPhoneMapper.selectListByPhone(phone, businessId, iDisplayStart, iDisplayLength, status, tag, notPhone, openBusinessId, position);
     }
 
     public static UserAccountPhone selectUserAccountPhoneByPhoneAndBusId(String phone, Integer businessId){
         return userAccountPhoneMapper.selectByPhoneAndBusId(phone, businessId);
     }
 
-    public static int countUserAccountPhoneByPhoneAndCity(String phone, Integer businessId, String status, String tag, String notPhone, Integer openBusinessId){
-        return userAccountPhoneMapper.countListByPhone(phone, businessId, status, tag, notPhone, openBusinessId);
+    public static int countUserAccountPhoneByPhoneAndCity(String phone, Integer businessId, String status, String tag, String notPhone, Integer openBusinessId, String position){
+        return userAccountPhoneMapper.countListByPhone(phone, businessId, status, tag, notPhone, openBusinessId, position);
     }
 
     public static int insertOrUpdateUserAccountPhoneSelective(UserAccountPhone userAccountPhone){

@@ -23,7 +23,8 @@ public class IndexController extends BaseController{
 	@ResponseBody
 	public String phoneList(@RequestParam(value = "key") String phone, @RequestParam(value = "cid", required = false) String cid,
 							@RequestParam(value = "no", required = false) Integer pageNo, @RequestParam(value = "status", required = false) String status,
-							@RequestParam(value = "tag", required = false) String tag, @RequestParam(value = "notPhone", required = false) String notPhone){
+							@RequestParam(value = "tag", required = false) String tag, @RequestParam(value = "notPhone", required = false) String notPhone,
+							@RequestParam(value = "position", required = false) String position){
 		ReplyMap replyMap = new ReplyMap();
 		if(StringUtils.isBlank(phone) && StringUtils.isBlank(tag) && StringUtils.isBlank(notPhone)){
 			replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "请输入查询的关键号码");
@@ -39,10 +40,13 @@ public class IndexController extends BaseController{
 		if(StringUtils.isBlank(status)){
 			status = "private";
 		}
+		if(StringUtils.isBlank(position)){
+			position = null;
+		}
 		Integer pageSize = 10;
-		replyMap = indexService.getData(phone, cid, pageNo, pageSize, status, tag, notPhone);
-		logger.info("IndexController.phoneList   key:{}   cid:{}   pageNo:{}   status:{}   tag:{}   notPhone:{}   replyMap:{}",
-				phone, cid, pageNo, status, tag, notPhone, replyMap.toJson());
+		replyMap = indexService.getData(phone, cid, pageNo, pageSize, status, tag, notPhone, position);
+		logger.info("IndexController.phoneList   key:{}   cid:{}   pageNo:{}   status:{}   tag:{}   notPhone:{}   position:{}   replyMap:{}",
+				phone, cid, pageNo, status, tag, notPhone, position, replyMap.toJson());
 		return replyMap.toJson();
 	}
 	
