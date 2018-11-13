@@ -17,16 +17,17 @@ function initParam() {
     var status = "";
     var tag = $("#tag").val();
     var notPhone = $("#notPhone").val();
-    initBaseStringReload(all_scope_path+'/phoneInfo/phoneList', keyword, status, tag, notPhone);
+    var position = $("#position").val();
+    initBaseStringReload(all_scope_path+'/phoneInfo/phoneList', keyword, status, tag, notPhone, position);
 }
 
 /**
  * 初始化userTable表
  * @param url
  */
-function initBaseStringReload(url, keyword, status, tag, notPhone){
+function initBaseStringReload(url, keyword, status, tag, notPhone, position){
     var arrcol = getCloumJson();
-    var param = {"keyword":keyword, "status":status, "tag":tag, "notPhone":notPhone};
+    var param = {"keyword":keyword, "status":status, "tag":tag, "notPhone":notPhone, "position":position};
     initDataTable("baseStringTable", url, arrcol, param);
 }
 
@@ -128,4 +129,7 @@ function initSelect() {
     $("#notPhone").append("<option value='7'>不含7</option>");//不含7
     $("#notPhone").append("<option value='8'>不含8</option>");//不含8
     $("#notPhone").append("<option value='9'>不含9</option>");//不含9
+
+    $("#position").append("<option value='0'>中间</option>");
+    $("#position").append("<option value='1'>末尾</option>");
 }

@@ -49,5 +49,4 @@ public class IndexController extends BaseController{
 				phone, cid, pageNo, status, tag, notPhone, position, replyMap.toJson());
 		return replyMap.toJson();
 	}
-	
 }

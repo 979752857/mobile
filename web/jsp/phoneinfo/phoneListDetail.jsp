@@ -44,6 +44,18 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-10">
+                                <div class="sear_cond" style="float: left">
+                                    <span class="title">位置：</span>
+                                </div>
+                                <div class="col-md-2" style="margin-left: 5px; padding: 0px">
+                                    <select id="position" class="form-control select2" style="width: 100%;">
+                                        <option selected="selected" value="">不限</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-sm-2" style="margin-left: 20px;">
                                 <input type="text" class="form-control" name="phone" placeholder="手机号" value="">
                             </div>

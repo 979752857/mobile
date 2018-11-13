@@ -19,7 +19,7 @@ public class BusinessConstants {
     public static final int PASSWORD_ERROR_CODE = 205;
     public static final String PASSWORD_ERROR_MSG = "账号或密码错误";
     public static final int VALID_TIMEOUT_CODE = 206;
-    public static final String VALID_TIMEOUT_MSG = "该账户已过期";
+    public static final String VALID_TIMEOUT_MSG = "该账户已过期，请联系管理员";
     public static final int PHONE_NULL_CODE = 207;
     public static final String PHONE_NULL_MSG = "手机信息不存在";
 
