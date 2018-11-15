@@ -81,10 +81,11 @@
         <%--<button class="search-button" href="javascript:searchData();" id="form-button" ></button>--%>
     </form>
 </div>
-<div id="nav">
+<div id="nav" class="margin-bottom-div">
     <ul id="phone-data"></ul>
     <p id="load-more" style="display:none;" class="load-more">点击加载更多</p>
 </div>
+<div id="bus-info" class="float-bottom-div"></div>
 <script>
     var pageNo = 0;
     function searchData() {
@@ -145,11 +146,33 @@
         });
         setTimeout("$(\"#form-button\").show()",500);
     }
+    function getBusInfo(){
+        var Request = GetRequest();
+        var cid = Request['cid'];
+        $.ajax({
+            url:"${pageContext.request.contextPath}/index/businessInfo",
+            type:"get",
+            data:{cid:cid},
+            success:function(data){
+                if(data){
+                    var result = eval('(' + data + ')');
+                    if(result.code == 0){
+                        var phone = result.phone;
+                        var name = result.name;
+                        var address = result.address;
+                        var html = '<p>'+name+'</p><p>地址：'+address+'&nbsp;&nbsp;&nbsp;&nbsp;电话：'+phone+'</p>';
+                        $("#bus-info").html(html);
+                    }
+                }
+            }
+        });
+    }
     $('#load-more').on('click', function(){
         pageNo++;
         getData();
     });
     getData();
+    getBusInfo();
 </script>
 </body>
 </html>

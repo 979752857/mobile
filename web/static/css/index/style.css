@@ -235,7 +235,7 @@ form {
   float:right;
 }
 
-#nav{width:100%;height:500px;perspective:400px;}
+#nav{width:100%;height:auto;perspective:400px;}
 #nav p{height:40px;width:280px;font-size:18px;font-family:"微软雅黑";text-align:center;line-height:40px;padding-left:20px;padding-right:20px;}
 #nav ul{padding:0;}
 #nav ul li{width:280px;height:40px;list-style:none;position:relative;
@@ -258,3 +258,19 @@ form {
  #nav2 ul li div:nth-child(1){height:40px;width:200px;background:#f96;}
  #nav2 ul li div p{font-size:16px;font-family:"微软雅黑";text-align:center;line-height:40px;}
  #nav2 ul li:hover{transform:rotateY(360deg) scale(1.1);}
+
+.float-bottom-div{
+  left: 0;
+  position: fixed;
+  bottom: 0;
+  width:100%;
+  z-index: 100;
+  height:40px;
+  background: #fff9e5;
+  color: #666;
+  font-size:14px;
+  text-align: center;
+}
+.margin-bottom-div{
+  padding-bottom:40px;
+}

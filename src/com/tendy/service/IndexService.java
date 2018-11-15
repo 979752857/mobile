@@ -21,6 +21,24 @@ import java.util.List;
 @Service
 public class IndexService {
 
+    public ReplyMap getBusinessInfo(String businessCid){
+        ReplyMap replyMap = new ReplyMap();
+        if(StringUtils.isBlank(businessCid)){
+            replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "运营商查询错误，请重新扫码");
+            return replyMap;
+        }
+        MobileBussiness mobileBussiness = DataMapperUtil.selectMobileBussinessByCid(businessCid);
+        if(mobileBussiness == null){
+            replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "运营商查询错误，请重新扫码");
+            return replyMap;
+        }
+        replyMap.put("name", mobileBussiness.getBussinessName());
+        replyMap.put("phone", mobileBussiness.getPhone());
+        replyMap.put("address", mobileBussiness.getAddress());
+        replyMap.success();
+        return replyMap;
+    }
+
     public ReplyMap getData(String phoneParam, String businessCid, Integer pageNo, Integer pageSize, String status, String tag, String notPhone, String position){
         ReplyMap replyMap = new ReplyMap();
         if(StringUtils.isBlank(businessCid)){

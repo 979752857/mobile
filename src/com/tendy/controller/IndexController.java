@@ -49,4 +49,17 @@ public class IndexController extends BaseController{
 				phone, cid, pageNo, status, tag, notPhone, position, replyMap.toJson());
 		return replyMap.toJson();
 	}
+
+	@RequestMapping(value = "/businessInfo", method = {RequestMethod.GET}, produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String businessInfo(@RequestParam(value = "cid") String cid){
+		ReplyMap replyMap = new ReplyMap();
+		if(StringUtils.isBlank(cid)){
+			replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, BusinessConstants.PARAM_ERROR_MSG);
+			return replyMap.toJson();
+		}
+		replyMap = indexService.getBusinessInfo(cid);
+		logger.info("IndexController.businessInfo   cid:{}   replyMap:{}", cid, replyMap.toJson());
+		return replyMap.toJson();
+	}
 }
