@@ -81,11 +81,11 @@
         <%--<button class="search-button" href="javascript:searchData();" id="form-button" ></button>--%>
     </form>
 </div>
-<div id="nav" class="margin-bottom-div">
+<div id="nav">
     <ul id="phone-data"></ul>
     <p id="load-more" style="display:none;" class="load-more">点击加载更多</p>
 </div>
-<div id="bus-info" class="float-bottom-div"></div>
+<%--<div id="bus-info" class="float-bottom-div"></div>--%>
 <script>
     var pageNo = 0;
     function searchData() {
@@ -172,7 +172,7 @@
         getData();
     });
     getData();
-    getBusInfo();
+//    getBusInfo();
 </script>
 </body>
 </html>
