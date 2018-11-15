@@ -44,6 +44,7 @@ public class PhoneInfoService extends BaseService {
             UserAccountPhone accountPhone = list.get(i);
             map.put("phone", accountPhone.getPhone());
             map.put("url", accountPhone.getUrl());
+            map.put("city", accountPhone.getCityId());
             if (accountPhone.getPrice() != null) {
                 map.put("price", accountPhone.getPrice().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
             }

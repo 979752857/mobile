@@ -39,10 +39,6 @@ function getCloumJson() {
             "mData" : "phone"
         }, {
             "sWidth":"15%",
-            "sTitle" : "链接",
-            "mData" : "url"
-        }, {
-            "sWidth":"15%",
             "sTitle" : "价格",
             "mData" : "price"
         }, {
@@ -62,6 +58,17 @@ function getCloumJson() {
             "sWidth":"15%",
             "sTitle" : "日期",
             "mData" : "time"
+        }, {
+            "sWidth":"15%",
+            "sTitle" : "链接",
+            "mData" : "url",
+            "mRender" : function test(data, type, full) {
+                var resultHtml = '';
+                if(data){
+                    resultHtml += '<a class="btn btn-primary btn-xs" href="'+data+'"><i class="fa fa-edit"></i> 跳转</a>';
+                }
+                return resultHtml;
+            }
         }, {
             "sWidth":"20%",
             "sTitle" : "操作",
