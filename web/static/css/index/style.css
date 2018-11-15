@@ -271,6 +271,12 @@ form {
   font-size:14px;
   text-align: center;
 }
+.float-bottom-div a{
+  color: #0daff0;
+}
+.float-bottom-div p{
+  margin-bottom:5px;
+}
 .margin-bottom-div{
   padding-bottom:40px;
 }

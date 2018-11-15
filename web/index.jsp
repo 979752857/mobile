@@ -160,7 +160,7 @@
                         var phone = result.phone;
                         var name = result.name;
                         var address = result.address;
-                        var html = '<p>'+name+'</p><p>地址：'+address+'&nbsp;&nbsp;&nbsp;&nbsp;电话：'+phone+'</p>';
+                        var html = '<p>'+name+'</p><p>'+address+'&nbsp;&nbsp;&nbsp;&nbsp;<a href="tel:'+phone+'">'+phone+'</a></p>';
                         $("#bus-info").html(html);
                     }
                 }
