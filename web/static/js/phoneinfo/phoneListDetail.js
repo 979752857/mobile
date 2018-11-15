@@ -65,7 +65,7 @@ function getCloumJson() {
             "mRender" : function test(data, type, full) {
                 var resultHtml = '';
                 if(data){
-                    resultHtml += '<a class="btn btn-primary btn-xs" href="'+data+'"><i class="fa fa-edit"></i> 跳转</a>';
+                    resultHtml += '<a class="btn btn-primary btn-xs" href="javascript:void(0)" onclick="showQrcode(\''+full.city+'\',\''+data+'\',\''+full.phone+'\')"><i class="fa fa-search"></i> 查看二维码</a>';
                 }
                 return resultHtml;
             }
@@ -85,6 +85,17 @@ function getCloumJson() {
             }
         }];
     return arrcol;
+}
+
+function showQrcode(city, data, phone) {
+    var showId = "qrcode-"+phone;
+    Ewin.normal({message:"<div id=\""+showId+"\" style='width:200;margin:0 auto;'></div>"});
+    var qrcodeContent = getQrcodeByCity(city, data, phone);
+    var qrcode = new QRCode(document.getElementById(showId), {
+        width : 200,//设置宽高
+        height : 200
+    });
+    qrcode.makeCode(qrcodeContent);
 }
 
 function lockPhone(phone, status){

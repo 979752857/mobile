@@ -82,6 +82,7 @@
         });
     </script>
     <script src="${pageContext.request.contextPath }/static/js/phoneinfo/qrcode.js"></script>
+    <script src="${pageContext.request.contextPath }/static/js/phoneinfo/cityQrcode.js"></script>
     <script src="${pageContext.request.contextPath }/static/js/phoneinfo/phoneListDetail.js"></script>
 </body>
 </html>

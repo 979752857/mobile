@@ -236,6 +236,46 @@
                     }
                 };
             },
+            normal: function (options) {
+                if (typeof options == 'string') {
+                    options = {
+                        message: options
+                    };
+                }
+                var id = init(options);
+                var modal = $('#' + id);
+                modal.find('.modal-content').css({'background-color': '#eee','color':'#333'});
+                modal.find('.ok').removeClass('btn-primary').addClass('btn-outline btn-info');
+                modal.find('.cancel').removeClass('btn-primary').addClass('btn-outline btn-info');
+                modal.find('.icon').addClass("fa-info");
+                if (options.btncl == undefined){
+                    modal.find('.cancel').hide();
+                }
+                if (options.btnok == undefined){
+                    modal.find('.ok').hide();
+                }
+                if(options.btncl == undefined && options.btnok == undefined){
+                    modal.click(function () {
+                        $(this).modal('hide');
+                    });
+                }
+                return {
+                    id: id,
+                    on: function (callback) {
+                        if (callback && callback instanceof Function) {
+                            modal.find('.ok').click(function () {callback(true); });
+                            modal.find('.cancel').click(function () {callback(false); });
+                        }
+                    },
+                    hide: function (callback) {
+                        if (callback && callback instanceof Function) {
+                            modal.on('hide.bs.modal', function (e) {
+                                callback(e);
+                            });
+                        }
+                    }
+                };
+            },
             confirm: function (options) {
                 var id = init(options);
                 var modal = $('#' + id);
