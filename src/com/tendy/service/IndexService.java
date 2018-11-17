@@ -1,6 +1,7 @@
 package com.tendy.service;
 
 import com.tendy.common.BusinessConstants;
+import com.tendy.common.Constants;
 import com.tendy.common.ReplyMap;
 import com.tendy.dao.DataMapperUtil;
 import com.tendy.dao.bean.MobileBussiness;
@@ -12,6 +13,7 @@ import org.springframework.util.CollectionUtils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: tendy
@@ -51,8 +53,15 @@ public class IndexService {
             return replyMap;
         }
         Integer openBusinessId = null;
-        if(ConfigUtil.getValue("open_businessid_"+mobileBussiness.getCityId()) != null){
-            openBusinessId = Integer.valueOf(ConfigUtil.getValue("open_businessid_"+mobileBussiness.getCityId()));
+        if(StringUtils.isNotBlank(mobileBussiness.getContent())){
+            Map<String, Object> roleMap = JsonMapper.json2Map(mobileBussiness.getContent());
+            if(roleMap.get(Constants.OPEN_BUSINESS_KEY) != null){
+                if(Boolean.valueOf(String.valueOf(roleMap.get(Constants.OPEN_BUSINESS_KEY)))){
+                    if(ConfigUtil.getValue("open_businessid_"+mobileBussiness.getCityId()) != null){
+                        openBusinessId = Integer.valueOf(ConfigUtil.getValue("open_businessid_"+mobileBussiness.getCityId()));
+                    }
+                }
+            }
         }
         List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, mobileBussiness.getId(), pageNo*pageSize, pageSize, status, tag, notPhone, openBusinessId, position);
         if(CollectionUtils.isEmpty(list)){

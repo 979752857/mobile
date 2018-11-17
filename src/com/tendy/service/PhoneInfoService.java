@@ -1,6 +1,7 @@
 package com.tendy.service;
 
 import com.tendy.common.BusinessConstants;
+import com.tendy.common.Constants;
 import com.tendy.common.ReplyMap;
 import com.tendy.dao.DataMapperUtil;
 import com.tendy.dao.bean.MobileBussiness;
@@ -26,12 +27,19 @@ import java.util.Map;
 @Service
 public class PhoneInfoService extends BaseService {
 
-    public Map<String, Object> getDataDetail(String phoneParam, Integer iDisplayStart, Integer pageSize, String status, Integer businessId, String tag, String notPhone, Integer cityId, String position) {
+    public Map<String, Object> getDataDetail(String phoneParam, Integer iDisplayStart, Integer pageSize, String status, Integer businessId, String tag, String notPhone, Integer cityId, String position, String content) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
         Integer openBusinessId = null;
-        if(ConfigUtil.getValue("open_businessid_"+cityId) != null){
-            openBusinessId = Integer.valueOf(ConfigUtil.getValue("open_businessid_"+cityId));
+        if(StringUtils.isNotBlank(content)){
+            Map<String, Object> roleMap = JsonMapper.json2Map(content);
+            if(roleMap.get(Constants.OPEN_BUSINESS_KEY) != null){
+                if(Boolean.valueOf(String.valueOf(roleMap.get(Constants.OPEN_BUSINESS_KEY)))){
+                    if(ConfigUtil.getValue("open_businessid_"+cityId) != null){
+                        openBusinessId = Integer.valueOf(ConfigUtil.getValue("open_businessid_"+cityId));
+                    }
+                }
+            }
         }
         List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, businessId, iDisplayStart, pageSize, status, tag, notPhone, openBusinessId, position);
         if (CollectionUtils.isEmpty(list)) {

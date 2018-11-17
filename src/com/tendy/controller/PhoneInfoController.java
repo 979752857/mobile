@@ -63,7 +63,8 @@ public class PhoneInfoController extends BaseController {
 		String position = String.valueOf(map.get("position"));
         Integer businessId = Integer.valueOf(String.valueOf(httpSession.getAttribute("id")));
         Integer cityId = Integer.valueOf(String.valueOf(httpSession.getAttribute("city")));
-        Map<String, Object> resultMap = phoneInfoService.getDataDetail(keyword, iDisplayStart, iDisplayLength, status, businessId, tag, notPhone, cityId, position);
+        String content = String.valueOf(httpSession.getAttribute("content"));
+        Map<String, Object> resultMap = phoneInfoService.getDataDetail(keyword, iDisplayStart, iDisplayLength, status, businessId, tag, notPhone, cityId, position, content);
         Integer total = (Integer) resultMap.get("total");
         if(resultMap.get("list") != null){
             list = (List<Map<String, Object>>) resultMap.get("list");
