@@ -18,6 +18,8 @@ public class UserAccountPhone {
 
     private String tag;
 
+    private String type;
+
     private String status;
 
     private Date createTime;
@@ -80,6 +82,14 @@ public class UserAccountPhone {
 
     public void setTag(String tag) {
         this.tag = tag == null ? null : tag.trim();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 
     public String getStatus() {

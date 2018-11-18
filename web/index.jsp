@@ -72,7 +72,7 @@
 <!-- End 专业 -->
 <div class="search d5">
     <form id="phone-form" method="get">
-        <input type="text" id="key" name="key" value="" placeholder="搜索从这里开始...">
+        <input type="text" id="key" name="key" value="" placeholder="输入关键数字号码...">
         <input type="hidden" id="status" name="status" value="private">
         <input type="hidden" id="tag" name="tag" value="">
         <input type="hidden" id="notPhone" name="notPhone" value="">

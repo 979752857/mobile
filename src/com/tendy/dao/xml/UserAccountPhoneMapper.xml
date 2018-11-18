@@ -9,13 +9,14 @@
     <result column="city_id" property="cityId" jdbcType="INTEGER" />
     <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="tag" property="tag" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="CHAR" />
     <result column="status" property="status" jdbcType="CHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, phone, url, business_id, city_id, price, tag, status, create_time, update_time, remark
+    id, phone, url, business_id, city_id, price, tag, type, status, create_time, update_time, remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -142,6 +143,9 @@
       <if test="tag != null" >
         tag,
       </if>
+      <if test="type != null" >
+        type,
+      </if>
       <if test="status != null" >
         status,
       </if>
@@ -177,6 +181,9 @@
       <if test="tag != null" >
         #{tag,jdbcType=VARCHAR},
       </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
       <if test="status != null" >
         #{status,jdbcType=CHAR},
       </if>
@@ -211,6 +218,9 @@
       </if>
       <if test="tag != null" >
         tag = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=CHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=CHAR},

@@ -15,6 +15,7 @@ public class MobileRule {
         listRule.add(new ItemRule("(\\d)\\1{4}", "5A精品靓号", "AAAAA"));
         listRule.add(new ItemRule("(?:(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){4}|(?:9(?=8)|8(?=7)|7(?=6)|6(?=5)|5(?=4)|4(?=3)|3(?=2)|2(?=1)|1(?=0)){4})\\d", "5顺精品靓号", "ABCDE"));
         listRule.add(new ItemRule("(\\d)\\1{2}(\\d)(\\d)\\3{2}", "AAABCCC靓号", "AAABCCC"));
+        listRule.add(new ItemRule("([\\d])\\1{2,}([\\d])\\2{2,}", "AAABBB精品靓号", "AAABBB"));
         listRule.add(new ItemRule("(\\d\\d\\d)\\1{1}", "ABC重复靓号", "ABCABC"));
         listRule.add(new ItemRule("(\\d)\\1{1}(?!\\1)(\\d)\\2{1}(?!\\2)(\\d)\\3{1}", "ABC对子靓号", "AABBCC"));
         listRule.add(new ItemRule("(\\d)(\\d)(\\d)\\3\\2\\1", "3位回环靓号", "ABCCBA"));

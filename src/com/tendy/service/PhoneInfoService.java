@@ -215,7 +215,9 @@ public class PhoneInfoService extends BaseService {
                 ItemRule item = MobileRule.checkPhone(userAccountPhone.getPhone());
                 if(item != null){
                     userAccountPhone.setTag(item.getTag());
-                    userAccountPhone.setRemark(item.getRemark());
+                    Map<String, String> map = new HashMap<>();
+                    map.put("tag", item.getRemark());
+                    userAccountPhone.setRemark(JsonMapper.toJson(map));
                 }
                 int num = DataMapperUtil.insertOrUpdateUserAccountPhoneSelective(userAccountPhone);
                 if (num > 0) {
