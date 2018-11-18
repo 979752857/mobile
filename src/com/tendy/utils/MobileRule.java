@@ -16,6 +16,7 @@ public class MobileRule {
         listRule.add(new ItemRule("(?:(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){4}|(?:9(?=8)|8(?=7)|7(?=6)|6(?=5)|5(?=4)|4(?=3)|3(?=2)|2(?=1)|1(?=0)){4})\\d", "5顺精品靓号", "ABCDE"));
         listRule.add(new ItemRule("(\\d)\\1{2}(\\d)(\\d)\\3{2}", "AAABCCC靓号", "AAABCCC"));
         listRule.add(new ItemRule("([\\d])\\1{2,}([\\d])\\2{2,}", "AAABBB精品靓号", "AAABBB"));
+        listRule.add(new ItemRule("(\\d\\d\\d\\d)\\1{1}", "ABCD重复靓号", "ABCDABCD"));
         listRule.add(new ItemRule("(\\d\\d\\d)\\1{1}", "ABC重复靓号", "ABCABC"));
         listRule.add(new ItemRule("(\\d)\\1{1}(?!\\1)(\\d)\\2{1}(?!\\2)(\\d)\\3{1}", "ABC对子靓号", "AABBCC"));
         listRule.add(new ItemRule("(\\d)(\\d)(\\d)\\3\\2\\1", "3位回环靓号", "ABCCBA"));
@@ -62,6 +63,10 @@ public class MobileRule {
         list.add("18812362377");
         //AAABCCC
         list.add("18886222377");
+        //ABCDABCD
+        list.add("18823472347");
+        //AAABBB
+        list.add("18821115557");
         //ABCABC
         list.add("18813513577");
         //AABBCC

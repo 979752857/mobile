@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/index/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/index/demo.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/index/style.css">
+    <script>var all_scope_path = "${pageContext.servletContext.contextPath }";</script>
     <script src="${pageContext.request.contextPath}/static/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/common/util.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/index.js"></script>
@@ -88,85 +89,6 @@
 <%--<div id="bus-info" class="float-bottom-div"></div>--%>
 <script>
     var pageNo = 0;
-    function searchData() {
-        $("#phone-data").html("");
-        pageNo = 0;
-        getData();
-    }
-    function getData() {
-        $("#form-button").hide();
-        var Request = GetRequest();
-        var cid = Request['cid'];
-        var status = $("#status").val();
-        var notPhone = $("#notPhone").val();
-        var tag = $("#tag").val();
-        var position = $("#position").val();
-        var keyword = $("#key").val();
-        if(!keyword && !tag && !keyword){
-            keyword = "888";
-        }
-        if(!cid){
-            $("#phone-data").html("");
-            $("#phone-data").html("<li><div><p>请重新扫描二维码</p></div></li>");
-        }
-        $.ajax({
-            url:"${pageContext.request.contextPath}/index/phoneList",
-            type:"get",
-            data:{key:keyword,cid:cid,status:status,no:pageNo,tag:tag,notPhone:notPhone,position:position},
-            success:function(data){
-                if(data){
-                    var result = eval('(' + data + ')');
-                    if(result.code == 0){
-                        var resList = result.list;
-                        for(var i = 0; i <resList.length; i++){
-                            console.log(resList[i]);
-                            $("#phone-data").append(resList[i]);
-                        }
-                        if(resList.length == 10){
-                            $("#load-more").show();
-                        }else{
-                            $("#load-more").hide();
-                        }
-                    }else if(result.code == 204){
-                        if(pageNo == 0){
-                            $("#phone-data").append("<li><div><p>"+result.message+"</p></div></li>");
-                        }else{
-                            $("#load-more").hide();
-                        }
-                    }else{
-                        $("#load-more").hide();
-                        $("#phone-data").html("");
-                        $("#phone-data").append("<li><div><p>"+result.message+"</p></div></li>");
-                    }
-                }
-            },
-            error:function(e){
-                alert("网络传输错误！！");
-            }
-        });
-        setTimeout("$(\"#form-button\").show()",500);
-    }
-    function getBusInfo(){
-        var Request = GetRequest();
-        var cid = Request['cid'];
-        $.ajax({
-            url:"${pageContext.request.contextPath}/index/businessInfo",
-            type:"get",
-            data:{cid:cid},
-            success:function(data){
-                if(data){
-                    var result = eval('(' + data + ')');
-                    if(result.code == 0){
-                        var phone = result.phone;
-                        var name = result.name;
-                        var address = result.address;
-                        var html = '<p>'+name+'</p><p>'+address+'&nbsp;&nbsp;&nbsp;&nbsp;<a href="tel:'+phone+'">'+phone+'</a></p>';
-                        $("#bus-info").html(html);
-                    }
-                }
-            }
-        });
-    }
     $('#load-more').on('click', function(){
         pageNo++;
         getData();
