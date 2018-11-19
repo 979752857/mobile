@@ -70,7 +70,7 @@
         and business_id = #{businessId,jdbcType=INTEGER}
       </otherwise>
     </choose>
-    order by business_id,update_time desc
+    order by business_id desc, update_time desc
     limit #{iDisplayStart},#{iDisplayLength}
   </select>
   <select id="selectByPhoneAndBusId" resultMap="BaseResultMap" parameterType="java.util.Map" >
