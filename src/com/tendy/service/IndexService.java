@@ -62,12 +62,16 @@ public class IndexService {
             return replyMap;
         }
         Integer openBusinessId = null;
+        String price = "---";
         if(StringUtils.isNotBlank(mobileBussiness.getContent())){
             Map<String, Object> roleMap = JsonMapper.json2Map(mobileBussiness.getContent());
             if(roleMap.get(Constants.OPEN_BUSINESS_KEY) != null){
                 if(Boolean.valueOf(String.valueOf(roleMap.get(Constants.OPEN_BUSINESS_KEY)))){
                     if(ConfigUtil.getValue("open_businessid_"+mobileBussiness.getCityId()) != null){
                         openBusinessId = Integer.valueOf(ConfigUtil.getValue("open_businessid_"+mobileBussiness.getCityId()));
+                    }
+                    if(roleMap.get(Constants.OPEN_BUSINESSID_PRICE_KEY) != null){
+                        price = String.valueOf(roleMap.get(Constants.OPEN_BUSINESSID_PRICE_KEY));
                     }
                 }
             }
@@ -86,7 +90,7 @@ public class IndexService {
                 itemMap.put("tag", accountPhone.getTag());
                 itemMap.put("city", baseCity.getCityName());
                 if(accountPhone.getPrice() != null && BigDecimal.ZERO.compareTo(accountPhone.getPrice()) == 0){
-                    itemMap.put("price", "---");
+                    itemMap.put("price", price);
                 }else{
                     itemMap.put("price", accountPhone.getPrice().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
                 }
