@@ -5,6 +5,9 @@ function getQrcodeByCity(city, url, phone){
     if(city == '769'){
         return cityDongguan(url);
     }
+    if(city == '200'){
+        return cityDongguan(url);
+    }
 }
 
 function cityNanyang(url, phone){
