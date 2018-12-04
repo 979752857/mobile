@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
 
 @Controller
 @RequestMapping("/userInfo")
@@ -42,7 +43,12 @@ public class UserInfoController extends BaseController {
     public String userInfo(HttpSession httpSession) {
         ReplyMap replyMap = new ReplyMap();
         Integer businessId = Integer.valueOf(String.valueOf(httpSession.getAttribute("id")));
-        replyMap = userInfoService.getUserInfo(businessId);
+        try {
+            replyMap = userInfoService.getUserInfo(businessId);
+        } catch (ParseException e) {
+            logger.error("UserInfoController userInfo is error businessId:{}", businessId, e);
+            replyMap.fail(BusinessConstants.SERVER_ERROR_CODE, BusinessConstants.SERVER_ERROR_MSG);
+        }
         return replyMap.toJson();
     }
 }

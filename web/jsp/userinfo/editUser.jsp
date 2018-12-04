@@ -12,20 +12,32 @@
 				<div class="box-body">
 					<form class="form-horizontal" id="function-form" action="${pageContext.request.contextPath }/sysUser/addUser" method="post">
 						<input type="hidden" name="userId" value="${tSysUser.userId }"/>
+							<div class="form-group" style="margin-bottom: 50px;">
+								<label  class="col-sm-2 control-label"><i class="fa fa-user"></i> 账户到期时间</label>
+								<div class="col-sm-9">
+									<label class="col-sm-2 control-label" id="timeout">${endTime}到期</label>
+									<button id="pay" type="button" class="col-md-offset-1 col-sm-1 btn" onclick = "showAlipay()">
+										<i class="fa fa-money">&nbsp;续费</i>
+									</button>
+								</div>
+							</div>
 						<c:choose><c:when test="${cid != null}">
 							<div class="form-group">
 								<label class="col-sm-2 control-label">下载二维码</label>
 								<div class="col-sm-2">
-									<a class="btn btn-success" href="${pageContext.request.contextPath }/static/qrcode/${cid}-1000X1000.png" download="${businessName}"><i class="fa fa-cloud-download">&nbsp;1000X1000</i></a>
+									<a class="btn btn-success" href="${pageContext.request.contextPath }/static/qrcode/${cid}-1000X1000.png" download="${businessName}">
+										<i class="fa fa-cloud-download">&nbsp;1000X1000</i>
+									</a>
 								</div>
 								<div class="col-sm-2">
-									<a class="btn btn-success" href="${pageContext.request.contextPath }/static/qrcode/${cid}-500X500.png" download="${businessName}><i class="fa fa-cloud-download">&nbsp;500X500</i></a>
+									<a class="btn btn-success" href="${pageContext.request.contextPath }/static/qrcode/${cid}-500X500.png" download="${businessName}">
+										<i class="fa fa-cloud-download">&nbsp;500X500</i>
+									</a>
 								</div>
 							</div>
 						</c:when></c:choose>
 						<div class="form-group">
 							<label  class="col-sm-2 control-label"><i class="fa fa-user"></i> 账户</label>
-
 							<div class="col-sm-9">
 								<label class="col-sm-2 control-label" id="name"></label>
 							</div>

@@ -7,9 +7,11 @@ import com.tendy.dao.bean.BaseCity;
 import com.tendy.dao.bean.MobileBussiness;
 import com.tendy.utils.EncryptUtil;
 import com.tendy.utils.StringUtils;
+import com.tendy.utils.TimeUtil;
 import org.springframework.stereotype.Service;
 
 import javax.xml.crypto.Data;
+import java.text.ParseException;
 import java.util.Date;
 
 @Service
@@ -48,7 +50,7 @@ public class UserInfoService extends BaseService{
         return replyMap;
     }
 
-    public ReplyMap getUserInfo(Integer businessId){
+    public ReplyMap getUserInfo(Integer businessId) throws ParseException {
         ReplyMap replyMap = new ReplyMap();
         MobileBussiness mobileBussiness = DataMapperUtil.selectMobileBussinessByPrimaryKey(businessId);
         if(mobileBussiness == null){
@@ -68,6 +70,15 @@ public class UserInfoService extends BaseService{
         replyMap.put("address", mobileBussiness.getAddress());
         replyMap.put("remark", mobileBussiness.getRemark());
         replyMap.put("city", baseCity.getCityName());
+        replyMap.put("endTime", TimeUtil.formatDate(mobileBussiness.getEndTime(), TimeUtil.YYYY_MM_DD));
+        int leftDay = TimeUtil.daysBetween(new Date(), mobileBussiness.getEndTime());
+        if(leftDay > 30){
+            replyMap.put("warnLevel", "0");
+        }else if(leftDay > 10){
+            replyMap.put("warnLevel", "1");
+        }else{
+            replyMap.put("warnLevel", "2");
+        }
         return replyMap;
     }
 }

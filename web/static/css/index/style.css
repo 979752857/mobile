@@ -225,6 +225,12 @@ form {
 .text-red {
   color: #ec2128;
 }
+.text-danger {
+  color: #d73925;
+}
+.text-warning {
+  color: #e08e0b;
+}
 .load-more {
   margin:0 auto;
   padding: 15px 0px;
