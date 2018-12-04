@@ -126,92 +126,6 @@ public class TimeUtil {
 		return cal.getTime();
 	}
 	
-	public static Date getAfterDayMinuteZero(int i){
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.SECOND, 0);
-		cal.set(Calendar.MILLISECOND, 0);
-		cal.add(Calendar.MINUTE, i);
-		return cal.getTime();
-	}
-	
-	public static Date getAfterMinuteDate(int minutes) {
-		
-		return getAnotherDate(null, Calendar.MINUTE, minutes);
-	}
-	
-	public static Date getAfterMonthDate(Date date, int months) {
-		
-		return getAnotherDate(date, Calendar.MONTH, months);
-	}
-	
-	public static Date getAfterYearDate(Date date, int years) {
-		
-		return getAnotherDate(date, Calendar.YEAR, years);
-	}
-
-	public static String getNextNDaysStr(String timeStr, String formatStr, int days) {
-
-		Date endTime = null;
-		try {
-			endTime = parseTimeStr(timeStr, formatStr);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		Calendar cal = Calendar.getInstance();
-
-		cal.setTime(endTime);
-
-		cal.add(Calendar.DATE, days);
-
-		return formatDate(cal.getTime(), formatStr);
-	}
-	
-	public static String formateSeconds(int seconds){
-		
-		return seconds/3600+"时"+seconds%3600/60+"分"+seconds%3600%60+"秒";
-	}
-	
-	/**
-	 * 计算时间之间的年差
-	 * 
-	 * @return
-	 */
-	public static int getYearDiff(Date first_date, Date second_date) {
-		if(first_date == null || second_date == null){
-			return 0;
-		}
-		boolean flag = false;
-		int years = -1;
-		try {
-			first_date = parseTimeStr(formatDate(first_date, "yyyy-MM-dd"), "yyyy-MM-dd");
-			second_date = parseTimeStr(formatDate(second_date, "yyyy-MM-dd"), "yyyy-MM-dd");
-			if(first_date.after(second_date)){
-				Date tempDate = first_date;
-				first_date = second_date;
-				second_date = tempDate;
-				flag = true;
-			}
-			
-			Calendar cal1 = Calendar.getInstance();
-			cal1.setTime(first_date);
-        
-			Calendar cal2 = Calendar.getInstance();
-			cal2.setTime(second_date);
-			
-			while(!cal1.after(cal2)){
-			    years++;
-			    cal1.add(Calendar.YEAR, 1);
-			}
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-        if(flag && years>0){
-        	years = Integer.parseInt("-"+years);
-        }
-      return years;
-	}
-	
 	 /**  
      * 计算两个日期之间相差的天数  
      * @param smdate 较小的时间 
@@ -232,200 +146,6 @@ public class TimeUtil {
             
         return Integer.parseInt(String.valueOf(between_days));
     }
-	
-	/**
-	 * 计算某时间距当前时间的天数
-	 * @param date_target
-	 * @return
-	 */
-	public static int getDaysBetweenToday(String date_target){
-		Integer days = 0;
-		try {
-			Date beginDate = parseTimeStr(date_target, "yyyy-MM-dd");
-			days = daysBetween(beginDate, new Date());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return days;
-	}
-	
-	  /**
-     * 某一个月第一天和最后一天
-     * @param date
-     * @return
-     */
-    public static Map<String, String> getFirstday_Lastday_Month(Date date) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        
-        //当月第一天
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        String day_first = df.format(calendar.getTime());
-
-        //当月最后一天
-        calendar.add(Calendar.MONTH, 1);
-        //加一个月
-        calendar.add(Calendar.DATE, -1);
-        //再减一天即为上个月最后一天
-        String day_last = df.format(calendar.getTime());
-
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("first", day_first);
-        map.put("last", day_last);
-        return map;
-    }
-
-    /**
-     * 取得当前日期所在周的最后一天
-     *
-     * @param date
-     * @return
-     */
-    public static Date getFirstDayOfWeek(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.setTime(date);
-		calendar.set(Calendar.DAY_OF_WEEK,calendar.getFirstDayOfWeek());
-        return calendar.getTime();
-    }
-
-    /**
-     * 取得当前日期所在周的最后一天
-     *
-     * @param date
-     * @return
-     */
-    public static Date getLastDayOfWeek(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.setTime(date);
-        calendar.set(Calendar.DAY_OF_WEEK,calendar.getFirstDayOfWeek() + 6);
-        return calendar.getTime();
-    }
-
-    /**
-     * 获取本周周一
-     * @param date
-     */
-    public static String getFirstDayOfThisWeek(Date date){
-    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar calendar = Calendar.getInstance();
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.setTime(date);
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        return df.format(calendar.getTime());
-    }
-    
-    /**
-     * 获取本周周天
-     * @param date
-     */
-    public static String getLastDayOfThisWeek(Date date){
-    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-    	Calendar calendar = Calendar.getInstance();
-    	calendar.setTime(date);
-    	calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
-    	return df.format(getAfterDayDate(calendar.getTime(),1));
-    }
-
-	/**
-	 * 判断是周几
-	 * @param pTime
-	 * @return
-	 */
-	public static int dayForWeek(String pTime) {
-    	int dayForWeek=7;
-		try {
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			  Calendar c = Calendar.getInstance();
-			  c.setTime(format.parse(pTime));
-			  dayForWeek = 0;
-			  if(c.get(Calendar.DAY_OF_WEEK) == 1){
-			   dayForWeek = 7;
-			  }else{
-			   dayForWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
-			  }
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	  return dayForWeek;
-   }
-	/**
-	 * 判断是周几
-	 * @param date
-	 * @return
-	 */
-	public static int dayForWeek(Date date) {
-		int dayForWeek=7;
-		Calendar c = Calendar.getInstance();
-		c.setTime(date);
-		dayForWeek = 0;
-		if(c.get(Calendar.DAY_OF_WEEK) == 1){
-			dayForWeek = 7;
-		}else{
-			dayForWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
-		}
-		return dayForWeek;
-	}
-
-    /**
-     * 获取日期所在的周
-     * @param date
-     * @return
-     * @throws ParseException
-     */
-    public static int getDayOfWeek(String date) throws ParseException {
-    	Calendar calendar = Calendar.getInstance();
-    	calendar.setTime(TimeUtil.parseTimeStr(date, "yyyy-MM-dd"));
-    	return calendar.get(Calendar.DAY_OF_WEEK);
-    }
-    
-    
-	public static int getHour(String date) throws ParseException {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(TimeUtil.parseTimeStr(date, "yyyy-MM-dd hh:mm:ss"));
-		return calendar.get(Calendar.HOUR_OF_DAY);
-	}
-	
-	/**
-	 * 获得日期的年
-	 * @param date
-	 */
-	public static int getYear(Date date){
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		return calendar.get(Calendar.YEAR);
-	}
-	
-	public static Date getDateFromTime(long time){
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTimeInMillis(time);
-		return calendar.getTime();
-	}
-	
-	
-	
-	/**
-	 * 是否同一天
-	 * @param date1
-	 * @param date2
-	 */
-	public static boolean isSameDate(Date date1, Date date2) {
-       Calendar cal1 = Calendar.getInstance();
-       cal1.setTime(date1);
-       Calendar cal2 = Calendar.getInstance();
-       cal2.setTime(date2);
-       return  (cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR))
-    		   && (cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH))
-    		   && (cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH));
-	}
-
-	public static Integer getSecondBetweenDate(Date date1, Date date2){
-		Long betweenSecond = (date2.getTime()-date1.getTime())/1000;
-		return betweenSecond.intValue();
-	}
 
 	/**
 	 * 获取今天0时0分0秒时间
@@ -496,18 +216,30 @@ public class TimeUtil {
 	}
 
 	/**
-	 * 判断时间是否在两个时间区间内 true在区间内
-	 * @param startTime
-	 * @param endTime
-	 * @param checkTime
+	 * 判断当前时间是否在[startTime, endTime]区间，注意时间格式要一致
+	 *
+	 * @param nowTime 当前时间
+	 * @param startTime 开始时间
+	 * @param endTime 结束时间
 	 * @return
+	 * @author jqlin
 	 */
-	public static boolean isValidTime(Date startTime, Date endTime, Date checkTime){
-		boolean flag = false;
-		if(startTime.getTime() <= checkTime.getTime() && endTime.getTime() >= checkTime.getTime()){
-			flag = true;
+	public static boolean isEffectiveDate(Date nowTime, Date startTime, Date endTime) {
+		if (nowTime.getTime() == startTime.getTime()
+				|| nowTime.getTime() == endTime.getTime()) {
+			return true;
 		}
-		return flag;
+		Calendar date = Calendar.getInstance();
+		date.setTime(nowTime);
+		Calendar begin = Calendar.getInstance();
+		begin.setTime(startTime);
+		Calendar end = Calendar.getInstance();
+		end.setTime(endTime);
+		if (date.after(begin) && date.before(end)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -520,35 +252,6 @@ public class TimeUtil {
 			flag = true;
 		}
 		return flag;
-	}
-
-	public static Date getFirstDayOfLastWeek(Date date){
-		Calendar calendar = Calendar.getInstance();
-		calendar.setFirstDayOfWeek(Calendar.MONDAY);
-		calendar.setTime(date);
-		calendar.add(Calendar.WEEK_OF_YEAR, -1);
-		calendar.set(Calendar.DAY_OF_WEEK,calendar.getFirstDayOfWeek());
-		return calendar.getTime();
-	}
-
-	public static Date getLastDayOfLastWeek(Date date){
-		Calendar calendar = Calendar.getInstance();
-		calendar.setFirstDayOfWeek(Calendar.MONDAY);
-		calendar.setTime(date);
-		calendar.add(Calendar.WEEK_OF_YEAR, -1);
-		calendar.set(Calendar.DAY_OF_WEEK,calendar.getFirstDayOfWeek() + 6);
-		return calendar.getTime();
-	}
-	public static String date2String(Date date) throws Exception {
-		return (new SimpleDateFormat("yyyyMMdd")).format(date);
-	}
-
-	public static Date getThisWeekMonday(Date date) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		cal.add(5, -1);
-		cal.set(7, 2);
-		return cal.getTime();
 	}
 
 	public static void main(String[] args) throws ParseException {

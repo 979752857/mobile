@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tendy.dao.mapper.PhoneAlertConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.tendy.dao.bean.PhoneAlertConfig" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="tag" property="tag" jdbcType="VARCHAR" />
+    <result column="contains_key" property="containsKey" jdbcType="VARCHAR" />
+    <result column="send_alert" property="sendAlert" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, city_id, tag, contains_key, send_alert, content, status, create_time, update_time, 
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from phone_alert_config
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllConfig" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from phone_alert_config
+    where status = 'online'
+  </select>
+</mapper>

@@ -9,6 +9,8 @@ public interface UserAccountPhoneMapper {
 
     int insertSelective(UserAccountPhone record);
 
+    int insertSelectiveBatch(List<UserAccountPhone> list);
+
     UserAccountPhone selectByPrimaryKey(Long id);
 
     UserAccountPhone selectByPhone(String phone);

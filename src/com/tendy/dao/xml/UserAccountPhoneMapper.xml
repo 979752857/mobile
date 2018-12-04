@@ -198,6 +198,59 @@
       </if>
     </trim>
   </insert>
+  <insert id="insertSelectiveBatch" parameterType="java.util.List" >
+    insert into user_account_phone
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      phone,
+      url,
+      business_id,
+      city_id,
+      price,
+      tag,
+      type,
+      status,
+      create_time,
+      update_time,
+      remark,
+    </trim>
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (<if test="item.phone != null" >
+        #{item.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="item.url != null" >
+        #{item.url,jdbcType=VARCHAR},
+      </if>
+      <if test="item.businessId != null" >
+        #{item.businessId,jdbcType=INTEGER},
+      </if>
+      <if test="item.cityId != null" >
+        #{item.cityId,jdbcType=INTEGER},
+      </if>
+      <if test="item.price != null" >
+        #{item.price,jdbcType=DECIMAL},
+      </if>
+      <if test="item.tag != null" >
+        #{item.tag,jdbcType=VARCHAR},
+      </if>
+      <if test="item.type != null" >
+        #{item.type,jdbcType=CHAR},
+      </if>
+      <if test="item.status != null" >
+        #{item.status,jdbcType=CHAR},
+      </if>
+      <if test="item.createTime != null" >
+        #{item.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="item.updateTime != null" >
+        #{item.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="item.remark != null" >
+        #{item.remark,jdbcType=VARCHAR}
+      </if>)
+    </foreach>
+    on DUPLICATE key update `update_time`=now()
+  </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.tendy.dao.bean.UserAccountPhone" >
     update user_account_phone
     <set >

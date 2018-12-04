@@ -50,6 +50,7 @@
 			<mvc:exclude-mapping path="/page/toLogin"/>
 			<mvc:exclude-mapping path="/login/checkLogin"/>
 			<mvc:exclude-mapping path="/index/*"/>
+			<mvc:exclude-mapping path="/spider/*"/>
 			<mvc:exclude-mapping path="/jsp/toOuterPage.jsp"/>
 			<bean class="com.tendy.interceptor.LoginInterceptor"/>
 		</mvc:interceptor>
@@ -59,6 +60,7 @@
 			<mvc:exclude-mapping path="/page/toLogin"/>
 			<mvc:exclude-mapping path="/login/checkLogin"/>
 			<mvc:exclude-mapping path="/index/*"/>
+			<mvc:exclude-mapping path="/spider/*"/>
 			<mvc:exclude-mapping path="/jsp/toOuterPage.jsp"/>
 			<bean class="com.tendy.interceptor.PrivilegeInterceptor"/>
 		</mvc:interceptor>

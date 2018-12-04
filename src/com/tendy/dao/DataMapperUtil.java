@@ -14,6 +14,7 @@ public class DataMapperUtil {
     private static SysUserRoleMapper sysUserRoleMapper = SpringUtils.getBean(SysUserRoleMapper.class);
     private static SysCmsRoleMenuMapper sysCmsRoleMenuMapper = SpringUtils.getBean(SysCmsRoleMenuMapper.class);
     private static BaseCityMapper baseCityMapper = SpringUtils.getBean(BaseCityMapper.class);
+    private static PhoneAlertConfigMapper phoneAlertConfigMapper = SpringUtils.getBean(PhoneAlertConfigMapper.class);
 
     public static MobileBussiness selectMobileBussinessByPrimaryKey(Integer id){
         return mobileBussinessMapper.selectByPrimaryKey(id);
@@ -41,6 +42,18 @@ public class DataMapperUtil {
 
     public static int updateUserAccountPhoneByPrimaryKeySelective(UserAccountPhone accountPhone){
         return userAccountPhoneMapper.updateByPrimaryKeySelective(accountPhone);
+    }
+
+    public static int insertUserAccountPhoneSelectiveBatch(List<UserAccountPhone> accountPhones){
+        return userAccountPhoneMapper.insertSelectiveBatch(accountPhones);
+    }
+
+    public static int insertUserAccountPhoneSelective(UserAccountPhone accountPhone){
+        return userAccountPhoneMapper.insertSelective(accountPhone);
+    }
+
+    public static List<PhoneAlertConfig> selectPhoneAlertConfigAllConfig(){
+        return phoneAlertConfigMapper.selectAllConfig();
     }
 
     public static List<UserAccountPhone> selectUserAccountPhoneByPhoneAndBusiness(String phone, Integer businessId, Integer iDisplayStart,
