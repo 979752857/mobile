@@ -78,11 +78,11 @@ function getUserInfo(){
 }
 
 function showAlipay() {
-    var showId = "alipay-code";
+    var showId = "pay-code";
     var name = $("#name").html();
     var html = "<div id=\""+showId+"\" style='width:450;margin:0 auto;'>" +
-        "<p class='text-red' style='font-size:15px;'>请添加管理员支付宝好友，进行续费操作，转账前请将您的账号:<span class='text-blue'>" + name + "</span>发送给管理员！</p>" +
-        "<img style='width: 300px;' src=\""+all_scope_path+"/static/image/alipay.jpg\">" +
+        "<p class='text-red' style='font-size:15px;'>请添加管理员好友，进行续费操作，转账前请将您的账号:<span class='text-blue'>" + name + "</span>发送给管理员！</p>" +
+        "<img style='width: 300px;' src=\""+all_scope_path+"/static/image/pay.png\">" +
         "</div>";
     Ewin.normal({message:html});
 }
