@@ -18,7 +18,7 @@
             <div class="box-body">
                 <div class="row">
                         <label class="col-md-1">导入文档：</label>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <input type="file" id="excelFile" name="excelFile" onchange="checkFile()"/>
                         </div>
                         <button type="button" class="btn btn-info" id="impBtn" style="width: 83px; height: 34px;" onclick="readExcel()">导入</button>
@@ -26,7 +26,7 @@
                 <div class="row">
                     <div style="width: 420px; font-size: 12px;padding-left: 20px;padding-top:5px;padding-bottom:10px;float: left;">
                         导入说明：<br/>
-                        1、仅支持excel文件（后缀为xls,xlsx）。请将手机号写在第一列，价格写在第二列，无需表头，每次上传不能超过1000行<br />
+                        1、仅支持excel文件（后缀为xls,xlsx）。请将手机号写在第一列，价格写在第二列，无需表头，<span class="text-red">每次上传不能超过1000行</span><br />
                         2、范例文档如下格式：
                         <table border="1px">
                             <tr align="center" style="font-weight: bold">

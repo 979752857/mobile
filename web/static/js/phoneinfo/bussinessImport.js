@@ -50,7 +50,11 @@ function readExcel(){
                 }
             } else {
                 Ewin.unblock();
-                Ewin.error({message: "批量添加手机号失败!"});
+                if(data.message != ''){
+                    Ewin.error({message: data.message});
+                }else{
+                    Ewin.error({message: "批量添加手机号失败!"});
+                }
             }
         },
         error: function (data, status, e) {
