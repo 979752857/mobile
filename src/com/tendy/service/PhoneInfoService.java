@@ -27,7 +27,7 @@ import java.util.Map;
 @Service
 public class PhoneInfoService extends BaseService {
 
-    public Map<String, Object> getDataDetail(String phoneParam, Integer iDisplayStart, Integer pageSize, String status, Integer businessId, String tag, String notPhone, Integer cityId, String position, String content) {
+    public Map<String, Object> getDataDetail(String phoneParam, Integer iDisplayStart, Integer pageSize, String status, Integer businessId, String tag, String notPhone, Integer cityId, String position, String content, String type) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
         Integer openBusinessId = null;
@@ -41,12 +41,12 @@ public class PhoneInfoService extends BaseService {
                 }
             }
         }
-        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, businessId, iDisplayStart, pageSize, status, tag, notPhone, openBusinessId, position);
+        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, businessId, iDisplayStart, pageSize, status, tag, notPhone, openBusinessId, position, type);
         if (CollectionUtils.isEmpty(list)) {
             resultMap.put("total", 0);
             return resultMap;
         }
-        int total = DataMapperUtil.countUserAccountPhoneByPhoneAndCity(phoneParam, businessId, status, tag, notPhone, openBusinessId, position);
+        int total = DataMapperUtil.countUserAccountPhoneByPhoneAndCity(phoneParam, businessId, status, tag, notPhone, openBusinessId, position, type);
         for (int i = 0; i < list.size(); i++) {
             Map<String, Object> map = new HashMap<>();
             UserAccountPhone accountPhone = list.get(i);

@@ -20,12 +20,21 @@
 <!-- screening -->
 <div class="screening">
     <ul>
+        <li class="Type"><span id="type-word">运营商</span></li>
         <li class="Sort"><span id="sort-word">类型</span></li>
         <li class="Brand"><span id="brand-word">特征</span></li>
         <li class="Position"><span id="position-word">位置</span></li>
     </ul>
 </div>
 <!-- End screening -->
+<div class="Type-eject Type-height">
+    <ul class="Type-Sort" id="Type-Sort">
+        <li onclick="Type(this, '', '运营商')">不限</li>
+        <li onclick="Type(this, 'Mobile', '移动')">移动</li>
+        <li onclick="Type(this, 'Unicom', '联通')">联通</li>
+        <li onclick="Type(this, 'Telecom', '电信')">电信</li>
+    </ul>
+</div>
 <div class="Sort-eject Sort-height">
     <ul class="Sort-Sort" id="Sort-Sort">
         <li onclick="Sorts(this, '', '类型')">不限</li>
@@ -76,6 +85,7 @@
         <input type="text" id="key" name="key" value="" placeholder="输入关键数字号码...">
         <input type="hidden" id="status" name="status" value="private">
         <input type="hidden" id="tag" name="tag" value="">
+        <input type="hidden" id="type" name="type" value="">
         <input type="hidden" id="notPhone" name="notPhone" value="">
         <input type="hidden" id="position" name="position" value="">
         <button type="button" id="form-button" onclick="searchData()"></button>

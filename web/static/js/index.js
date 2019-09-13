@@ -24,6 +24,18 @@ $(document).ready(function(){
 			$('.screening').attr('style','position: fixed;top:0;');
         }
     });
+    $(".Type").click(function(){
+        if ($('.Type-eject').hasClass('grade-w-roll')) {
+            $('.Type-eject').removeClass('grade-w-roll');
+			$(this).removeClass('current');
+			$('.screening').attr('style',' ');
+        } else {
+            $('.Type-eject').addClass('grade-w-roll');
+			$(this).addClass('current');
+			$(".Brand").removeClass('current');
+			$('.screening').attr('style','position: fixed;top:0;');
+        }
+    });
     $(".Position").click(function(){
         if ($('.Position-eject').hasClass('grade-w-roll')) {
             $('.Position-eject').removeClass('grade-w-roll');
@@ -46,6 +58,9 @@ $(document).ready(function(){
         if ($('.Position-eject').hasClass('grade-w-roll')){
             $('.Position-eject').removeClass('grade-w-roll');
         };
+        if ($('.Type-eject').hasClass('grade-w-roll')){
+            $('.Type-eject').removeClass('grade-w-roll');
+        };
     });
     $(".Sort").click(function(){
         if ($('.Category-eject').hasClass('grade-w-roll')){
@@ -54,6 +69,20 @@ $(document).ready(function(){
         if ($('.Position-eject').hasClass('grade-w-roll')){
             $('.Position-eject').removeClass('grade-w-roll');
         };
+        if ($('.Type-eject').hasClass('grade-w-roll')){
+            $('.Type-eject').removeClass('grade-w-roll');
+        };
+    });
+    $(".Type").click(function(){
+        if ($('.Category-eject').hasClass('grade-w-roll')){
+            $('.Category-eject').removeClass('grade-w-roll');
+        };
+        if ($('.Position-eject').hasClass('grade-w-roll')){
+            $('.Position-eject').removeClass('grade-w-roll');
+        };
+        if ($('.Sort-eject').hasClass('grade-w-roll')){
+            $('.Sort-eject').removeClass('grade-w-roll');
+        };
     });
     $(".Position").click(function(){
         if ($('.Category-eject').hasClass('grade-w-roll')){
@@ -61,6 +90,9 @@ $(document).ready(function(){
         };
         if ($('.Sort-eject').hasClass('grade-w-roll')){
             $('.Sort-eject').removeClass('grade-w-roll');
+        };
+        if ($('.Type-eject').hasClass('grade-w-roll')){
+            $('.Type-eject').removeClass('grade-w-roll');
         };
     });
 });
@@ -102,6 +134,18 @@ function Sorts(sbj, tag, txt){
     $(".Sort").click();
 }
 
+function Type(sbj, tag, txt){
+    var arr = document.getElementById("Type-Sort").getElementsByTagName("li");
+    for (var i = 0; i < arr.length; i++){
+        var a = arr[i];
+        a.style.background = "";
+    };
+    sbj.style.background = "#eee";
+    $("#type").val(tag);
+    $("#type-word").html(txt);
+    $(".Type").click();
+}
+
 function searchData() {
     $("#phone-data").html("");
     pageNo = 0;
@@ -116,6 +160,7 @@ function getData() {
     var notPhone = $("#notPhone").val();
     var tag = $("#tag").val();
     var position = $("#position").val();
+    var type = $("#type").val();
     var keyword = $("#key").val();
     if(!keyword && !tag && !keyword){
         keyword = "888";
@@ -127,7 +172,7 @@ function getData() {
     $.ajax({
         url:all_scope_path+"/index/phoneList",
         type:"get",
-        data:{key:keyword,cid:cid,status:status,no:pageNo,tag:tag,notPhone:notPhone,position:position},
+        data:{key:keyword,cid:cid,status:status,no:pageNo,tag:tag,notPhone:notPhone,position:position,type:type},
         success:function(data){
             if(data){
                 var result = eval('(' + data + ')');

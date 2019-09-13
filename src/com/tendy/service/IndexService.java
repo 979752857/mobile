@@ -40,7 +40,7 @@ public class IndexService {
         return replyMap;
     }
 
-    public ReplyMap getData(String phoneParam, String businessCid, Integer pageNo, Integer pageSize, String status, String tag, String notPhone, String position){
+    public ReplyMap getData(String phoneParam, String businessCid, Integer pageNo, Integer pageSize, String status, String tag, String notPhone, String position, String type){
         ReplyMap replyMap = new ReplyMap();
         if(StringUtils.isBlank(businessCid)){
             replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "运营商查询错误，请重新扫码");
@@ -76,7 +76,7 @@ public class IndexService {
                 }
             }
         }
-        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, mobileBussiness.getId(), pageNo*pageSize, pageSize, status, tag, notPhone, openBusinessId, position);
+        List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, mobileBussiness.getId(), pageNo*pageSize, pageSize, status, tag, notPhone, openBusinessId, position, type);
         if(CollectionUtils.isEmpty(list)){
             replyMap.fail(BusinessConstants.RESULT_NULL_CODE, BusinessConstants.RESULT_NULL_MSG);
             return replyMap;

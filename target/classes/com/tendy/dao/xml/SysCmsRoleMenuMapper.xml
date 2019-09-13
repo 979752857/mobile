@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tendy.dao.mapper.SysCmsRoleMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.tendy.dao.bean.SysCmsRoleMenu" >
+    <id column="sys_role_menu_id" property="sysRoleMenuId" jdbcType="INTEGER" />
+    <result column="sys_role_id" property="sysRoleId" jdbcType="INTEGER" />
+    <result column="sys_menu_id" property="sysMenuId" jdbcType="INTEGER" />
+    <result column="isLeaf" property="isleaf" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sys_role_menu_id, sys_role_id, sys_menu_id, isLeaf
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_cms_role_menu
+    where sys_role_menu_id = #{sysRoleMenuId,jdbcType=INTEGER}
+  </select>
+  <!-- manual -->
+  <select id="getMenuIdListByRoleId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select sys_menu_id
+    from sys_cms_role_menu
+    where sys_role_id = #{sys_role_id}
+  </select>
+  <insert id="insertSelective" parameterType="com.tendy.dao.bean.SysCmsRoleMenu" >
+    insert into sys_cms_role_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sysRoleMenuId != null" >
+        sys_role_menu_id,
+      </if>
+      <if test="sysRoleId != null" >
+        sys_role_id,
+      </if>
+      <if test="sysMenuId != null" >
+        sys_menu_id,
+      </if>
+      <if test="isleaf != null" >
+        isLeaf,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sysRoleMenuId != null" >
+        #{sysRoleMenuId,jdbcType=INTEGER},
+      </if>
+      <if test="sysRoleId != null" >
+        #{sysRoleId,jdbcType=INTEGER},
+      </if>
+      <if test="sysMenuId != null" >
+        #{sysMenuId,jdbcType=INTEGER},
+      </if>
+      <if test="isleaf != null" >
+        #{isleaf,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tendy.dao.bean.SysCmsRoleMenu" >
+    update sys_cms_role_menu
+    <set >
+      <if test="sysRoleId != null" >
+        sys_role_id = #{sysRoleId,jdbcType=INTEGER},
+      </if>
+      <if test="sysMenuId != null" >
+        sys_menu_id = #{sysMenuId,jdbcType=INTEGER},
+      </if>
+      <if test="isleaf != null" >
+        isLeaf = #{isleaf,jdbcType=TINYINT},
+      </if>
+    </set>
+    where sys_role_menu_id = #{sysRoleMenuId,jdbcType=INTEGER}
+  </update>
+</mapper>

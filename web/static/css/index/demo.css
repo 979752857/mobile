@@ -50,7 +50,7 @@ div.screening>ul{
 div.screening>ul>li{
 	float: left;
 	font-size:0.75em;
-	width: 33%;
+	width: 25%;
 	text-align: center;
 	line-height: 3rem;
 	border-left: solid 1px #d3d3d3;
@@ -66,7 +66,7 @@ div.screening>ul>.current>span{
 
 /* grade */
 
-.Category-eject,.Sort-eject,.Position-eject{
+.Category-eject,.Sort-eject,.Position-eject,.Type-eject{
 	position:fixed;
 	top: -65%;
 	width: 100%;
@@ -75,7 +75,7 @@ div.screening>ul>.current>span{
 	-webkit-transition-duration: 0.4s;
 }
 
-.Category-eject>ul,.Sort-eject>ul,.Position-eject>ul{
+.Category-eject>ul,.Sort-eject>ul,.Position-eject>ul,.Type-eject>ul{
 	margin: 0;
 	padding: 0;
 	overflow: auto;
@@ -83,7 +83,7 @@ div.screening>ul>.current>span{
 	width: 100%;
 	-webkit-transition-duration: 0.4s;
 }
-.Category-eject>ul>li,.Sort-eject>ul>li,.Position-eject>ul>li{
+.Category-eject>ul>li,.Sort-eject>ul>li,.Position-eject>ul>li,.Type-eject>ul>li{
 	height: 3rem;
 	line-height: 3rem;
 	font-size: 0.75em;
@@ -113,18 +113,18 @@ div.screening>ul>.current>span{
 	top: 0;
 }
 /*Sort-eject*/
-.Sort-Sort{
+.Sort-Sort,.Type-Sort{
 	background: #fff;
 	position: absolute;
 	z-index: 3;
 	left: 0;
 	list-style-type: none;
 }
-.Sort-Sort>li{
+.Sort-Sort>li,.Type-Sort>li{
 	border-bottom: solid 1px #eee;
 	padding: 0;
 }
-.Sort-height{
+.Sort-height,.Type-height{
 	height: 63%;
 }
 
