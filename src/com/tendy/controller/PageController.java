@@ -71,6 +71,11 @@ public class PageController {
         return new ModelAndView("phoneinfo/importPhoneList");
     }
 
+    @RequestMapping(value = {"/toBussinessImport"}, method = {RequestMethod.GET})
+    public ModelAndView toBussinessImport() {
+        return new ModelAndView("phoneinfo/bussinessImport");
+    }
+
     @RequestMapping(value = {"/toEditUser"}, method = {RequestMethod.GET})
     public ModelAndView toEditUser(HttpSession httpSession) {
         Map<String, String> map = new HashMap<>();

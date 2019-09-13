@@ -21,15 +21,12 @@
                         <div class="col-md-2">
                             <input type="file" id="excelFile" name="excelFile" onchange="checkFile()"/>
                         </div>
-                        <div class="col-md-2">
-                            <input type="text" class="form-control" name="busName" placeholder="请输入运营商账号">
-                        </div>
                         <button type="button" class="btn btn-info" id="impBtn" style="width: 83px; height: 34px;" onclick="readExcel()">导入</button>
                 </div>
                 <div class="row">
                     <div style="width: 420px; font-size: 12px;padding-left: 20px;padding-top:5px;padding-bottom:10px;float: left;">
                         导入说明：<br/>
-                        1、仅支持excel文件（后缀为xls,xlsx）。请将手机号写在第一列，价格写在第二列，无需表头<br />
+                        1、仅支持excel文件（后缀为xls,xlsx）。请将手机号写在第一列，价格写在第二列，无需表头，每次上传不能超过1000行<br />
                         2、范例文档如下格式：
                         <table border="1px">
                             <tr align="center" style="font-weight: bold">
@@ -44,30 +41,9 @@
                         </table>
                     </div>
                 </div>
-                <div class="row">
-                    <form id="searchForm"  method="get">
-                        <input type="hidden" name="source" value="${source}" id="source"/>
-                        <div class="row">
-                            <div class="col-sm-2" style="margin-left: 20px;">
-                                <input type="text" class="form-control" name="code" placeholder="请输入券码">
-                            </div>
-                            <button type="button" id="searchBut" class="btn btn-info bg-blue">
-                                <i class="fa fa-search"></i> &nbsp;搜&nbsp;索&nbsp;
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="box-body" id="table-body">
-                <table  class="table table-bordered table-hover" id="baseStringTable" >
-                    <thead>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
-    <script src="${pageContext.request.contextPath }/static/js/phoneinfo/importPhoneList.js"></script>
+    <script src="${pageContext.request.contextPath }/static/js/phoneinfo/bussinessImport.js"></script>
 </body>
 </html>

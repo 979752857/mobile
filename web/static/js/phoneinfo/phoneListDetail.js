@@ -15,19 +15,20 @@ $(function () {
 function initParam() {
     var keyword = $("input[name='phone']").val();
     var status = "";
+    var type = $("#type").val();
     var tag = $("#tag").val();
     var notPhone = $("#notPhone").val();
     var position = $("#position").val();
-    initBaseStringReload(all_scope_path+'/phoneInfo/phoneList', keyword, status, tag, notPhone, position);
+    initBaseStringReload(all_scope_path+'/phoneInfo/phoneList', keyword, status, tag, notPhone, position, type);
 }
 
 /**
  * 初始化userTable表
  * @param url
  */
-function initBaseStringReload(url, keyword, status, tag, notPhone, position){
+function initBaseStringReload(url, keyword, status, tag, notPhone, position, type){
     var arrcol = getCloumJson();
-    var param = {"keyword":keyword, "status":status, "tag":tag, "notPhone":notPhone, "position":position};
+    var param = {"keyword":keyword, "status":status, "tag":tag, "notPhone":notPhone, "position":position, "type":type};
     initDataTable("baseStringTable", url, arrcol, param);
 }
 
@@ -119,6 +120,10 @@ function lockPhone(phone, status){
 }
 
 function initSelect() {
+    $("#type").append("<option value='Mobile'>移动</option>");//移动
+    $("#type").append("<option value='Telecom'>电信</option>");//电信
+    $("#type").append("<option value='Unicom'>联通</option>");//联通
+
     $("#tag").append("<option value='ABAC'>ABAC靓号</option>");//>ABAC靓号
     $("#tag").append("<option value='ABC'>3顺精品靓号</option>");//>3顺精品靓号
     $("#tag").append("<option value='AAA'>3A精品靓号</option>");//>3A精品靓号

@@ -136,7 +136,7 @@ public class PhoneInfoController {
 
 	@RequestMapping(value = "/readExcel", method = RequestMethod.POST)
 	@ResponseBody
-	public String readExcel(@RequestParam(value = "excelFile") MultipartFile excelFile, @RequestParam(value = "busName") String busName, HttpSession httpSession) {
+	public String readExcel(HttpSession httpSession, @RequestParam(value = "excelFile") MultipartFile excelFile, @RequestParam(value = "busName") String busName, @RequestParam(value = "limit", required = false) Integer limit) {
 		ReplyMap replyMap = new ReplyMap();
 		try {
 			if (excelFile == null || ParamUtil.checkParamIsNull(busName)) {
@@ -162,6 +162,12 @@ public class PhoneInfoController {
 			if (CollectionUtils.isEmpty(infoList)) {
 				replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "没有获取到excel的内容");
 				return replyMap.toJson();
+			}
+			if(limit != null && limit > 0){
+				if(infoList.size() > limit){
+					replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "excel内容不能超过"+limit+"行");
+					return replyMap.toJson();
+				}
 			}
 			List<Map<String, String>> failList = new ArrayList<>();
 			replyMap.put("failList", failList);
@@ -194,5 +200,12 @@ public class PhoneInfoController {
 		}
 		logger.info("PhoneInfoController readExcel  busName:" + busName + "   replyMap:" + JsonMapper.toJson(replyMap));
 		return replyMap.toJson();
+	}
+
+	@RequestMapping(value = "/busReadExcel", method = RequestMethod.POST)
+	@ResponseBody
+	public String busReadExcel(HttpSession httpSession, @RequestParam(value = "excelFile") MultipartFile excelFile) {
+		String busName = String.valueOf(httpSession.getAttribute("name"));
+		return readExcel(httpSession, excelFile, busName, 1000);
 	}
 }
