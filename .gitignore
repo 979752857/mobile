@@ -11,5 +11,6 @@
 /classes/
 /config/jdbc.properties
 /out/
+/target/
 /web/META-INF
 /web/WEB-INF/lib

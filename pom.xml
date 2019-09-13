@@ -100,6 +100,11 @@
             <version>${log4j2_version}</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-web</artifactId>
+            <version>${log4j2_version}</version>
+        </dependency>
+        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
@@ -150,9 +155,9 @@
             <version>0.9.5.3</version>
         </dependency>
         <dependency>
-            <groupId>org.aspectj</groupId >
-            <artifactId>aspectjweaver</artifactId >
-            <version>1.8.7</version >
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.8.7</version>
         </dependency>
         <dependency>
             <groupId>commons-fileupload</groupId>
