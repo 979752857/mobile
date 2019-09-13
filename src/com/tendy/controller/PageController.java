@@ -19,7 +19,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/page")
-public class PageController extends BaseController {
+public class PageController {
 
     private Logger logger = Logger.getLogger(PageController.class);
 

@@ -10,12 +10,11 @@ import com.tendy.utils.StringUtils;
 import com.tendy.utils.TimeUtil;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
 import java.text.ParseException;
 import java.util.Date;
 
 @Service
-public class UserInfoService extends BaseService{
+public class UserInfoService {
 
     public ReplyMap updateUserInfo(Integer businessId, String name, String password, String phone, String address, String remark, String busName){
         ReplyMap replyMap = new ReplyMap();
