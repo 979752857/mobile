@@ -75,6 +75,8 @@ function readExcel(){
     if(!checkFile()){
         return;
     }
+    $("#impBtn").text("导入中...");
+    $("#impBtn").attr("disabled",true);
     var busName = $("input[name= busName]").val();
     $.ajaxFileUpload({
         url: all_scope_path + "/phoneInfo/readExcel",
@@ -109,10 +111,14 @@ function readExcel(){
                 Ewin.unblock();
                 Ewin.error({message: "批量添加第三方券码失败!"});
             }
+            $("#impBtn").text("导入");
+            $("#impBtn").attr("disabled",false);
         },
         error: function (data, status, e) {
             Ewin.unblock();
             Ewin.error({message: "批量添加第三方券码失败!"});
+            $("#impBtn").text("导入");
+            $("#impBtn").attr("disabled",false);
         }
     });
 

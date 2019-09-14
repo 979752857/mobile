@@ -21,7 +21,7 @@
                         <div class="col-md-2">
                             <input type="file" id="excelFile" name="excelFile" onchange="checkFile()"/>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <input type="text" class="form-control" name="busName" placeholder="请输入运营商账号">
                         </div>
                         <button type="button" class="btn btn-info" id="impBtn" style="width: 83px; height: 34px;" onclick="readExcel()">导入</button>
