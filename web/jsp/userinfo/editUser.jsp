@@ -16,7 +16,7 @@
 								<label  class="col-sm-2 control-label"><i class="fa fa-user"></i> 账户到期时间</label>
 								<div class="col-sm-9">
 									<label class="col-sm-2 control-label" id="timeout">${endTime}到期</label>
-									<button id="pay" type="button" class="col-md-offset-1 col-sm-1 btn" onclick = "showAlipay()">
+									<button id="pay" type="button" class="col-md-offset-1 col-sm-2 btn" onclick = "showAlipay()">
 										<i class="fa fa-money">&nbsp;续费</i>
 									</button>
 								</div>

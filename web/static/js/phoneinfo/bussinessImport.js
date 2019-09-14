@@ -1,3 +1,8 @@
+//重新加载页面
+function getParamData(){
+
+    // initBaseStringReload(all_scope_path+'/phoneInfo/phoneInfo',source,code);
+}
 
 // 检查 Excel 文件
 function checkFile() {
@@ -19,6 +24,8 @@ function readExcel(){
     if(!checkFile()){
         return;
     }
+    $("#impBtn").text("导入中...");
+    $("#impBtn").attr("disabled",true);
     $.ajaxFileUpload({
         url: all_scope_path + "/phoneInfo/busReadExcel",
         type: "post",
@@ -56,10 +63,14 @@ function readExcel(){
                     Ewin.error({message: "批量添加手机号失败!"});
                 }
             }
+            $("#impBtn").text("导入");
+            $("#impBtn").attr("disabled", false);
         },
         error: function (data, status, e) {
             Ewin.unblock();
             Ewin.error({message: "批量添加手机号失败!"});
+            $("#impBtn").text("导入");
+            $("#impBtn").attr("disabled", false);
         }
     });
 
