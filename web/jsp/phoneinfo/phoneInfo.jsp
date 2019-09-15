@@ -50,6 +50,14 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">运营商</label>
+                            <div class="col-sm-9">
+                                <input type="radio" name="type" checked="checked" value="Mobile">移动
+                                <input type="radio" name="type" value="Unicom" style="margin-left:50px;">联通
+                                <input type="radio" name="type" value="Telecom" style="margin-left:50px;">电信
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">状态</label>
                             <div class="col-sm-9">
                                 <input type="radio" name="status" checked="checked" value="private">私有

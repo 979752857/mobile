@@ -57,6 +57,7 @@ public class PhoneInfoService {
 			map.put("phone", accountPhone.getPhone());
 			map.put("url", accountPhone.getUrl());
 			map.put("city", accountPhone.getCityId());
+			map.put("type", accountPhone.getType());
 			if (accountPhone.getPrice() != null) {
 				map.put("price", accountPhone.getPrice().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
 			}
@@ -140,7 +141,7 @@ public class PhoneInfoService {
 		return replyMap;
 	}
 
-	public ReplyMap processExcel(MultipartFile excelFile, String busName) throws Exception {
+	public ReplyMap processExcel(MultipartFile excelFile, String busName, String type) throws Exception {
 		ReplyMap replyMap = new ReplyMap();
 		MobileBussiness business = DataMapperUtil.selectMobileBussinessByName(busName);
 		if (business == null) {
@@ -175,20 +176,20 @@ public class PhoneInfoService {
 			processList.add(item);
 			infoList.remove(i);
 			if (processList.size() == processSize) {
-				replyMap = insertPhoneProcessExcel(processList, business.getId(), business.getCityId(), replyMap);
+				replyMap = insertPhoneProcessExcel(processList, business.getId(), business.getCityId(), type, replyMap);
 				processList.clear();
 				Thread.sleep(1000);
 			}
 		}
 		if (!CollectionUtils.isEmpty(processList)) {
-			replyMap = insertPhoneProcessExcel(processList, business.getId(), business.getCityId(), replyMap);
+			replyMap = insertPhoneProcessExcel(processList, business.getId(), business.getCityId(), type, replyMap);
 			processList.clear();
 		}
 		replyMap.success();
 		return replyMap;
 	}
 
-	public ReplyMap insertPhoneProcessExcel(List<String[]> infoList, Integer businessId, Integer cityId, ReplyMap replyMap) {
+	public ReplyMap insertPhoneProcessExcel(List<String[]> infoList, Integer businessId, Integer cityId, String type, ReplyMap replyMap) {
 		int successNum = Integer.parseInt(String.valueOf(replyMap.get("failNum")));
 		int failNum = Integer.parseInt(String.valueOf(replyMap.get("successNum")));
 		int processRow = Integer.parseInt(String.valueOf(replyMap.get("processRow")));
@@ -216,6 +217,7 @@ public class PhoneInfoService {
 				userAccountPhone.setPrice(new BigDecimal(codeArr[1]));
 				userAccountPhone.setUpdateTime(new Date());
 				userAccountPhone.setStatus("private");
+				userAccountPhone.setType(type);
 				ItemRule item = MobileRule.checkPhone(userAccountPhone.getPhone());
 				if (item != null) {
 					userAccountPhone.setTag(item.getTag());

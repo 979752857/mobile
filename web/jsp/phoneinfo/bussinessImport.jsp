@@ -16,13 +16,31 @@
                 </ul>
             </div>
             <div class="box-body">
-                <div class="row">
-                        <label class="col-md-1">导入文档：</label>
-                        <div class="col-md-3">
-                            <input type="file" id="excelFile" name="excelFile" onchange="checkFile()"/>
+                <form class="form-horizontal" method="post">
+                    <div class="row form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-2">导入文档：</label>
+                                <div class="col-md-3">
+                                    <input type="file" id="excelFile" name="excelFile" onchange="checkFile()"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">运营商：</label>
+                                <div class="col-sm-9">
+                                    <input type="radio" name="type" checked="checked" value="Mobile">移动
+                                    <input type="radio" name="type" value="Unicom" style="margin-left:50px;">联通
+                                    <input type="radio" name="type" value="Telecom" style="margin-left:50px;">电信
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <button type="button" class="btn btn-info" id="impBtn" style="width: 83px; height: 34px;" onclick="readExcel()">导入</button>
+                                </div>
+                            </div>
                         </div>
-                        <button type="button" class="btn btn-info" id="impBtn" style="width: 83px; height: 34px;" onclick="readExcel()">导入</button>
-                </div>
+                    </div>
+                </form>
                 <div class="row">
                     <div style="width: 420px; font-size: 12px;padding-left: 20px;padding-top:5px;padding-bottom:10px;float: left;">
                         导入说明：<br/>

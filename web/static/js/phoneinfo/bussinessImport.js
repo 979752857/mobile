@@ -24,12 +24,17 @@ function readExcel(){
     if(!checkFile()){
         return;
     }
+    var type = $("input[name='type']:checked").val();
+    if(type == null || type == ""){
+        Ewin.warning({message: "请选择号码运营商"});
+        return;
+    }
     $("#impBtn").text("导入中...");
     $("#impBtn").attr("disabled",true);
     $.ajaxFileUpload({
         url: all_scope_path + "/phoneInfo/busReadExcel",
         type: "post",
-        data: {},
+        data: {type:type},
         secureuri: false,
         fileElementId: "excelFile",
         dataType: 'json',

@@ -80,7 +80,8 @@ public class PhoneInfoController {
 	@RequestMapping(value = "/updatePhone", method = RequestMethod.GET)
 	public String updatePhone(@RequestParam("id") String id, @RequestParam("phone") String phone,
 							  @RequestParam("url") String url, @RequestParam("price") String price,
-							  @RequestParam("status") String status, HttpSession httpSession) {
+							  @RequestParam("status") String status, @RequestParam("type") String type,
+							  HttpSession httpSession) {
 		ReplyMap replyMap = new ReplyMap();
 		if (ParamUtil.checkParamIsNull(phone)) {
 			replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, BusinessConstants.PARAM_ERROR_MSG);
@@ -96,6 +97,9 @@ public class PhoneInfoController {
 		}
 		if (!StringUtils.isBlank(price)) {
 			accountPhone.setPrice(new BigDecimal(price));
+		}
+		if (!StringUtils.isBlank(type)) {
+			accountPhone.setType(type);
 		}
 		if (!StringUtils.isBlank(status)) {
 			accountPhone.setStatus(status);
@@ -136,7 +140,7 @@ public class PhoneInfoController {
 
 	@RequestMapping(value = "/readExcel", method = RequestMethod.POST)
 	@ResponseBody
-	public String readExcel(HttpSession httpSession, @RequestParam(value = "excelFile") MultipartFile excelFile, @RequestParam(value = "busName") String busName, @RequestParam(value = "limit", required = false) Integer limit) {
+	public String readExcel(HttpSession httpSession, @RequestParam(value = "excelFile") MultipartFile excelFile, @RequestParam(value = "busName") String busName, @RequestParam(value = "type", required = false) String type, @RequestParam(value = "limit", required = false) Integer limit) {
 		ReplyMap replyMap = new ReplyMap();
 		try {
 			if (excelFile == null || ParamUtil.checkParamIsNull(busName)) {
@@ -182,14 +186,14 @@ public class PhoneInfoController {
 				processList.add(item);
 				infoList.remove(i);
 				if (processList.size() == processSize) {
-					replyMap = phoneInfoService.insertPhoneProcessExcel(processList, business.getId(), business.getCityId(), replyMap);
+					replyMap = phoneInfoService.insertPhoneProcessExcel(processList, business.getId(), business.getCityId(), type, replyMap);
 					processList.clear();
 					Thread.sleep(1000);
 					logger.info("PhoneInfoController readExcel  replyMap:" + replyMap.toJson());
 				}
 			}
 			if (!CollectionUtils.isEmpty(processList)) {
-				replyMap = phoneInfoService.insertPhoneProcessExcel(processList, business.getId(), business.getCityId(), replyMap);
+				replyMap = phoneInfoService.insertPhoneProcessExcel(processList, business.getId(), business.getCityId(), type, replyMap);
 				processList.clear();
 			}
 			logger.info("PhoneInfoController readExcel  处理完毕  replyMap:" + replyMap.toJson());
@@ -204,8 +208,8 @@ public class PhoneInfoController {
 
 	@RequestMapping(value = "/busReadExcel", method = RequestMethod.POST)
 	@ResponseBody
-	public String busReadExcel(HttpSession httpSession, @RequestParam(value = "excelFile") MultipartFile excelFile) {
+	public String busReadExcel(HttpSession httpSession, @RequestParam(value = "excelFile") MultipartFile excelFile, @RequestParam(value = "type", required = true) String type) {
 		String busName = String.valueOf(httpSession.getAttribute("name"));
-		return readExcel(httpSession, excelFile, busName, 1000);
+		return readExcel(httpSession, excelFile, busName, type, 1000);
 	}
 }

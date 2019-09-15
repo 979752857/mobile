@@ -78,10 +78,19 @@ function readExcel(){
     $("#impBtn").text("导入中...");
     $("#impBtn").attr("disabled",true);
     var busName = $("input[name= busName]").val();
+    if(busName == null || busName == ""){
+        Ewin.warning({message: "请输入运营商账号"});
+        return;
+    }
+    var type = $("input[name='type']:checked").val();
+    if(type == null || type == ""){
+        Ewin.warning({message: "请选择号码运营商"});
+        return;
+    }
     $.ajaxFileUpload({
         url: all_scope_path + "/phoneInfo/readExcel",
         type: "post",
-        data: {busName:busName},
+        data: {busName:busName, type:type},
         secureuri: false,
         fileElementId: "excelFile",
         dataType: 'json',

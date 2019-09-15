@@ -24,6 +24,7 @@ function getPhoneInfo() {
                 $("#url").val(userAccountPhone.url);
                 $("#phoneId").val(userAccountPhone.id);
                 $("#price").val(userAccountPhone.price);
+                $("input[name='type'][value="+userAccountPhone.type+"]").attr("checked",true);
                 $("input[name='status'][value="+userAccountPhone.status+"]").attr("checked",true);
             }else{
                 Ewin.error({message: data.message});
@@ -48,6 +49,11 @@ function updatePhone() {
     if(price == null || price == ""){
         price = 0;
     }
+    var type = $("input[name='type']:checked").val();
+    if(type == null || type == ""){
+        Ewin.warning({message: "请选择运营商"});
+        return;
+    }
     var status = $("input[name='status']:checked").val();
     if(status == null || status == ""){
         Ewin.warning({message: "请选择状态"});
@@ -62,6 +68,7 @@ function updatePhone() {
             phone : phone,
             price : price,
             url : phoneUrl,
+            type : type,
             status : status
         },
         "success" : function(data) {

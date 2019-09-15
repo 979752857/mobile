@@ -61,12 +61,16 @@ function getCloumJson() {
             "mData" : "time"
         }, {
             "sWidth":"15%",
-            "sTitle" : "链接",
-            "mData" : "url",
+            "sTitle" : "运营商",
+            "mData" : "type",
             "mRender" : function test(data, type, full) {
                 var resultHtml = '';
-                if(data){
-                    resultHtml += '<a class="btn btn-primary btn-xs" href="javascript:void(0)" onclick="showQrcode(\''+full.city+'\',\''+data+'\',\''+full.phone+'\')"><i class="fa fa-search"></i> 查看二维码</a>';
+                if(full.type == "Mobile"){
+                    resultHtml += '移动';
+                }else if(full.type == "Telecom"){
+                    resultHtml += '电信';
+                }else if(full.type == "Unicom"){
+                    resultHtml += '联通';
                 }
                 return resultHtml;
             }
