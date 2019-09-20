@@ -163,7 +163,7 @@ function getData() {
     var type = $("#type").val();
     var keyword = $("#key").val();
     if(!keyword && !tag && !keyword){
-        keyword = "888";
+        keyword = "8";
     }
     if(!cid){
         $("#phone-data").html("");
