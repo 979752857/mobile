@@ -250,6 +250,10 @@ form {
   float:right;
 }
 
+.geomantic {
+  font-size: 0.65em;
+}
+
 #nav{width:100%;height:auto;perspective:400px;padding:0 3%;background-color: #fff;}
 #nav p{width:100%;font-family:"微软雅黑";text-align:center;}
 #nav ul{padding:0;}

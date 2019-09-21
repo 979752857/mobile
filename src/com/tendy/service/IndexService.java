@@ -3,6 +3,7 @@ package com.tendy.service;
 import com.google.common.collect.Maps;
 import com.tendy.common.BusinessConstants;
 import com.tendy.common.Constants;
+import com.tendy.common.GeomanticType;
 import com.tendy.common.ReplyMap;
 import com.tendy.dao.DataMapperUtil;
 import com.tendy.dao.bean.BaseCity;
@@ -84,19 +85,26 @@ public class IndexService {
 				phoneParam = String.valueOf(roleMap.get(Constants.SEARCH_KEY));
 			}
 		}
+		boolean isGeomantic = roleMap.get(Constants.GEOMANTIC_KEY) != null ? Boolean.valueOf(String.valueOf(roleMap.get(Constants.GEOMANTIC_KEY))) : false;
 		List<UserAccountPhone> list = DataMapperUtil.selectUserAccountPhoneByPhoneAndBusiness(phoneParam, mobileBussiness.getId(), pageNo * pageSize, pageSize, status, tag, notPhone, openBusinessId, position, type);
 		if (CollectionUtils.isEmpty(list)) {
 			replyMap.fail(BusinessConstants.RESULT_NULL_CODE, BusinessConstants.RESULT_NULL_MSG);
 			return replyMap;
 		} else {
-			List<Map<String, String>> phoneList = new ArrayList<>();
+			List<Map<String, Object>> phoneList = new ArrayList<>();
 			for (int i = 0; i < list.size(); i++) {
 				UserAccountPhone accountPhone = list.get(i);
-				Map<String, String> itemMap = new HashMap<>();
+				Map<String, Object> itemMap = new HashMap<>();
 				itemMap.put("phone", accountPhone.getPhone());
 				itemMap.put("type", accountPhone.getType());
 				itemMap.put("tag", accountPhone.getTag());
 				itemMap.put("city", baseCity.getCityName());
+				if(isGeomantic){
+					LuckyRule luckyRule = GeomanticRule.getPhoneLuck(accountPhone.getPhone());
+					if(GeomanticType.LUCKY.equals(GeomanticType.getBytag(luckyRule.getTag()))){
+						itemMap.put("geomantic", luckyRule);
+					}
+				}
 				if (accountPhone.getPrice() != null && BigDecimal.ZERO.compareTo(accountPhone.getPrice()) == 0) {
 					itemMap.put("price", price);
 				} else {

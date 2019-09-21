@@ -233,7 +233,9 @@ function changeToHtml(item, key){
     var html = '<li><div><span class="span-left">';
     var phone = item.phone.split(key).join('<span class="text-red">'+key+'</span>');
     html += processPhone(phone);
-    // html += '1<span class="text-red">88&nbsp;&nbsp;8</span>974&nbsp;&nbsp;1124';
+    if(item.geomantic && item.geomantic.geomanticType == 1){
+        html += '</span><span class="text-red geomantic" onclick="geomanticMessage(\''+item.phone+'\',\''+item.geomantic.message+'\')">&nbsp;&nbsp;'+item.geomantic.tag;
+    }
     html += '</span><span class="span-right">'+item.price+'</span></div>';
     html += '<div><span class="span-left-brand">';
     html += item.city;
@@ -283,4 +285,8 @@ function insertContent(phone, index) {
         }
     }
     return phone;
+}
+
+function geomanticMessage(phone, message) {
+    alert(phone+"\n"+message);
 }
