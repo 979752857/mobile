@@ -162,9 +162,6 @@ function getData() {
     var position = $("#position").val();
     var type = $("#type").val();
     var keyword = $("#key").val();
-    if(!keyword && !tag && !keyword){
-        keyword = "8";
-    }
     if(!cid){
         $("#phone-data").html("");
         $("#phone-data").html("<li><div><p>请重新扫描二维码</p></div></li>");
@@ -177,10 +174,11 @@ function getData() {
             if(data){
                 var result = eval('(' + data + ')');
                 if(result.code == 0){
+                    var keyWord = result.keyWord;
                     var resList = result.list;
                     for(var i = 0; i <resList.length; i++){
                         console.log(resList[i]);
-                        changeToHtml(resList[i], keyword);
+                        changeToHtml(resList[i], keyWord);
                     }
                     if(resList.length == 10){
                         $("#load-more").show();

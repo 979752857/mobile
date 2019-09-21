@@ -29,13 +29,16 @@ public class IndexController {
 							@RequestParam(value = "tag", required = false) String tag, @RequestParam(value = "notPhone", required = false) String notPhone,
 							@RequestParam(value = "position", required = false) String position, @RequestParam(value = "type", required = false) String type) {
 		ReplyMap replyMap = new ReplyMap();
-		if (StringUtils.isBlank(phone) && StringUtils.isBlank(tag) && StringUtils.isBlank(notPhone)) {
-			replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "请输入查询的关键号码");
-			return replyMap.toJson();
-		}
+//		if (StringUtils.isBlank(phone) && StringUtils.isBlank(tag) && StringUtils.isBlank(notPhone)) {
+//			replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "请输入查询的关键号码");
+//			return replyMap.toJson();
+//		}
 		if (ParamUtil.checkParamIsNull(cid)) {
 			replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "请重新扫描二维码");
 			return replyMap.toJson();
+		}
+		if (StringUtils.isBlank(phone)) {
+			phone = null;
 		}
 		if (pageNo == null) {
 			pageNo = 0;
