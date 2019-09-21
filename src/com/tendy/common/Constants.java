@@ -9,7 +9,10 @@ import java.util.Map;
  * @Date: 2018/10/29
  */
 public class Constants {
-
+    /**
+     * 配置1为开启
+     */
+    public static String CONFIG_TRUE_NUMBER = "0";
     public static String OPEN_BUSINESS_KEY = "open_businessid";
     public static String OPEN_BUSINESSID_PRICE_KEY = "open_businessid_price";
     public static String SEARCH_KEY = "search_key";
