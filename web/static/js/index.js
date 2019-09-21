@@ -204,21 +204,27 @@ function getData() {
     setTimeout("$(\"#form-button\").show()",500);
 }
 
-function getBusInfo(){
+function getShowInfo(){
     var Request = GetRequest();
     var cid = Request['cid'];
     $.ajax({
-        url:"${pageContext.request.contextPath}/index/businessInfo",
+        url:all_scope_path+"/index/businessInfo",
         type:"get",
         data:{cid:cid},
         success:function(data){
             if(data){
                 var result = eval('(' + data + ')');
                 if(result.code == 0){
-                    var phone = result.phone;
-                    var name = result.name;
-                    var address = result.address;
-                    var html = '<p>'+name+'</p><p>'+address+'&nbsp;&nbsp;&nbsp;&nbsp;<a href="tel:'+phone+'">'+phone+'</a></p>';
+                    var html = '';
+                    var showInfo = result.showInfo;
+                    if(showInfo == '0'){
+                        html = '<p>技术支持：微信tiandi0713</p>';
+                    }else if(showInfo == '1'){
+                        var phone = result.phone;
+                        var name = result.name;
+                        var address = result.address;
+                        html = '<p>'+name+'&nbsp;&nbsp;&nbsp;'+address+'&nbsp;&nbsp;&nbsp;'+phone+'</p>';
+                    }
                     $("#bus-info").html(html);
                 }
             }

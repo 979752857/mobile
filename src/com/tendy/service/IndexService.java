@@ -35,6 +35,11 @@ public class IndexService {
 			replyMap.fail(BusinessConstants.PARAM_ERROR_CODE, "运营商查询错误，请重新扫码");
 			return replyMap;
 		}
+		Map<String, Object> roleMap = Maps.newHashMap();
+		if (StringUtils.isNotBlank(mobileBussiness.getContent())) {
+			roleMap = JsonMapper.json2Map(mobileBussiness.getContent());
+		}
+		replyMap.put("showInfo", roleMap.get(Constants.SHOW_INFO));
 		replyMap.put("name", mobileBussiness.getBussinessName());
 		replyMap.put("phone", mobileBussiness.getPhone());
 		replyMap.put("address", mobileBussiness.getAddress());

@@ -96,7 +96,7 @@
     <ul id="phone-data"></ul>
     <p id="load-more" style="display:none;" class="load-more">点击加载更多</p>
 </div>
-<%--<div id="bus-info" class="float-bottom-div"></div>--%>
+<div id="bus-info" class="float-bottom-div"></div>
 <script>
     var pageNo = 0;
     $('#load-more').on('click', function(){
@@ -104,7 +104,7 @@
         getData();
     });
     getData();
-//    getBusInfo();
+    getShowInfo();
 </script>
 </body>
 </html>
