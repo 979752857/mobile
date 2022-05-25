@@ -10,7 +10,7 @@
 
     <properties>
         <guava_version>23.0</guava_version>
-        <spring.version>4.0.1.RELEASE</spring.version>
+        <spring.version>5.2.22.RELEASE</spring.version>
         <log4j2_version>2.6.2</log4j2_version>
     </properties>
 
